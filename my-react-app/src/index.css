@@ -740,3 +740,31 @@ input[type="checkbox"] {
   background: #C0C0C0;;
   border-radius: 4px;
 }
+/* userlogin */
+.userLoginContainer{
+  display: flex;
+  padding: 50px;
+  width: 300px;
+}
+.userLoginForm{
+  display: flex;
+  flex-direction: column;
+}
+.userLoginForm input{
+  height: 40px;
+  width: 300px;
+}
+.rememberForgot{
+  display: flex;
+  align-items: center;
+  justify-content: space-between
+}
+.rememberForgot input{
+  height: 20px;
+  width: 20px;
+}
+.rememberForgot label{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
