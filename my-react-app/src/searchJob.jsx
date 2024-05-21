@@ -98,6 +98,7 @@ const SearchJob = () =>{
               <ul className='DropdownJob'>
                 <li>Specialization <TfiAngleDown /></li>
                 <ul className="filterList">
+                <li><div className='select'></div>Select All</li>
                 {error && <div>Error: {error}</div>}
                   {data && (
                       <ul>
