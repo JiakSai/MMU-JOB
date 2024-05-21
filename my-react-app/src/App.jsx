@@ -7,10 +7,10 @@ import ListUser from './test.jsx';
 function App() {
     return (
         <>
-            {/* <Header />
+            <Header />
             <SearchJob /> 
-            <Footer /> */}
-            <ListUser/>
+            <Footer />
+            {/* <ListUser/> */}
         </>
     );
 }

@@ -23,24 +23,12 @@ import axios from 'axios';
 
 const SearchJob = () =>{
 
-  const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:8000/api/test');
-                console.log('Response data:', response.data);
-                setData(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setError(error.message);
-            }
-        };
   
-        fetchData();
-    }, []);
-  
+  const [api,setApi] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:8000/api/job-categories').then(data => data.json()).then(val => setApi(val));
+    console.log(api);
+  }, []);
 
   const Specializations = ["Accounting / Finance", "Engineering", "Information Technology", "Law", "Others"];
   const States = ["Kuala Lumpur", "Selagor", "Putrajaya","Penang", "Johor", "Perlis", "Keadh", "Kelanta", "Terengganu", "Melacca",
@@ -97,20 +85,15 @@ const SearchJob = () =>{
               <GoMultiSelect className="searchIcon"/>
               <ul className='DropdownJob'>
                 <li>Specialization <TfiAngleDown /></li>
-                <ul className="filterList">
+                <div className="SpecializationList">
                 <li><div className='select'></div>Select All</li>
-                {error && <div>Error: {error}</div>}
-                  {data && (
-                      <ul>
-                          <li>{data.message}</li>
-                          <li>{data['another message']}</li>
-                      </ul>
-                  )}
-                  {Specializations.map((specialization, index) => (
-                    <li key={index}>{specialization}<FaAngleRight /></li>
-                  ))}
+                    {api.map((jobcategories,index) =>(
+                      <div key={index}>
+                          <div className='Specialization'><input type="checkbox" /><span>{jobcategories.name}</span></div>
+                      </div>
+                    ))}
                   <li className='apply'><div className='apply'> <button>Cancel</button> <button>Apply</button></div></li>
-                </ul>
+                </div>
                 <li>State / Region  <TfiAngleDown /></li>
                 <div className='stateList'>
                   <li><div className='select'></div>Select All</li>

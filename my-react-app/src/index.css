@@ -690,16 +690,6 @@ form button {
   margin: 15px 0;
   justify-content: space-between;
 }
-.filterList{
-  border: solid 1px #9b9b9b;
-  border-radius: 20px;
-  padding: 5px 0;
-}
-.filterList li{
-  border: none;
-  margin: 15px 0;
-  height: auto;
-}
 .searchBar .apply{
   display: flex;
   align-items: center;
@@ -719,19 +709,19 @@ input[type="checkbox"] {
   width: 20px;
   height: 20px;
 }
-.jobList, .stateList, .experienceList{
+.jobList, .stateList, .experienceList, .SpecializationList{
   border: solid 1px #9b9b9b;
   border-radius: 20px;
   padding: 5px ;
   width: 326.4px;
   height: auto;
 }
-.jobList li, .stateList li, .experienceList li{
+.jobList li, .stateList li, .experienceList li, .SpecializationList li{
   border: none;
   margin: 15px 0;
   height: auto;
 }
-.jobT, .State, .experience{
+.jobT, .State, .experience, .Specialization{
   display: flex;
   align-items: center;
   margin: 15px 0;
