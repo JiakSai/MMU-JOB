@@ -3,8 +3,9 @@ import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import SearchJob from './searchJob.jsx';
 import ListUser from './test.jsx';
-import UserLogin from './loginPage.jsx';
-import Register from './registerPage.jsx';
+import UserLogin from './userLoginPage.jsx';
+import UserRegister from './userRegisterPage.jsx';
+import FinishSign from './finishSign.jsx';
 
 function App() {
     return (
@@ -12,8 +13,9 @@ function App() {
             {/* <Header />
             <SearchJob /> 
             <Footer /> */}
-            {/* <UserLogin/> */}
-            <Register/>
+            <UserLogin/>
+            {/* <UserRegister/> */}
+            {/* <FinishSign/> */}
         </>
     );
 }

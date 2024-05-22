@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
+import registerPhoto from './photo/MoshingDoodle (1).png';
+import { Link } from "react-router-dom";
 
-function Register(){
+function UserRegister(){
     const [post, setPost] = useState({
         email: '',
         password: '',
@@ -23,11 +25,11 @@ function Register(){
     }
     return(
         <section>
-            <nav><h1 className='logo'>" MMUJOB "</h1> </nav>
+            <div className='userLoginTop'><h1 className='logo'>" MMUJOB "</h1> </div>
             <div className="registerContainer">
                 <div>
-                    <p className='changeSite'>Are you an employer?</p>
-                    <div className="userLoginFormContainer">
+                    <p className='rchangeSite'>Are you an employer?</p>
+                    <div className="userRegisterFormContainer">
                         <h1>Register as New User</h1>
                         <p>Fill in this form to create an account.</p>
                         <form className="registerForm" onSubmit={handleSubmit}>
@@ -42,10 +44,11 @@ function Register(){
                                 <a href="#">Forgot password?</a>
                             </div>
                             <button type="submit">Register</button>
-                            <p>Already have an account? <a href="#">Login</a></p>
+                            <p>Already have an account? <Link to="/userLogin">Login</Link></p>
                         </form>
                     </div>
                 </div>
+                <img src={registerPhoto} alt="Login" className='registerIllustration'/>
             </div>
             <div className='userLoginBottom'>
               <p>Copyright © 2024, MMUJOB LLC. "MMUJOB" and logo are registered trademarks of MMUJOB LLC.</p>
@@ -54,4 +57,4 @@ function Register(){
         </section>
     )
 }
-export default Register;
+export default UserRegister;

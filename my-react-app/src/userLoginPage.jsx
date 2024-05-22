@@ -1,9 +1,10 @@
 import loginphoto from './photo/ZombieingDoodle.png';
+import { Link } from "react-router-dom";
 
 export default function UserLogin() {
     return (
         <section>
-          <nav><h1 className='logo'>" MMUJOB "</h1> </nav>
+          <div className='userLoginTop'><h1 className='logo'>" MMUJOB "</h1> </div>
           <div className="userLoginContainer">
                 <img src={loginphoto} alt="Login" className='loginIllustration'/>
                 <div>
@@ -21,7 +22,7 @@ export default function UserLogin() {
                         <a href="#">Forgot password?</a>
                       </div>
                       <button type="submit">Login</button>
-                      <p className='toRegister'>Do you have an account? <a href="#">Register</a></p>
+                      <p className='toRegister'>Do you have an account? <Link to="/userRegister">Register</Link></p>
                     </form>
                   </div>
                 </div>

@@ -743,7 +743,7 @@ input[type="checkbox"] {
 /* userlogin */
 .userLoginContainer{
   display: flex;
-  padding: 120px 0 65px 40px;
+  padding: 60px 0 70px 40px;
 }
 .userLoginFormContainer{
   margin-left: 20px;
@@ -784,8 +784,9 @@ input[type="checkbox"] {
   gap: 5px;
 }
 .loginIllustration{
-  width: 700px;
-  height: 408px;
+  width: 720px;
+  height: 450px;
+  margin: -18px 0 0 -40px;
 }
 .userLoginContainer button,.registerForm button{
   height: 40px;
@@ -793,6 +794,10 @@ input[type="checkbox"] {
   background-color: black;
   color: white;
   border-radius: 4px;
+}
+.userLoginTop{
+  padding: 10px 120px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
 }
 .userLoginBottom{
   display: flex;
@@ -807,6 +812,19 @@ input[type="checkbox"] {
 }
 .registerContainer{
   display: flex;
-  justify-content: center;
-  padding: 80px 0 40px 0;
+  padding: 60px 0 60px 135px;
+}
+.userRegisterFormContainer{
+  background-color: #F2F3F4;
+  padding: 30px;
+  border-radius: 4px;
+  width: 360px;
+}
+.rchangeSite{
+  padding: 0 0 5px 205px;
+}
+.registerIllustration{
+  width: 800px;
+  height: 480px;
+  margin: 20px 0 0 0px;
 }
