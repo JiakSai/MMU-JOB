@@ -1,12 +1,12 @@
 function FinishSign(){
     return(
         <section>
-            <nav><h1 className='logo'>" MMUJOB "</h1> </nav>
+            <div className='LoginRegisterTop'><h1 className='logo'>" MMUJOB "</h1> </div>
             <div className="finishSignContainer">
-                <div className="finishSignForm">
-                        <h1>Almost done</h1>
-                        <p>Fill in this form to complete your account.</p>
-                    <form>
+                <div>
+                    <h1>Almost done</h1>
+                    <p>Fill in this form to complete your account.</p>
+                    <form className="finishSignForm">
                         <label htmlFor="fullName">Full Name</label>
                         <input type="text" id="fullName" name="fullName" required />
                         <label htmlFor="phone">Phone Number</label>
@@ -25,7 +25,7 @@ function FinishSign(){
                     </form>
                 </div>
             </div>
-            <div className='userLoginBottom'>
+            <div className='LoginRegisterBottom'>
               <p>Copyright © 2024, MMUJOB LLC. "MMUJOB" and logo are registered trademarks of MMUJOB LLC.</p>
               <p><a href="#">Terms of Use</a> | <a href="#">Privacy & Ad Choices</a></p>
             </div>

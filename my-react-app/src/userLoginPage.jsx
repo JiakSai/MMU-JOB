@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function UserLogin() {
     return (
         <section>
-          <div className='userLoginTop'><h1 className='logo'>" MMUJOB "</h1> </div>
+          <div className='LoginRegisterTop'><h1 className='logo'>" MMUJOB "</h1> </div>
           <div className="userLoginContainer">
                 <img src={loginphoto} alt="Login" className='loginIllustration'/>
                 <div>
@@ -27,7 +27,7 @@ export default function UserLogin() {
                   </div>
                 </div>
           </div>
-            <div className='userLoginBottom'>
+            <div className='LoginRegisterBottom'>
               <p>Copyright © 2024, MMUJOB LLC. "MMUJOB" and logo are registered trademarks of MMUJOB LLC.</p>
               <p><a href="#">Terms of Use</a> | <a href="#">Privacy & Ad Choices</a></p>
             </div>
