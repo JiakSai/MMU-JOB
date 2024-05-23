@@ -4,6 +4,7 @@ import { useState } from 'react';
 import registerPhoto from './photo/MoshingDoodle (1).png';
 import { Link } from "react-router-dom";
 
+
 function UserRegister(){
     const [post, setPost] = useState({
         email: '',
