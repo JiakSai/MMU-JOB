@@ -802,21 +802,12 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
 }
-.LoginRegisterBottom{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #E5E4E2;
-  padding: 20px 0;
-  height: 80px;
-  box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.1);
-}
 .changeSite{
   padding: 0 0 5px 225px;
 }
 .registerContainer{
   display: flex;
-  padding: 60px 0 60px 135px;
+  padding: 60px 0 60px 120px;
 }
 .userRegisterFormContainer{
   background-color: #F2F3F4;
@@ -852,7 +843,7 @@ input[type="checkbox"] {
 }
 .password-toggle-icon{
   position: absolute;
-  right: 1065px;
+  right: 1080px;
   cursor: pointer;
   padding-top: 5px;
 }
@@ -862,4 +853,10 @@ input[type="checkbox"] {
 }
 #inputError{
   border: 1px solid red;
+}
+.userpassword-toggle-icon{
+  position: absolute;
+  right: 455px;
+  cursor: pointer;
+  padding-top: 5px;
 }
