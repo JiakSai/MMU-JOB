@@ -99,7 +99,7 @@ function UserRegister() {
                                 name="email" 
                                 value={post.email} 
                                 onChange={handleInput} 
-                                className={formError.email ? 'inputError' : ''}
+                                id={formError.email ? 'inputError' : ''}
                             />
                             <p className="error-message">{formError.email}</p>
                             <label htmlFor="password">Password</label>
@@ -109,7 +109,7 @@ function UserRegister() {
                                     name="password" 
                                     value={post.password} 
                                     onChange={handleInput} 
-                                    className={formError.password ? 'inputError' : ''}
+                                    id={formError.password ? 'inputError' : ''}
                                 />
                                 <span onClick={togglePasswordVisibility} className="password-toggle-icon">
                                     {passwordVisible ? <FaRegEye /> : <FaRegEyeSlash />}
@@ -123,7 +123,7 @@ function UserRegister() {
                                     name="password_confirmation" 
                                     value={post.password_confirmation} 
                                     onChange={handleInput} 
-                                    className={formError.password_confirmation ? 'inputError' : ''}
+                                    id={formError.password_confirmation ? 'inputError' : ''}
                                 />
                                 <span onClick={toggleComPasswordVisibility} className="password-toggle-icon">
                                     {comPasswordVisible ? <FaRegEye /> : <FaRegEyeSlash />}
