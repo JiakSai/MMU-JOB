@@ -837,3 +837,25 @@ input[type="checkbox"] {
 .finishSignContainer{
   padding: 60px 135px 60px 135px;
 }
+.password-container{
+  display: flex;
+  align-items: center;
+}
+.password-container input{
+  width: 100%;
+  outline: none;
+  position: relative;
+}
+.password-toggle-icon{
+  position: absolute;
+  right: 1065px;
+  cursor: pointer;
+  padding-top: 5px;
+}
+.error-message{
+  color: red ;
+  font-size: 13px;
+}
+#inputError{
+  border: 1px solid red;
+}
