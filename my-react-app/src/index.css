@@ -743,7 +743,7 @@ input[type="checkbox"] {
 /* userlogin */
 .userLoginContainer{
   display: flex;
-  padding: 60px 0 70px 40px;
+  padding: 60px 0 60px 40px;
 }
 .userLoginFormContainer{
   margin-left: 20px;
@@ -796,8 +796,11 @@ input[type="checkbox"] {
   border-radius: 4px;
 }
 .LoginRegisterTop{
-  padding: 10px 120px;
+  padding: 0 120px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+  height: 65px;
+  display: flex;
+  align-items: center;
 }
 .LoginRegisterBottom{
   display: flex;
@@ -805,7 +808,7 @@ input[type="checkbox"] {
   align-items: center;
   background-color: #E5E4E2;
   padding: 20px 0;
-  height: 78px;
+  height: 80px;
   box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.1);
 }
 .changeSite{
