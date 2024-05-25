@@ -427,11 +427,6 @@ form button {
   align-items: center;
   gap: 5px;
 }
-.loginIllustration{
-  width: 720px;
-  height: 450px;
-  margin: -18px 0 0 -35px;
-}
 .userLoginContainer button,.registerForm button{
   height: 40px;
   margin-top: 30px;
@@ -461,11 +456,6 @@ form button {
 }
 .rchangeSite{
   padding: 0 0 5px 205px;
-}
-.registerIllustration{
-  width: 820px;
-  height: 480px;
-  margin: 20px 0 0 0px;
 }
 .finishSignForm{
   display: flex;

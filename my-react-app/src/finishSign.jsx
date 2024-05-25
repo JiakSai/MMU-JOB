@@ -61,17 +61,19 @@ function FinishSign() {
   return (
     <>
       <section>
-      <div className='LoginRegisterTop'><h1 className='logo'>" MMUJOB "</h1> </div>
+        <div className="LoginRegisterTop">
+          <h1 className="logo">MMUJOB</h1>
+        </div>
         <div className="finishSignContainer">
           <div className="bg-white w-[560px] py-[30px] px-[30px]">
             <h1 className="text-[25px] font-bold text-gray-900">Almost done</h1>
             <p>Fill in this form to complete your account.</p>
-            <form className="finishSignForm  flex flex-col mt-[60px]" onSubmit={handleSubmit}>
+            <form className="finishSignForm space-y-4 flex flex-col mt-[60px]" onSubmit={handleSubmit}>
               <div className="relative">
                 <input
                   type="text"
                   name="name"
-                  className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-2 rounded mb-[10px]"
+                  className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-2 rounded"
                   value={post.name}
                   onChange={handleInput}
                 />
@@ -103,7 +105,7 @@ function FinishSign() {
                     name={field}
                     value={post[field]}
                     required
-                    className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-2 rounded mt-[10px]"
+                    className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-2 rounded"
                     onChange={handleInput}
                   />
                   <label
@@ -118,7 +120,7 @@ function FinishSign() {
                     name="jobCategory"
                     value={post.jobCategory}
                     onChange={handleInput}
-                    className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded mt-[10px] mb-[5px]" required>
+                    className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded" required>
                     <option value="" disabled className="hidden"></option>
                     {api.map((jobCategory, index) => (
                     <option key={index} value={jobCategory.name}>
@@ -137,7 +139,7 @@ function FinishSign() {
                     name="jobCategory"
                     value={post.jobCategory}
                     onChange={handleInput}
-                    className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded mt-[5px] mb-[5px]" required>
+                    className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded" required>
                     <option value="" disabled className="hidden"></option>
                     {api.map((jobCategory, index) => (
                     <option key={index} value={jobCategory.name}>
@@ -151,7 +153,7 @@ function FinishSign() {
                 </label>
               </div>
               <div className="flex"><input type="checkbox"/>I'm not have a resume</div>
-              <div className="flex flex-col items-center justify-center border-2 border-dashed border-black h-[300px] w-full cursor-pointer mt-[5px]" 
+              <div className="flex flex-col items-center justify-center border-2 border-dashed border-black h-[300px] w-full cursor-pointer" 
                 onClick={() => document.querySelector(".input-field").click()}>
                 <input type="file" accept="image/*,application/pdf" className="input-field hidden"
                   onChange={({ target: { files } }) => {
@@ -176,7 +178,7 @@ function FinishSign() {
             </div>
             </form>
           </div>
-          <img src={registerPhoto} alt="Login" className='mt-[100px] h-[800px] w-[800px]' />
+          <img src={registerPhoto} alt="Login" className='mt-[100px] h-[800px] w-[850px] ml-[-20px]'/>
         </div>
       </section>
       <Footer />
