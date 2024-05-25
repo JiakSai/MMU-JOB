@@ -8,7 +8,8 @@ use App\Models\jobcategory;
 class JobCategoryController extends Controller
 {
     public function index(){
-        return JobCategory::all();
+        $jobcategory = jobcategory::all();
+        return response()->json($jobcategory, 200);
     }
 
     public function create(){
