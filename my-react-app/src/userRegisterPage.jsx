@@ -72,12 +72,19 @@ function UserRegister() {
 
         // Submit registration data
         axios.post('http://localhost:8000/api/UserRegister', post)
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+    .then(response => {
+        // Check if the response indicates success
+        if (response.status === 200) {
+            // Navigate to the next page
+            window.location.href = '/userFinishSign'; // Replace '/next-page' with the URL of the next page
+        } else {
+            console.log('Error: Unable to register user'); // Log an error if the response indicates failure
+        }
+    })
+    .catch(error => {
+        console.log('Error: Unable to register user'); // Log an error if there is an error in the request
+    });
+
     };
 
     return (

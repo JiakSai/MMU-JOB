@@ -63,7 +63,7 @@ nav a:hover {
   margin-right: 10px;
   font-weight: bolder;
   font-size: 30px;
-  margin-left: -15px;
+  color: #2471A3;
 }
 .logo a{
   color: #2471A3;
@@ -474,7 +474,8 @@ form button {
   width: 500px;
 }
 .finishSignContainer{
-  padding: 60px 135px 60px 135px;
+  padding: 60px 135px 60px 120px;
+  display: flex;
 }
 .password-container{
   display: flex;
@@ -503,4 +504,10 @@ form button {
   right: 455px;
   cursor: pointer;
   padding-top: 5px;
+}
+.form-control.custom-phone-input{
+ width: 100%;
+ border: 1px solid black;
+ height: 40px;
+ border-radius: 4px;
 }
