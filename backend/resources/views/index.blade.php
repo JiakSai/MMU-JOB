@@ -18,5 +18,34 @@
             </div>
         </div>
     </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Website</th>
+                <th>Logo</th>
+                <th>Cover</th>
+                <th>Description</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {{-- @foreach($companies as $company)
+                <tr>
+                    <td>{{ $company->name }}</td>
+                    <td><a href="{{ $company->website }}">{{ $company->website }}</a></td>
+                    <td>
+                        <img src="{{ url('/') }}/images/company/{{ $company->logo }}" alt="{{ $company->name }} logo">
+                    </td>
+                    <td>
+                        <img src="{{ url('/') }}/images/company/{{ $company->logo }}" alt="{{ $company->name }} logo">
+                    </td>
+                    <td>{{ $company->description }}</td>
+                </tr>
+            @endforeach --}}
+        </tbody>
+    </table>
+
 </body>
 </html>

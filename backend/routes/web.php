@@ -10,10 +10,11 @@ Route::get('/', function () {
 })->name('index');
 
 Route::get('/add-category', [JobCategoryController::class, 'create'])->name('jobcategory.create');
-Route::post('/', [JobCategoryController::class, 'store'])->name('jobcategory.store');
+Route::post('/store-category', [JobCategoryController::class, 'store'])->name('jobcategory.store');
 
+Route::get('/showcompany', [CompanyController::class, 'company.index']);
 Route::get('/createCompany', [CompanyController::class, 'create'])->name('company.create');
-Route::post('/', [CompanyController::class, 'store'])->name('company.store');
+Route::post('/companyStore', [CompanyController::class, 'store'])->name('company.store');
 
 Route::get('/createPost', [PostController::class, 'create'])->name('post.create');
-Route::post('/', [PostController::class, 'store'])->name('post.store');
+Route::post('/postStore', [PostController::class, 'store'])->name('post.store');

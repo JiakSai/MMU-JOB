@@ -92,4 +92,19 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    public function logoutUser(){
+        if (Auth::guard('user')->check()) {
+            Auth::guard('user')->user()->tokens()->delete();
+            return response()->json([
+                'status' => true,
+                'message' => 'User Logged Out Successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'No authenticated user'
+            ], 401);
+        }
+    }
 }

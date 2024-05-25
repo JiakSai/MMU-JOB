@@ -806,6 +806,7 @@ input[type="checkbox"] {
   background-color: #E5E4E2;
   padding: 20px 0;
   box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.1);
+  height: 78px;
 }
 .changeSite{
   padding: 0 0 5px 225px;

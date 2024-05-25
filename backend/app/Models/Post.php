@@ -10,11 +10,17 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'company_id', 'job_title', 'job_level',
-        'vacancy_count', 'employment_type',
-        'job_location', 'salary', 'deadline',
-        'education_level', 'experience',
-        'skills', 'specifications'
+        'company_id', 
+        'job_title', 
+        'job_level',
+        'vacancy_count', 
+        'employment_type',
+        'job_location', 
+        'salary', 
+        'education_level', 
+        'experience',
+        'skills', 
+        'specifications'
     ];
 
     public function company()

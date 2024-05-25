@@ -26,17 +26,11 @@ export default function UserLogin() {
 
     return (
         <section>
-<<<<<<< Updated upstream
-          <div className='LoginRegisterTop'><h1 className='logo'>" MMUJOB "</h1> </div>
-          <div className="userLoginContainer">
-                <img src={loginphoto} alt="Login" className='loginIllustration'/>
-=======
             <div className='LoginRegisterTop'>
                 <h1 className='logo'>MMUJOB</h1>
             </div>
             <div className="userLoginContainer">
                 <img src={loginphoto} alt="Login" className='loginIllustration' />
->>>>>>> Stashed changes
                 <div>
                     <p className='changeSite'>Are you an employer?</p>
                     <div className='userLoginFormContainer'>
@@ -72,17 +66,10 @@ export default function UserLogin() {
                         </form>
                     </div>
                 </div>
-<<<<<<< Updated upstream
-          </div>
-            <div className='LoginRegisterBottom'>
-              <p>Copyright © 2024, MMUJOB LLC. "MMUJOB" and logo are registered trademarks of MMUJOB LLC.</p>
-              <p><a href="#">Terms of Use</a> | <a href="#">Privacy & Ad Choices</a></p>
-=======
             </div>
             <div className='LoginRegisterBottom'>
                 <p>Copyright Â© 2024, MMUJOB LLC. "MMUJOB" and logo are registered trademarks of MMUJOB LLC.</p>
                 <p><a href="#">Terms of Use</a> | <a href="#">Privacy & Ad Choices</a></p>
->>>>>>> Stashed changes
             </div>
         </section>
     );
