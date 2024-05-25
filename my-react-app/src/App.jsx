@@ -14,8 +14,10 @@ function App() {
             <SearchJob /> 
             <Footer /> */}
             {/* <UserLogin/> */}
+            {/* <Header />
             <UserRegister/>
-            {/* <FinishSign/> */}
+            <Footer /> */}
+            <FinishSign/>
         </>
     );
 }

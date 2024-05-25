@@ -1,5 +1,7 @@
+import Footer from './Footer.jsx';
 function FinishSign(){
     return(
+        <>
         <section>
             <div className='LoginRegisterTop'><h1 className='logo'>" MMUJOB "</h1> </div>
             <div className="finishSignContainer">
@@ -25,11 +27,9 @@ function FinishSign(){
                     </form>
                 </div>
             </div>
-            <div className='LoginRegisterBottom'>
-              <p>Copyright © 2024, MMUJOB LLC. "MMUJOB" and logo are registered trademarks of MMUJOB LLC.</p>
-              <p><a href="#">Terms of Use</a> | <a href="#">Privacy & Ad Choices</a></p>
-            </div>
         </section>
+        <Footer />
+        </>
     )
 }
 export default FinishSign;

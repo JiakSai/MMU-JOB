@@ -1,20 +1,57 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import loginphoto from './photo/ZombieingDoodle.png';
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import axios from 'axios';
+import Footer from './Footer.jsx';
 
 export default function UserLogin() {
+    const [passwordVisible, setPasswordVisible] = useState(false);
     const [loginPost, setLoginPost] = useState({
         email: '',
         password: ''
     });
+    const [formError, setFormError] = useState({
+        email: '',
+        password: ''
+    });
+
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
 
     const handleInput = (event) => {
-      setLoginPost({...loginPost, [event.target.name]: event.target.value});
-  };
+        setLoginPost({ ...loginPost, [event.target.name]: event.target.value });
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        let inputError = {
+            email: '',
+            password: ''
+        };
+
+        // Form validation
+        if (!loginPost.email) {
+            inputError.email = '* Email is required';
+        }
+        
+        if (!loginPost.password) {
+            inputError.password = '* Password is required';
+        } else if (loginPost.password.length < 6) {
+            inputError.password = '* Password must be at least 6 characters';
+        }
+
+        if (inputError.email || inputError.password) {
+            setFormError(inputError);
+            return;
+        }
+
+        // Reset errors
+        setFormError(inputError);
+
+        // Submit login data
         axios.post('http://localhost:8000/api/Userlogin', loginPost)
             .then(response => {
                 console.log(response);
@@ -25,10 +62,9 @@ export default function UserLogin() {
     };
 
     return (
+        <>
         <section>
-            <div className='LoginRegisterTop'>
-                <h1 className='logo'>MMUJOB</h1>
-            </div>
+            <div className='LoginRegisterTop'><h1 className='logo'>" MMUJOB "</h1> </div>
             <div className="userLoginContainer">
                 <img src={loginphoto} alt="Login" className='loginIllustration' />
                 <div>
@@ -40,21 +76,26 @@ export default function UserLogin() {
                             <label htmlFor="email">Email Address</label>
                             <input
                                 type="email"
-                                id="email"
                                 name="email"
                                 onChange={handleInput}
                                 value={loginPost.email}
-                                required
+                                id={formError.email ? 'inputError' : ''}
                             />
+                            <p className="error-message">{formError.email}</p>
                             <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                onChange={handleInput}
-                                value={loginPost.password}
-                                required
-                            />
+                            <div className="password-container">
+                                <input 
+                                    type={passwordVisible ? "text" : "password"} 
+                                    name="password" 
+                                    value={loginPost.password} 
+                                    onChange={handleInput} 
+                                    id={formError.password ? 'inputError' : ''}
+                                />
+                                <span onClick={togglePasswordVisibility} className="userpassword-toggle-icon">
+                                    {passwordVisible ? <FaRegEye /> : <FaRegEyeSlash />}
+                                </span>
+                            </div>
+                            <p className="error-message">{formError.password}</p>
                             <div className="rememberForgot">
                                 <label>
                                     <input type="checkbox" /> Remember me
@@ -67,10 +108,8 @@ export default function UserLogin() {
                     </div>
                 </div>
             </div>
-            <div className='LoginRegisterBottom'>
-                <p>Copyright Â© 2024, MMUJOB LLC. "MMUJOB" and logo are registered trademarks of MMUJOB LLC.</p>
-                <p><a href="#">Terms of Use</a> | <a href="#">Privacy & Ad Choices</a></p>
-            </div>
         </section>
+        <Footer />
+        </>
     );
 }

@@ -17,7 +17,7 @@ body {
 }
 
 /* --------header------ */
-nav {
+nav{
   position: fixed;
   width: 100%;
   padding: 10px 120px;
@@ -743,7 +743,7 @@ input[type="checkbox"] {
 /* userlogin */
 .userLoginContainer{
   display: flex;
-  padding: 60px 0 70px 40px;
+  padding: 60px 0 60px 40px;
 }
 .userLoginFormContainer{
   margin-left: 20px;
@@ -796,24 +796,18 @@ input[type="checkbox"] {
   border-radius: 4px;
 }
 .LoginRegisterTop{
-  padding: 10px 120px;
+  padding: 0 120px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
-}
-.LoginRegisterBottom{
+  height: 65px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  background-color: #E5E4E2;
-  padding: 20px 0;
-  box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.1);
-  height: 78px;
 }
 .changeSite{
   padding: 0 0 5px 225px;
 }
 .registerContainer{
   display: flex;
-  padding: 60px 0 60px 135px;
+  padding: 60px 0 60px 120px;
 }
 .userRegisterFormContainer{
   background-color: #F2F3F4;
@@ -849,7 +843,7 @@ input[type="checkbox"] {
 }
 .password-toggle-icon{
   position: absolute;
-  right: 1065px;
+  right: 1080px;
   cursor: pointer;
   padding-top: 5px;
 }
@@ -859,4 +853,10 @@ input[type="checkbox"] {
 }
 #inputError{
   border: 1px solid red;
+}
+.userpassword-toggle-icon{
+  position: absolute;
+  right: 455px;
+  cursor: pointer;
+  padding-top: 5px;
 }
