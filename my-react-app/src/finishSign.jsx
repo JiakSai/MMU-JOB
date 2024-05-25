@@ -62,11 +62,11 @@ function FinishSign() {
     <>
       <section>
         <div className="LoginRegisterTop">
-          <h1 className="logo">MMUJOB</h1>
+          <h1 className="logo">" MMUJOB "</h1>
         </div>
         <div className="finishSignContainer">
           <div className="bg-white w-[560px] py-[30px] px-[30px]">
-            <h1 className="text-[25px] font-bold text-gray-900">Almost done</h1>
+            <h1 className="text-[28px] font-bold text-gray-900">Almost done</h1>
             <p>Fill in this form to complete your account.</p>
             <form className="finishSignForm space-y-4 flex flex-col mt-[60px]" onSubmit={handleSubmit}>
               <div className="relative">
@@ -171,14 +171,12 @@ function FinishSign() {
                     <RiDeleteBin6Line onClick={()=> {setFileName("No selected File"); setImages(null)}}/>
                 </span>
             </div>
-            <div className="w-full mt-[30px]">
             <button type="submit" className="px-4 py-2 bg-black text-white rounded w-full">
                 Save And Continue
             </button>
-            </div>
             </form>
           </div>
-          <img src={registerPhoto} alt="Login" className='mt-[100px] h-[800px] w-[850px] ml-[-20px]'/>
+          <img src={registerPhoto} alt="Login" className='mt-[120px] h-[850px] w-[850px] ml-[-20px]'/>
         </div>
       </section>
       <Footer />
