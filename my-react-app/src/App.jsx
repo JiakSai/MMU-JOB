@@ -10,11 +10,11 @@ import FinishSign from './finishSign.jsx';
 function App() {
     return (
         <>
-            <Header />
+            {/* <Header />
             <SearchJob /> 
-            <Footer />
+            <Footer /> */}
             {/* <UserLogin/> */}
-            {/* <FinishSign/> */}
+            <FinishSign/>
             {/* <UserRegister/> */}
         </>
     );

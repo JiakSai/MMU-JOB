@@ -8,7 +8,6 @@ import { FaFileAlt } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import registerPhoto from './photo/MoshingDoodle (1).png';
 
-
 function FinishSign() {
   const [fileName, setFileName] = useState("No selected file");
   const [showFileInput, setShowFileInput] = useState(true);
@@ -21,6 +20,7 @@ function FinishSign() {
     Address: '',
     Nationality: "",
     jobCategory: '',
+    workExp: '',
     resume: '',
   });
 
@@ -29,6 +29,7 @@ function FinishSign() {
     setPost({ ...post, phoneNumber: value });
     setValid(validatePhoneNumber(value));
   };
+
   const handleFileChange = (event) => {
     const file = event.target.files[0]; 
     setPost({ ...post, resume: file }); 
@@ -38,13 +39,16 @@ function FinishSign() {
   const handleCheckboxChange = () => {
     setShowFileInput(!showFileInput);
   };
+
   const handleExpCheckboxChange = () => {
     setShowExpInput(!showExpInput);
   };
+
   const validatePhoneNumber = (phoneNumber) => {
     const phoneNumberPattern = /^\+?[1-9]\d{1,14}$/;
     return phoneNumberPattern.test(phoneNumber);
   };
+
   const containerStyle = () => {
     if (showFileInput && showExpInput) {
       return 'h-[850px] mt-[120px]';
@@ -56,6 +60,8 @@ function FinishSign() {
       return 'h-[580px] mt-[35px]';
     }
   };
+
+  const experiences = ["Intern", "1 to 3 Years of Experience", "4 to 7 Years of Experience", "8 to 10 Years of Experience", "Over 10 Years of Experience"];
 
   const handleInput = (event) => {
     const { name, value } = event.target;
@@ -79,10 +85,11 @@ function FinishSign() {
     }
   };
 
-  const [api,setApi] = useState([]);
+  const [api, setApi] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:8000/api/job-categories').then(data => data.json()).then(val => setApi(val));
-    console.log(api);
+    fetch('http://localhost:8000/api/job-categories')
+      .then(data => data.json())
+      .then(val => setApi(val));
   }, []);
 
   return (
@@ -109,23 +116,23 @@ function FinishSign() {
                 </label>
               </div>
               <div className="relative">
-              <PhoneInput
-                    country={'my'}
-                    value={phoneNumber}
-                    onChange={handleChange}
-                    inputClass="custom-phone-input"
-                    inputProps={{
-                        required: true,
-                    }}
+                <PhoneInput
+                  country={'my'}
+                  value={phoneNumber}
+                  onChange={handleChange}
+                  inputClass="custom-phone-input"
+                  inputProps={{
+                    required: true,
+                  }}
                 />
-                <label className={`input-text absolute left-20 top-2  transition-all duration-200 transform origin-0 ${post.phoneNumber ? 'top-[-11px] left-[8px] text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
-                    Phone Number
+                <label className={`input-text absolute left-20 top-2 transition-all duration-200 transform origin-0 ${post.phoneNumber ? 'top-[-11px] left-[8px] text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
+                  Phone Number
                 </label>
                 {!valid && (
-                    <p>Please enter a valid phone number.</p>
+                  <p>Please enter a valid phone number.</p>
                 )}
-            </div>
-              {["Nationality","Address"].map((field) => (
+              </div>
+              {["Nationality", "Address"].map((field) => (
                 <div className="relative" key={field}>
                   <input
                     type="text"
@@ -137,78 +144,82 @@ function FinishSign() {
                   />
                   <label
                     htmlFor={field}
-                    className={`input-text absolute left-2 top-2  transition-all duration-200 transform origin-0 ${post[field] ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
+                    className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post[field] ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
                     {field.charAt(0).toUpperCase() + field.slice(1)}
                   </label>
                 </div>
               ))}
               <div className="relative">
                 <select
-                    name="jobCategory"
-                    value={post.jobCategory}
-                    onChange={handleInput}
-                    className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded" required>
-                    <option value="" disabled className="hidden"></option>
-                    {api.map((jobCategory, index) => (
+                  name="jobCategory"
+                  value={post.jobCategory}
+                  onChange={handleInput}
+                  className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded"
+                  required>
+                  <option value="" disabled className="hidden"></option>
+                  {api.map((jobCategory, index) => (
                     <option key={index} value={jobCategory.name}>
-                        {jobCategory.name}
+                      {jobCategory.name}
                     </option>
-                    ))}
+                  ))}
                 </select>
                 <label
-                    className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post.jobCategory ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
-                    Major
+                  className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post.jobCategory ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
+                  Major
                 </label>
               </div>
               <div className="flex">
-                <input type="checkbox"  onChange={handleExpCheckboxChange}/>
+                <input type="checkbox" onChange={handleExpCheckboxChange} />
                 <label htmlFor="hideExpInput">I'm a fresh graduate/ student</label>
               </div>
-              {showExpInput &&(
+              {showExpInput && (
                 <div className="relative">
-                <select
-                    name="jobCategory"
-                    value={post.jobCategory}
+                  <select
+                    name="workExp"
+                    value={post.workExp}
                     onChange={handleInput}
-                    className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded" required>
+                    className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded"
+                    required>
                     <option value="" disabled className="hidden"></option>
-                    {api.map((jobCategory, index) => (
-                    <option key={index} value={jobCategory.name}>
-                        {jobCategory.name}
-                    </option>
+                    {experiences.filter(exp => exp).map((experience, index) => (
+                      <option key={index} value={experience}>
+                        {experience}
+                      </option>
                     ))}
-                </select>
-                <label
-                    className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post.jobCategory ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
+                  </select>
+                  <label
+                    className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post.workExp ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
                     Work Experience
-                </label>
-              </div>
+                  </label>
+                </div>
               )}
-            <div className="flex">
-              <input type="checkbox" onChange={handleCheckboxChange} />
-              <label htmlFor="hideFileInput">I don't have a resume</label>
-            </div>
-            {showFileInput && (
-              <>
-                <div id="fileInput" className="flex flex-col items-center justify-center border-2 border-dashed border-black h-[300px] w-full cursor-pointer">
-                  <input type="file" accept="image/*,application/pdf" className="input-field hidden" onChange={handleFileChange} />
-                  <img src={uploadCloud} alt="Upload Icon" className="w-28 h-28" />
-                  <p className="font-bold">Upload Your Resume</p>
-                  <p>Support file type: .pdf, .doc, .docx</p>
-                </div>
-                <div className="flex items-center ">
-                <FaFileAlt />
-                <span className="flex items-center justify-between w-full"> 
-                  {fileName}
-                  <RiDeleteBin6Line onClick={() => { setFileName("No selected File"); }} />
-                </span>
-                </div>
-              </>
-            )}
-            
-            <button type="submit" className="px-4 py-2 bg-black text-white rounded w-full">
+              <div className="flex">
+                <input type="checkbox" onChange={handleCheckboxChange} />
+                <label htmlFor="hideFileInput">I don't have a resume</label>
+              </div>
+              {showFileInput && (
+                <>
+                  <div className="flex flex-col items-center justify-center border-2 border-dashed border-black h-[300px] w-full cursor-pointer mt-[5px]" 
+                    onClick={() => document.querySelector(".input-field").click()}>
+                    <input type="file" accept="image/*,application/pdf" className="input-field hidden"
+                      onChange={handleFileChange} 
+                    />
+                    <img src={uploadCloud} alt="Upload Icon" className="w-28 h-28" />
+                    <p className="font-bold">Upload Your Resume</p>
+                    <p>Support file type: .pdf, .doc, .docx</p>
+                  </div>
+                  <div className="flex items-center ">
+                    <FaFileAlt />
+                    <span className="flex items-center justify-between w-full"> 
+                      {fileName}
+                      <RiDeleteBin6Line onClick={() => { setFileName("No selected File"); }} />
+                    </span>
+                  </div>
+                </>
+              )}
+              <button type="submit" className="px-4 py-2 bg-black text-white rounded w-full">
                 Save And Continue
-            </button>
+              </button>
             </form>
           </div>
           <img
@@ -216,7 +227,6 @@ function FinishSign() {
             alt="Login"
             className={` w-[850px] ml-[-20px] ${containerStyle()}`}
           />
-
         </div>
       </section>
       <Footer />
