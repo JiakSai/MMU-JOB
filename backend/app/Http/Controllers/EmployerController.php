@@ -11,6 +11,22 @@ use Illuminate\Support\Facades\Validator;
 
 class EmployerController extends Controller
 {
+    public function showUserAndCompany()
+    {
+        $employer = Employer::with('company')->get();
+
+        if (!$employer) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Employer not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'employer' => $employer,
+        ]);
+    }
     public function createEmployer(Request $request)
     {
         try {
