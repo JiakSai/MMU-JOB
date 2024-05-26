@@ -72,12 +72,19 @@ function UserRegister() {
 
         // Submit registration data
         axios.post('http://localhost:8000/api/UserRegister', post)
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+    .then(response => {
+        // Check if the response indicates success
+        if (response.status === 200) {
+            // Navigate to the next page
+            window.location.href = '/userFinishSign'; // Replace '/next-page' with the URL of the next page
+        } else {
+            console.log('Error: Unable to register user'); // Log an error if the response indicates failure
+        }
+    })
+    .catch(error => {
+        console.log('Error: Unable to register user'); // Log an error if there is an error in the request
+    });
+
     };
 
     return (
@@ -90,7 +97,7 @@ function UserRegister() {
                 <div>
                     <p className='rchangeSite'>Are you an employer?</p>
                     <div className="userRegisterFormContainer">
-                        <h1>Register as New User</h1>
+                        <h1 className='text-[28px] font-bold text-gray-900'>Register as New User</h1>
                         <p>Fill in this form to create an account.</p>
                         <form className="registerForm" onSubmit={handleSubmit}>
                             <label htmlFor="email">Email Address</label>
@@ -141,7 +148,7 @@ function UserRegister() {
                         </form>
                     </div>
                 </div>
-                <img src={registerPhoto} alt="Login" className='registerIllustration'/>
+                <img src={registerPhoto} alt="Login" className='w-[840px] h-[520px] mt-[45px]'/>
             </div>
         </section>
         <Footer />

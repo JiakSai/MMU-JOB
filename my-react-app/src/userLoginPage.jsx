@@ -66,11 +66,11 @@ export default function UserLogin() {
         <section>
             <div className='LoginRegisterTop'><h1 className='logo'>" MMUJOB "</h1> </div>
             <div className="userLoginContainer">
-                <img src={loginphoto} alt="Login" className='loginIllustration' />
+                <img src={loginphoto} alt="Login" className='w-[720px] h-[480px] ml-[-25px] mt-[-8px]'/>
                 <div>
                     <p className='changeSite'>Are you an employer?</p>
                     <div className='userLoginFormContainer'>
-                        <h1>Welcome Back!</h1>
+                        <h1 className='text-[28px] font-bold text-gray-900'>Welcome Back!</h1>
                         <p>Please login to your account</p>
                         <form className="userLoginForm" onSubmit={handleSubmit}>
                             <label htmlFor="email">Email Address</label>

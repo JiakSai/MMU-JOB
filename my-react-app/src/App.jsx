@@ -17,7 +17,8 @@ function App() {
             {/* <Header />
             <UserRegister/>
             <Footer /> */}
-            <FinishSign/>
+            {/* <FinishSign/> */}
+            <UserRegister/>
         </>
     );
 }

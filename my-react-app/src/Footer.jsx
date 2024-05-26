@@ -75,7 +75,7 @@ function Footer(){
                 <li><a href="#">Contact us</a></li>
                 <li><a href="#">Product & tech blog</a></li>
                 <li onClick={viewSocial}>
-                    <p>Social &#160;<FaAngleDown /></p>
+                  <div className='flex snap-center'><p>Social &#160;</p><FaAngleDown /></div>
                   <ul className="social">
                       <li><a href="#" className="social-link"><FaFacebookSquare />&nbsp;Facebook</a></li>
                       <li><a href="#" className="social-link"><FiInstagram />&nbsp;Instagram</a></li>
