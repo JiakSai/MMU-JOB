@@ -14,11 +14,8 @@ function App() {
             <SearchJob /> 
             <Footer /> */}
             {/* <UserLogin/> */}
-            {/* <Header />
-            <UserRegister/>
-            <Footer /> */}
-            {/* <FinishSign/> */}
-            <UserRegister/>
+            <FinishSign/>
+            {/* <UserRegister/> */}
         </>
     );
 }

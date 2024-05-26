@@ -79,7 +79,7 @@ export default function UserLogin() {
                                 name="email"
                                 onChange={handleInput}
                                 value={loginPost.email}
-                                id={formError.email ? 'inputError' : ''}
+                                style={{ border: formError.password ? '1px solid red' : '' }}
                             />
                             <p className="error-message">{formError.email}</p>
                             <label htmlFor="password">Password</label>
@@ -89,7 +89,7 @@ export default function UserLogin() {
                                     name="password" 
                                     value={loginPost.password} 
                                     onChange={handleInput} 
-                                    id={formError.password ? 'inputError' : ''}
+                                    style={{ border: formError.password? '1px solid red' : '' }}
                                 />
                                 <span onClick={togglePasswordVisibility} className="userpassword-toggle-icon">
                                     {passwordVisible ? <FaRegEye /> : <FaRegEyeSlash />}

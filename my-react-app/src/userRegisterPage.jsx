@@ -2,13 +2,12 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import registerPhoto from './photo/MoshingDoodle (1).png';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from './Footer.jsx';
 
 function UserRegister() {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [comPasswordVisible, setComPasswordVisible] = useState(false);
-
     const [formError, setFormError] = useState({
         email: '',
         password: '',
@@ -19,9 +18,10 @@ function UserRegister() {
         password: '',
         password_confirmation: ''
     });
+    const navigate = useNavigate();
 
     const handleInput = (event) => {
-        setPost({...post, [event.target.name]: event.target.value});
+        setPost({ ...post, [event.target.name]: event.target.value });
     };
     
     const togglePasswordVisibility = () => {
@@ -54,11 +54,7 @@ function UserRegister() {
 
         if (!post.password_confirmation) {
             inputError.password_confirmation = '* Confirm Password is required';
-        }
-        else if (post.password.length < 6) {
-            inputError.password_confirmation = '* Password must be at least 6 characters';
-        }
-        else if (post.password !== post.password_confirmation) {
+        } else if (post.password !== post.password_confirmation) {
             inputError.password_confirmation = '* Password does not match';
         }
 
@@ -72,19 +68,23 @@ function UserRegister() {
 
         // Submit registration data
         axios.post('http://localhost:8000/api/UserRegister', post)
-    .then(response => {
-        // Check if the response indicates success
-        if (response.status === 200) {
-            // Navigate to the next page
-            window.location.href = '/userFinishSign'; // Replace '/next-page' with the URL of the next page
-        } else {
-            console.log('Error: Unable to register user'); // Log an error if the response indicates failure
-        }
-    })
-    .catch(error => {
-        console.log('Error: Unable to register user'); // Log an error if there is an error in the request
-    });
-
+            .then(response => {
+                if (response.status === 200) {
+                    navigate('/userFinishSign'); // Navigate to success page
+                }
+            })
+            .catch(error => {
+                if (error.response && error.response.data) {
+                    const backendErrors = error.response.data.errors || {};
+                    setFormError({
+                        email: backendErrors.email || '',
+                        password: backendErrors.password || '',
+                        password_confirmation: backendErrors.password_confirmation || '',
+                    });
+                } else {
+                    console.log('Error: Unable to register user');
+                }
+            });
     };
 
     return (
@@ -106,7 +106,7 @@ function UserRegister() {
                                 name="email" 
                                 value={post.email} 
                                 onChange={handleInput} 
-                                id={formError.email ? 'inputError' : ''}
+                                style={{ border: formError.password ? '1px solid red' : '' }}
                             />
                             <p className="error-message">{formError.email}</p>
                             <label htmlFor="password">Password</label>
@@ -116,7 +116,7 @@ function UserRegister() {
                                     name="password" 
                                     value={post.password} 
                                     onChange={handleInput} 
-                                    id={formError.password ? 'inputError' : ''}
+                                    style={{ border: formError.password? '1px solid red' : '' }} 
                                 />
                                 <span onClick={togglePasswordVisibility} className="password-toggle-icon">
                                     {passwordVisible ? <FaRegEye /> : <FaRegEyeSlash />}
@@ -129,8 +129,8 @@ function UserRegister() {
                                     type={comPasswordVisible ? "text" : "password"} 
                                     name="password_confirmation" 
                                     value={post.password_confirmation} 
-                                    onChange={handleInput} 
-                                    id={formError.password_confirmation ? 'inputError' : ''}
+                                    onChange={handleInput}
+                                    style={{ border: formError.password_confirmation ? '1px solid red' : '' }} 
                                 />
                                 <span onClick={toggleComPasswordVisibility} className="password-toggle-icon">
                                     {comPasswordVisible ? <FaRegEye /> : <FaRegEyeSlash />}

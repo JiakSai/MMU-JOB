@@ -19,12 +19,18 @@ function FinishSign() {
     Address: '',
     Nationality: "",
     jobCategory: '',
+    resume: '',
   });
 
   const handleChange = (value) => {
     setPhoneNumber(value);
     setPost({ ...post, phoneNumber: value });
     setValid(validatePhoneNumber(value));
+  };
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]; 
+    setPost({ ...post, resume: file }); 
+    setFileName(file.name); 
   };
 
   const validatePhoneNumber = (phoneNumber) => {
@@ -43,9 +49,11 @@ function FinishSign() {
       axios.post('http://localhost:8000/api/UserRegister', post)
         .then(response => {
           console.log(response);
+          console.log(post);
         })
         .catch(error => {
           console.log(error);
+          console.log(post);
         });
     } else {
       console.log("Invalid phone number");
@@ -156,9 +164,7 @@ function FinishSign() {
               <div className="flex flex-col items-center justify-center border-2 border-dashed border-black h-[300px] w-full cursor-pointer" 
                 onClick={() => document.querySelector(".input-field").click()}>
                 <input type="file" accept="image/*,application/pdf" className="input-field hidden"
-                  onChange={({ target: { files } }) => {
-                    files[0] && setFileName(files[0].name);
-                  }} 
+                  onChange={handleFileChange}
                 />
                 <img src={uploadCloud} alt="Upload Icon" className="w-28 h-28" />
                 <p className="font-bold">Upload Your Resume</p>
