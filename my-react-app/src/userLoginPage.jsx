@@ -64,7 +64,7 @@ export default function UserLogin() {
     return (
         <>
         <section>
-            <div className='LoginRegisterTop'><h1 className='logo'>" MMUJOB "</h1> </div>
+            <div className='LoginRegisterTop'><h1 className='logoUser'>" MMUJOB "</h1> </div>
             <div className="userLoginContainer">
                 <img src={loginphoto} alt="Login" className='w-[720px] h-[480px] ml-[-25px] mt-[-8px]'/>
                 <div>

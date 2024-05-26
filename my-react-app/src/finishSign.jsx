@@ -11,6 +11,8 @@ import registerPhoto from './photo/MoshingDoodle (1).png';
 
 function FinishSign() {
   const [fileName, setFileName] = useState("No selected file");
+  const [showFileInput, setShowFileInput] = useState(true);
+  const [showExpInput, setShowExpInput] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [valid, setValid] = useState(true);
   const [post, setPost] = useState({
@@ -33,9 +35,26 @@ function FinishSign() {
     setFileName(file.name); 
   };
 
+  const handleCheckboxChange = () => {
+    setShowFileInput(!showFileInput);
+  };
+  const handleExpCheckboxChange = () => {
+    setShowExpInput(!showExpInput);
+  };
   const validatePhoneNumber = (phoneNumber) => {
     const phoneNumberPattern = /^\+?[1-9]\d{1,14}$/;
     return phoneNumberPattern.test(phoneNumber);
+  };
+  const containerStyle = () => {
+    if (showFileInput && showExpInput) {
+      return 'h-[850px] mt-[120px]';
+    } else if (showFileInput) {
+      return 'h-[850px] mt-[90px]';
+    } else if (showExpInput) {
+      return 'h-[600px] mt-[50px]';
+    } else {
+      return 'h-[580px] mt-[35px]';
+    }
   };
 
   const handleInput = (event) => {
@@ -70,10 +89,10 @@ function FinishSign() {
     <>
       <section>
         <div className="LoginRegisterTop">
-          <h1 className="logo">" MMUJOB "</h1>
+          <h1 className="logoUser">" MMUJOB "</h1>
         </div>
         <div className="finishSignContainer">
-          <div className="bg-white w-[560px] py-[30px] px-[30px]">
+          <div className="bg-white w-[560px] py-[30px] px-[30px] h-fit">
             <h1 className="text-[28px] font-bold text-gray-900">Almost done</h1>
             <p>Fill in this form to complete your account.</p>
             <form className="finishSignForm space-y-4 flex flex-col mt-[60px]" onSubmit={handleSubmit}>
@@ -138,11 +157,15 @@ function FinishSign() {
                 </select>
                 <label
                     className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post.jobCategory ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
-                    Select Job Category
+                    Major
                 </label>
               </div>
-              <div className="flex"><input type="checkbox"/>I'm a fresh graduate/ student</div>
-              <div className="relative">
+              <div className="flex">
+                <input type="checkbox"  onChange={handleExpCheckboxChange}/>
+                <label htmlFor="hideExpInput">I'm a fresh graduate/ student</label>
+              </div>
+              {showExpInput &&(
+                <div className="relative">
                 <select
                     name="jobCategory"
                     value={post.jobCategory}
@@ -157,32 +180,43 @@ function FinishSign() {
                 </select>
                 <label
                     className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post.jobCategory ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
-                    Select Job Category
+                    Work Experience
                 </label>
               </div>
-              <div className="flex"><input type="checkbox"/>I'm not have a resume</div>
-              <div className="flex flex-col items-center justify-center border-2 border-dashed border-black h-[300px] w-full cursor-pointer" 
-                onClick={() => document.querySelector(".input-field").click()}>
-                <input type="file" accept="image/*,application/pdf" className="input-field hidden"
-                  onChange={handleFileChange}
-                />
-                <img src={uploadCloud} alt="Upload Icon" className="w-28 h-28" />
-                <p className="font-bold">Upload Your Resume</p>
-                <p>Support file type: .pdf, .doc, .docx</p>
-              </div>
-            <div className="flex items-center ">
+              )}
+            <div className="flex">
+              <input type="checkbox" onChange={handleCheckboxChange} />
+              <label htmlFor="hideFileInput">I don't have a resume</label>
+            </div>
+            {showFileInput && (
+              <>
+                <div id="fileInput" className="flex flex-col items-center justify-center border-2 border-dashed border-black h-[300px] w-full cursor-pointer">
+                  <input type="file" accept="image/*,application/pdf" className="input-field hidden" onChange={handleFileChange} />
+                  <img src={uploadCloud} alt="Upload Icon" className="w-28 h-28" />
+                  <p className="font-bold">Upload Your Resume</p>
+                  <p>Support file type: .pdf, .doc, .docx</p>
+                </div>
+                <div className="flex items-center ">
                 <FaFileAlt />
                 <span className="flex items-center justify-between w-full"> 
-                    {fileName}
-                    <RiDeleteBin6Line onClick={()=> {setFileName("No selected File"); setImages(null)}}/>
+                  {fileName}
+                  <RiDeleteBin6Line onClick={() => { setFileName("No selected File"); }} />
                 </span>
-            </div>
+                </div>
+              </>
+            )}
+            
             <button type="submit" className="px-4 py-2 bg-black text-white rounded w-full">
                 Save And Continue
             </button>
             </form>
           </div>
-          <img src={registerPhoto} alt="Login" className='mt-[120px] h-[850px] w-[850px] ml-[-20px]'/>
+          <img
+            src={registerPhoto}
+            alt="Login"
+            className={` w-[850px] ml-[-20px] ${containerStyle()}`}
+          />
+
         </div>
       </section>
       <Footer />

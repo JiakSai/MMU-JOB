@@ -140,7 +140,7 @@ const SearchJob = () =>{
           <div className="allJob">
               <div className="jobQty">
                 <p>500 jobs</p>
-                <p>Sorted by relevance <LiaAngleDownSolid /></p>
+                <p className='flex items-center'>Sorted by relevance <LiaAngleDownSolid /></p>
               </div>
               <div className="jobList">
                   <div className="jobListTop">

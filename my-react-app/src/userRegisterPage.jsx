@@ -91,7 +91,7 @@ function UserRegister() {
         <>
         <section>
             <div className='LoginRegisterTop'>
-                <h1 className='logo'>" MMUJOB "</h1> 
+                <h1 className='logoUser'>" MMUJOB "</h1> 
             </div>
             <div className="registerContainer">
                 <div>
