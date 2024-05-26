@@ -17,6 +17,7 @@ Route::get('/showcompany', [CompanyController::class, 'index']);
 
 
 //Employer
+Route::get('/ShowUserAndCompany',[EmployerController::class, 'showUserAndCompany']);
 Route::post('/EmployerRegister', [EmployerController::class, 'createEmployer']);
 Route::post('/EmployerLogin', [EmployerController::class, 'loginEmployer']);
 Route::middleware(['auth:sanctum', 'employer'])->group(function(){

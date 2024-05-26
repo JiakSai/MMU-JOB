@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employer;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -21,6 +22,15 @@ class CompanyController extends Controller
 
     public function store(Request $request)
     {
+        $employer = $request->user();
+
+        if ($employer->company) {
+            return response()->json([
+                'status' => false,
+                'message' => 'You already have a company.',
+            ], 400);
+        }
+
         $validate = Validator::make($request->all(), 
         [
             'name' => 'required',
@@ -40,6 +50,7 @@ class CompanyController extends Controller
 
         // If validation passes
         $company = new Company();
+        $company->employer_id = $employer->id;
         $company->name = $request->name;
         $company->website = $request->website;
         $company->description = $request->description;

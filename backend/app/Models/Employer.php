@@ -30,4 +30,9 @@ class Employer extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function company()
+    {
+        return $this->hasOne('App\Models\Company');
+    }
 }
