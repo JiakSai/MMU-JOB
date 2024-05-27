@@ -48,6 +48,17 @@ const SearchJob = () =>{
     overflow: 'hidden',
     display: '-webkit-box',
   };
+  var num = 0;
+  const hideFilter = () => {
+    if(num === 0){
+      document.querySelector('.DropdownJob').style.display = 'block';
+      num = 1;
+    }
+    else{
+      document.querySelector('.DropdownJob').style.display = 'none';
+      num = 0;
+    }
+  }
   
   useEffect(() => {
     const handleScroll = () => {
@@ -80,7 +91,7 @@ const SearchJob = () =>{
             <input type="text" placeholder="Search Jobs"/>
             <IoIosSearch className="searchIcon" />
             </div>
-            <div className="filterBox">
+            <div className="filterBox" onClick={hideFilter}>
               <p>Filter</p>
               <GoMultiSelect className="searchIcon"/>
               <ul className='DropdownJob'>
