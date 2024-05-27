@@ -12,15 +12,13 @@ class Post extends Model
     protected $fillable = [
         'company_id', 
         'job_title', 
-        'job_level',
-        'vacancy_count', 
-        'employment_type',
-        'job_location', 
+        'job_type',
         'salary', 
+        'job_location', 
         'education_level', 
         'experience',
-        'skills', 
-        'specifications'
+        'requirement', 
+        'description'
     ];
 
     public function company()

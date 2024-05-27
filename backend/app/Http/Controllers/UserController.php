@@ -107,4 +107,9 @@ class UserController extends Controller
             ], 401);
         }
     }
+
+    public function finishSignup(){
+
+    }
+    
 }
