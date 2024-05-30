@@ -108,8 +108,100 @@ class UserController extends Controller
         }
     }
 
-    public function finishSignup(){
+    public function updateUser(Request $request){
+        
+        $user = $request->user();
+
+        $validate = Validator::make($request->all(),
+        [
+            'name' => 'sometimes | required',
+            'profilePic' => 'sometimes | required | mimes:jpeg,jpg,png',
+            'phoneNumber' => 'sometimes | required',
+            'nationality' => 'sometimes | required',
+            'state' => 'sometimes | required',
+            'education'=> 'sometimes | required',
+            'major' => 'sometimes | required',
+            'experience' => 'sometimes | required',
+            'resume' => 'sometimes | required | mimes:pdf',
+        ]);
+        
+        if($validate->fails()){
+            return response()->json([
+                'status' => false,
+                'message' => 'validation error',
+                'errors' => $validateUser->errors()
+            ], 401);
+        }
+
+        $data = $request->only('name', 'phoneNumber', 'nationality', 'state', 'education', 'major', 'experience');
+
+        if($request->hasFile('profilePic')){
+            $profilePic = $request->file('profilePic');
+            $profilePicName = time().'_profilePic'.$profilePic->getClientOriginalName();
+            $profilePic->move(public_path('images/User'), $profilePicName);
+            $data['profilePic'] = asset('images/User/'.$profilePicName);
+        }
+    
+        if($request->hasFile('resume')){
+            $resume = $request->file('resume');
+            $resumeName = time().'_resume'.$resume->getClientOriginalName();
+            $resume->move(public_path('resume'), $resumeName);
+            $data['resume'] = asset('resume/'.$resumeName);
+        }
+    
+        $user->update($data);
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'User updated successfully',
+            'data' => $user
+        ], 200);
 
     }
-    
+
+    public function finishSignup(Request $request){
+
+        $user = $request->user();
+
+        $validate = Validator::make($request->all(),
+        [
+            'name' => 'required',
+            'phoneNumber' => 'required',
+            'nationality' => 'required',
+            'state' => 'required',
+            'major' => 'required',
+            'experience' => 'sometimes',
+            'resume' => 'sometimes | mimes:pdf',
+        ]);
+
+        if($validate->fails()){
+            return response()->json([
+                'status' => false,
+                'message' => 'validation error',
+                'errors' => $validate->errors()
+            ], 401);
+        }
+
+        $data = $request->only('name', 'phoneNumber', 'nationality', 'state', 'major', 'experience');
+        
+        if($request->hasFile('resume')){
+            $resume = $request->file('resume');
+            $resumeName = time().'_resume'.$resume->getClientOriginalName();
+            $resume->move(public_path('resume'), $resumeName);
+            $data['resume'] = asset('resume/'.$resumeName);
+        }
+
+        $user->updateOrCreate(
+            ['id' => $user->id],
+            $data
+        );
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Sign up finished successfully',
+            'data' => $user
+        ], 200);
+           
+    }
+
 }
