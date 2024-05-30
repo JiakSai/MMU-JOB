@@ -58,6 +58,7 @@ class CompanyController extends Controller
         if($request->hasFile('logo')){
             $logoFile = $request->file('logo');
             $logoFilename = time() . '_logo.' . $logoFile->getClientOriginalExtension();
+            // asset('images/company/' . $logoFilename);
             $logoFile->move(public_path('images/company'), $logoFilename);
             $company->logo = $logoFilename;
         }
@@ -77,5 +78,5 @@ class CompanyController extends Controller
             'data' => $company
         ], 201);
     }
-    
+
 }

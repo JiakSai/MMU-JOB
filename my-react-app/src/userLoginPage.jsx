@@ -52,12 +52,15 @@ export default function UserLogin() {
         setFormError(inputError);
 
         // Submit login data
-        axios.post('http://localhost:8000/api/Userlogin', loginPost)
+        axios.post('http://localhost:8000/api/UserLogin', loginPost)
             .then(response => {
                 console.log(response);
             })
             .catch(error => {
                 console.log(error);
+                if (error.response.status === 401) {
+                    setFormError({ email: 'Invalid email or password', password: 'Invalid email or password' });
+                }
             });
     };
 

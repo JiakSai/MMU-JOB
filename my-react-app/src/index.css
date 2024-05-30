@@ -403,6 +403,7 @@ form button {
   justify-content: center;
   background-image: linear-gradient(111.5deg, rgb(187, 232, 255) 11.1%, rgb(4, 78, 116) 107.5%);
   gap: 10px;
+  margin-top: 0px;
 }
 .searchBar input {
   height: 48px;
@@ -493,10 +494,11 @@ form button {
   border-radius: 4px;
   padding: 15px;
 }
-.jobLogo{
+.jobLogo {
   height: 50px;
   width: 50px;
   border-radius: 50%;
+  object-fit: contain;
 }
 .jobListTop{
   display: flex;
@@ -710,14 +712,15 @@ input[type="checkbox"] {
   width: 20px;
   height: 20px;
 }
-.jobList, .stateList, .experienceList, .SpecializationList{
+.jobTList, .stateList, .experienceList, .SpecializationList{
   border: solid 1px #9b9b9b;
   border-radius: 20px;
   padding: 5px ;
   width: 326.4px;
   height: auto;
+  display: none;
 }
-.jobList li, .stateList li, .experienceList li, .SpecializationList li{
+.jobTList li, .stateList li, .experienceList li, .SpecializationList li{
   border: none;
   margin: 15px 0;
   height: auto;
