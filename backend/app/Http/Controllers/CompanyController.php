@@ -60,14 +60,14 @@ class CompanyController extends Controller
             $logoFilename = time() . '_logo.' . $logoFile->getClientOriginalExtension();
             // asset('images/company/' . $logoFilename);
             $logoFile->move(public_path('images/company'), $logoFilename);
-            $company->logo = $logoFilename;
+            $company->logo = asset('images/company/'.$logoFilename);
         }
         
         if($request->hasFile('cover')){
             $coverFile = $request->file('cover');
             $coverFilename = time() . '_cover.' . $coverFile->getClientOriginalExtension();
             $coverFile->move(public_path('images/company'), $coverFilename);
-            $company->cover = $coverFilename;
+            $company->cover = asset('images/company/'.$coverFilename);
         }
 
         $company->save();

@@ -10,14 +10,16 @@ use App\Http\Controllers\PostController;
 
 //Public
 Route::get('/ShowUserAndCompany',[EmployerController::class, 'showUserAndCompany']);
-Route::get('/job-categories', [JobCategoryController::class, 'index']);
-Route::get('/showcompany', [CompanyController::class, 'index']);
+Route::get('/JobCategories', [JobCategoryController::class, 'index']);
+Route::get('/ShowCompany', [CompanyController::class, 'index']);
 Route::get('/ShowPost', [PostController::class, 'index']);
 
 //User
 Route::post('/UserRegister', [UserController::class, 'createUser']);
 Route::post('/UserLogin', [UserController::class, 'loginUser']);
 Route::middleware(['auth:sanctum', 'user'])->group(function(){
+    Route::patch('/UserFinishSignup', [UserController::class, 'finishSignup']);
+    Route::patch('/UserUpdate', [UserController::class, 'updateUser']);
     Route::get('/UserLogout', [UserController::class, 'logoutUser']);
 });
 
