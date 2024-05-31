@@ -132,7 +132,7 @@ function FinishSign() {
                   <p>Please enter a valid phone number.</p>
                 )}
               </div>
-              {["Nationality", "Address"].map((field) => (
+              {["Nationality", "Address", "State", "City"].map((field) => (
                 <div className="relative" key={field}>
                   <input
                     type="text"

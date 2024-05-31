@@ -6,6 +6,8 @@ import UserLogin from "./userLoginPage.jsx";
 import FinishSign from './finishSign.jsx';
 import JobDetails from "./jobDetails.jsx";
 import JobList from "./jobList.jsx";
+import SearchBar from "./searchBar.jsx";
+import{ AddRole}  from './popUp-Components/addRole.jsx';
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const router = createBrowserRouter([
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
   {
     path: "JobList",
     element: <JobList />,
+  },
+  {
+    path: "SearchBar",
+    element: <SearchBar />,
+  },
+  {
+    path: "AddRole",
+    element: <AddRole />,
   },
 ]);
 
