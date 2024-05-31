@@ -10,11 +10,11 @@ import UserProfile from './userProfile.jsx';
 function App() {
     return (
         <>
-            <Header />
+            {/* <Header />
             <SearchJob /> 
-            <Footer />
+            <Footer /> */}
             {/* <UserLogin/> */}
-            {/* <FinishSign/> */}
+            <FinishSign/>
             {/* <UserRegister/> */}
             {/* <UserProfile/> */}
         </>

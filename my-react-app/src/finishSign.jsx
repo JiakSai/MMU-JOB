@@ -11,12 +11,12 @@ import registerPhoto from './photo/MoshingDoodle (1).png';
 function FinishSign() {
   const [fileName, setFileName] = useState("No selected file");
   const [showFileInput, setShowFileInput] = useState(true);
-  const [showExpInput, setShowExpInput] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [valid, setValid] = useState(true);
   const [post, setPost] = useState({
     name: '',
     phoneNumber: '',
+    Gender: '',
     Address: '',
     Nationality: "",
     jobCategory: '',
@@ -40,28 +40,16 @@ function FinishSign() {
     setShowFileInput(!showFileInput);
   };
 
-  const handleExpCheckboxChange = () => {
-    setShowExpInput(!showExpInput);
-  };
-
   const validatePhoneNumber = (phoneNumber) => {
     const phoneNumberPattern = /^\+?[1-9]\d{1,14}$/;
     return phoneNumberPattern.test(phoneNumber);
   };
 
   const containerStyle = () => {
-    if (showFileInput && showExpInput) {
-      return 'h-[850px] mt-[120px]';
-    } else if (showFileInput) {
-      return 'h-[850px] mt-[90px]';
-    } else if (showExpInput) {
-      return 'h-[600px] mt-[50px]';
-    } else {
-      return 'h-[580px] mt-[35px]';
-    }
+    return showFileInput ? 'h-[850px] mt-[120px]' : 'h-[600px] mt-[50px]';
   };
 
-  const experiences = ["Intern", "1 to 3 Years of Experience", "4 to 7 Years of Experience", "8 to 10 Years of Experience", "Over 10 Years of Experience"];
+  const Genders = ["Male", "Female", "Other"];
 
   const handleInput = (event) => {
     const { name, value } = event.target;
@@ -132,7 +120,26 @@ function FinishSign() {
                   <p>Please enter a valid phone number.</p>
                 )}
               </div>
-              {["Nationality", "Address", "State", "City"].map((field) => (
+              <div className="relative">
+                <select
+                  name="Gender"
+                  value={post.Gender}
+                  onChange={handleInput}
+                  className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded"
+                  required>
+                  <option value="" disabled className="hidden"></option>
+                  {Genders.filter(exp => exp).map((Gender, index) => (
+                    <option key={index} value={Gender}>
+                      {Gender}
+                    </option>
+                  ))}
+                </select>
+                <label
+                  className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post.Gender ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
+                  Gender
+                </label>
+              </div>
+              {["Nationality", "State", "City"].map((field) => (
                 <div className="relative" key={field}>
                   <input
                     type="text"
@@ -168,31 +175,6 @@ function FinishSign() {
                   Major
                 </label>
               </div>
-              <div className="flex">
-                <input type="checkbox" onChange={handleExpCheckboxChange} />
-                <label htmlFor="hideExpInput">I'm a fresh graduate/ student</label>
-              </div>
-              {showExpInput && (
-                <div className="relative">
-                  <select
-                    name="workExp"
-                    value={post.workExp}
-                    onChange={handleInput}
-                    className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded"
-                    required>
-                    <option value="" disabled className="hidden"></option>
-                    {experiences.filter(exp => exp).map((experience, index) => (
-                      <option key={index} value={experience}>
-                        {experience}
-                      </option>
-                    ))}
-                  </select>
-                  <label
-                    className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post.workExp ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
-                    Work Experience
-                  </label>
-                </div>
-              )}
               <div className="flex">
                 <input type="checkbox" onChange={handleCheckboxChange} />
                 <label htmlFor="hideFileInput">I don't have a resume</label>
