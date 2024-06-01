@@ -122,13 +122,11 @@ class UserController extends Controller
             'name' => 'sometimes | required',
             'profilePic' => 'sometimes | required | mimes:jpeg,jpg,png',
             'phoneNumber' => 'sometimes | required',
+            'gender' => 'sometimes | required',
             'nationality' => 'sometimes | required',
             'state' => 'sometimes | required',
             'city' => 'sometimes | required',
-            'education.university_name' => 'sometimes|required',
-            'education.education_level' => 'sometimes|required',
             'major' => 'sometimes | required',
-            'experience' => 'sometimes | required',
             'resume' => 'sometimes | required | mimes:pdf',
         ]);
         
@@ -174,11 +172,11 @@ class UserController extends Controller
         [
             'name' => 'required',
             'phoneNumber' => 'required',
+            'gender'=> 'required',
             'nationality' => 'required',
             'state' => 'required',
             'city' => 'required',
             'major' => 'required',
-            'experience' => 'sometimes',
             'resume' => 'sometimes | mimes:pdf',
         ]);
 
