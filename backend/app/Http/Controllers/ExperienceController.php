@@ -11,6 +11,8 @@ class ExperienceController extends Controller
 {
     public function store(Request $request)
     {
+        $user = $request->user();
+
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'jobType' => 'required',
@@ -31,14 +33,14 @@ class ExperienceController extends Controller
         }
 
         $experience = new Experience();
-        $experience->user_id = $request->user_id;
+        $experience->user_id = $user->id;
         $experience->title = $request->title;
         $experience->jobType = $request->jobType;
         $experience->companyName = $request->companyName;
         $experience->location = $request->location;
         $experience->locationType = $request->locationType;
-        $experience->start_date = $request->start_date;
-        $experience->end_date = $request->end_date;
+        $experience->startDate = $request->startDate;
+        $experience->endDate = $request->endDate;
         $experience->description = $request->description;
         $experience->save();
     
@@ -50,7 +52,9 @@ class ExperienceController extends Controller
     }
 
     public function update(Request $request, $id){
-        
+
+        $user = $request->user();
+
         $validator = Validator::make($request->all(), [
             'title' => 'sometimes | required',
             'jobType' => 'sometimes | required',
@@ -71,28 +75,20 @@ class ExperienceController extends Controller
         }
 
         $experience = Experience::find($id);
-        if (!$experience) {
+        if($experience && $experience->user_id == $user->id){
+            $experience->update($request->all());
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Experience Updated Successfully',
+                'data' => $experience
+            ], 200);
+        } else {
             return response()->json([
                 'status' => false,
-                'message' => 'Experience not found',
+                'message' => 'Experience not found or not owned by the user',
             ], 404);
         }
-
-        $experience->title = $request->title ?? $experience->title;
-        $experience->jobType = $request->jobType ?? $experience->jobType;
-        $experience->companyName = $request->companyName ?? $experience->companyName;
-        $experience->location = $request->location ?? $experience->location;
-        $experience->locationType = $request->locationType ?? $experience->locationType;
-        $experience->start_date = $request->start_date ?? $experience->start_date;
-        $experience->end_date = $request->end_date ?? $experience->end_date;
-        $experience->description = $request->description ?? $experience->description;
-        $experience->save();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Experience updated successfully',
-            'data' => $experience
-        ], 200);
     }
     
 }

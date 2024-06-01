@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function show()
     {
-        $user = Auth::user()->load('education');
+        $user = Auth::user()->load('education', 'experience');
         return response()->json($user, 200);
     }
     public function createUser(Request $request)
@@ -138,7 +138,7 @@ class UserController extends Controller
             ], 401);
         }
     
-        $data = $request->only('name', 'phoneNumber', 'nationality', 'state', 'city', 'education', 'major', 'experience');
+        $data = $request->only('name', 'phoneNumber','gender', 'nationality', 'state', 'city', 'major');
 
         if($request->hasFile('profilePic')){
             $profilePic = $request->file('profilePic');
@@ -188,7 +188,7 @@ class UserController extends Controller
             ], 401);
         }
 
-        $data = $request->only('name', 'phoneNumber', 'nationality', 'state', 'city', 'major', 'experience');
+        $data = $request->only('name', 'phoneNumber', 'gender', 'nationality', 'state', 'city', 'major');
         
         if($request->hasFile('resume')){
             $resume = $request->file('resume');
@@ -197,10 +197,7 @@ class UserController extends Controller
             $data['resume'] = asset('resume/'.$resumeName);
         }
 
-        $user->updateOrCreate(
-            ['id' => $user->id],
-            $data
-        );
+        $user->update($data);
 
         return response()->json([
             'status' => true,

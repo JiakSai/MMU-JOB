@@ -73,12 +73,7 @@ class EducationController extends Controller
         // If validation passes
         $education = Education::find($id);
         if($education && $education->user_id == $user->id) {
-            $education->school = $request->get('school', $education->school);
-            $education->degree = $request->get('degree', $education->degree);
-            $education->startDate = $request->get('startDate', $education->startDate);
-            $education->endDate = $request->get('endDate', $education->endDate);
-            $education->grade = $request->get('grade', $education->grade);
-            $education->save();
+            $education->update($request->all());
 
             return response()->json([
                 'status' => true,
