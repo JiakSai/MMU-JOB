@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function show()
+    {
+        $user = Auth::user()->load('education');
+        return response()->json($user, 200);
+    }
     public function createUser(Request $request)
     {
         try {
@@ -119,7 +124,9 @@ class UserController extends Controller
             'phoneNumber' => 'sometimes | required',
             'nationality' => 'sometimes | required',
             'state' => 'sometimes | required',
-            'education'=> 'sometimes | required',
+            'city' => 'sometimes | required',
+            'education.university_name' => 'sometimes|required',
+            'education.education_level' => 'sometimes|required',
             'major' => 'sometimes | required',
             'experience' => 'sometimes | required',
             'resume' => 'sometimes | required | mimes:pdf',
@@ -132,8 +139,8 @@ class UserController extends Controller
                 'errors' => $validateUser->errors()
             ], 401);
         }
-
-        $data = $request->only('name', 'phoneNumber', 'nationality', 'state', 'education', 'major', 'experience');
+    
+        $data = $request->only('name', 'phoneNumber', 'nationality', 'state', 'city', 'education', 'major', 'experience');
 
         if($request->hasFile('profilePic')){
             $profilePic = $request->file('profilePic');
@@ -169,6 +176,7 @@ class UserController extends Controller
             'phoneNumber' => 'required',
             'nationality' => 'required',
             'state' => 'required',
+            'city' => 'required',
             'major' => 'required',
             'experience' => 'sometimes',
             'resume' => 'sometimes | mimes:pdf',
@@ -182,7 +190,7 @@ class UserController extends Controller
             ], 401);
         }
 
-        $data = $request->only('name', 'phoneNumber', 'nationality', 'state', 'major', 'experience');
+        $data = $request->only('name', 'phoneNumber', 'nationality', 'state', 'city', 'major', 'experience');
         
         if($request->hasFile('resume')){
             $resume = $request->file('resume');

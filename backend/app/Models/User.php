@@ -25,6 +25,7 @@ class User extends Authenticatable
         'phoneNumber',
         'nationality',
         'state',
+        'city',
         'major',
         'experience',
         'resume',
@@ -51,5 +52,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function education()
+    {
+        return $this->hasMany('App\Models\Education');
+    }
+
+    public function experience()
+    {
+        return $this->hasMany('App\Models\Experience');
     }
 }

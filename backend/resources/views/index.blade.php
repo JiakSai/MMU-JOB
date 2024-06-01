@@ -46,6 +46,8 @@
             @endforeach --}}
         </tbody>
     </table>
+    <label for="start-date">Start Date:</label>
+    <input type="month" id="start-date" name="startDate">
 
 </body>
 </html>

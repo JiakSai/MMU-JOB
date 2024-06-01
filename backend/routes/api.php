@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\EducationController;
+use App\Http\Controllers\ExperienceController;
 
 //Public
 Route::get('/ShowUserAndCompany',[EmployerController::class, 'showUserAndCompany']);
@@ -20,6 +22,11 @@ Route::post('/UserLogin', [UserController::class, 'loginUser']);
 Route::middleware(['auth:sanctum', 'user'])->group(function(){
     Route::patch('/UserFinishSignup', [UserController::class, 'finishSignup']);
     Route::patch('/UserUpdate', [UserController::class, 'updateUser']);
+    Route::get('/ShowUserProfile', [UserController::class, 'show']);
+    Route::post('/AddEducation', [EducationController::class, 'store']);
+    Route::patch('/UpdateEducation/{id}', [EducationController::class, 'update']);
+    Route::post('/AddExperience', [ExperienceController::class, 'store']);
+    Route::patch('/UpdateExperience/{id}', [ExperienceController::class, 'update']);
     Route::get('/UserLogout', [UserController::class, 'logoutUser']);
 });
 
