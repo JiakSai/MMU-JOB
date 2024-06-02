@@ -35,7 +35,7 @@ const UserProfile = () => {
                     <p>{value.locationType}</p>
                     <div className='flex gap-2'>
                         <p>{value.startDateMonth}</p>
-                        <p>{value.startDateYear}</p>
+                        <p>/{value.startDateYear}</p>
                     </div>
                     <div className='flex gap-2'>
                         <p>{value.endDateMonth}</p>
