@@ -5,18 +5,35 @@ import profilePic from './photo/profilePic1.svg';
 import addInfo from './photo/addInfo.svg';
 import Cookies from 'js-cookie';
 import { AddRole } from './popUp-Components/addRole.jsx';
+import { MdOutlineEdit } from "react-icons/md";
+
 const UserProfile = () => {
     const [showAddRole, setShowAddRole] = useState(false);
-    const [showAddEducation, setShowAddEducation] = useState(false);
+    const [selectedRole, setSelectedRole] = useState(null); // New state for selected role
     const [roleValues, setRoleValues] = useState([]);
 
+    const handleEditClick = (role) => {
+        setSelectedRole(role); // Set the role to be edited
+        setShowAddRole(true);
+    };
+
+    const handleAddRoleClick = () => {
+        setSelectedRole(null); // Reset selected role when adding a new one
+        setShowAddRole(true);
+    };
+
+    const handleClose = () => {
+        setShowAddRole(false);
+        setSelectedRole(null); // Clear selected role on close
+    };
+
     useEffect(() => {
-        if (showAddRole || showAddEducation) {
+        if (showAddRole) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'unset';
         }
-    }, [showAddRole, showAddEducation]);
+    }, [showAddRole]);
 
     useEffect(() => {
         const token = Cookies.get('token');
@@ -31,77 +48,51 @@ const UserProfile = () => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Data:', data);
             if (data && Array.isArray(data.experience)) {
                 setRoleValues(data.experience);
             } else {
-                console.error('Experience data is not an array:', data.experience);
                 setRoleValues([]);
             }
         })
         .catch(error => console.error('Error:', error));
     }, []);
-    
-    
-    
+
     const myConstants = [
         {
             title: "Career History",
             value: "Add a personal summary to your profile as a way to introduce who you are",
             button: "Add role",
             userValue: roleValues,
-            action: () => setShowAddRole(true),
+            action: handleAddRoleClick,
             renderFunction: (value) => (
-                <div className='border border-black px-4 py-1 '>
-                    <p>{value.title}</p>
-                    <div className='flex '>
-                        <span>{value.companyName}</span>
-                        <span className='font-bold mx-[5px]'>·</span>
-                        <span>{value.jobType}</span>
+                <div className='border border-black px-4 py-2 w-[460px] flex justify-between'>
+                    <div>
+                        <p className='font-semibold text-lg text-gray-900'>{value.title}</p>
+                        <div className='text-sm text-gray-900 font-light'>
+                            <span>{value.companyName}</span>
+                            <span className='font-bold mx-[5px]'>·</span>
+                            <span>{value.jobType}</span>
+                        </div>
+                        <div className='text-sm text-gray-500 font-light'>
+                            <span>{value.startDate}</span>
+                            <span className=' mx-[5px]'>-</span>
+                            <span>{value.endDate}</span>
+                        </div>
+                        <div className='text-sm text-gray-500 font-light'>
+                            <span>{value.location}</span>
+                            <span className='font-bold mx-[5px]'>·</span>
+                            <span>{value.locationType}</span>
+                        </div>
+                        <p className='text-base text-gray-900 font-light mt-[5px]'>{value.description}</p>
                     </div>
                     <div>
-                        <span>{value.startDate}</span>
-                        <span className=' mx-[5px]'>-</span>
-                        <span>{value.endDate}</span>
+                        <MdOutlineEdit onClick={() => handleEditClick(value)} />
                     </div>
-                    <div>
-                        <span>{value.location}</span>
-                        <span className='font-bold mx-[5px]'>·</span>
-                        <span>{value.locationType}</span>
-                    </div>
-                    <p>{value.description}</p>
                 </div>
             )
         },
-        {
-            title: "Education",
-            value: "Tell employers about your education.",
-            button: "Add education",
-            userValue: [],
-            action: () => setShowAddEducation(true),
-        },
-        {
-            title: "Resume",
-            value: "Upload a resumé for easy applying and access no matter where you are.",
-            button: "Add resume",
-            userValue: [],
-            action: () => {},
-            renderFunction: () => null 
-        },
-        {
-            title: "Skills",
-            value: "Add your skills to show employers what you're good at",
-            button: "Add Skills",
-            userValue: [],
-            action: () => {},
-            renderFunction: () => null
-        },
+        // Other sections...
     ];
-
-    const handleAddRoleClose = () => {
-        setShowAddRole(false);
-    };
-    
 
     return (
         <>
@@ -146,17 +137,10 @@ const UserProfile = () => {
                         ))}
                         {showAddRole && (
                             <AddRole
-                                onClose={handleAddRoleClose} 
+                                onClose={handleClose} 
+                                role={selectedRole}
                             />
                         )}
-                        <div>
-                            <h2>User Profile</h2>
-                            {roleValues.map((role, index) => (
-                                <div key={index}>
-                                    {/* <p>Role: {role.experience.jobTitle}</p> */}
-                                </div>
-                            ))}
-                        </div>
                     </div>
                     <img src={addInfo} alt="addInfo" className='w-[656px] h-[480px] ml-[260px] mt-[50px]' />
                 </div>

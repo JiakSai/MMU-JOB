@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from "js-cookie";
 
-export function AddRole({onClose}) {
+export function AddRole({ onClose, role }) {
     const [roleValue, setRoleValue] = useState({
         title: "",
         companyName: "",
@@ -17,6 +17,27 @@ export function AddRole({onClose}) {
         description: "",
     });
 
+    useEffect(() => {
+        if (role) {
+            const [startMonth, startYear] = role.startDate.split(" ");
+            const [endMonth, endYear] = role.endDate.split(" ");
+            setRoleValue({
+                title: role.title,
+                companyName: role.companyName,
+                location: role.location,
+                locationType: role.locationType,
+                jobType: role.jobType,
+                startDate: role.startDate,
+                startDateMonth: startMonth,
+                startDateYear: startYear,
+                endDate: role.endDate,
+                endDateMonth: endMonth,
+                endDateYear: endYear,
+                description: role.description,
+            });
+        }
+    }, [role]);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const token = Cookies.get('token');
@@ -25,24 +46,30 @@ export function AddRole({onClose}) {
             return;
         }
 
-        console.log('Token:', token); 
         try {
-            const response = await axios.post('http://localhost:8000/api/AddExperience', roleValue, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            });
+            let response;
+            if (role) {
+                response = await axios.patch(`http://localhost:8000/api/UpdateExperience/${role.id}`, roleValue, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+            } else {
+                response = await axios.post('http://localhost:8000/api/AddExperience', roleValue, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+            }
             onClose();
             console.log('Response:', response.data);
         } catch (error) {
             if (error.response) {
-                console.log('Error response:', error.response); // Log the error response
-                if (error.response.data && error.response.data.errors) {
-                    setErrors(error.response.data.errors);
-                }
+                console.log('Error response:', error.response);
             } else {
-                console.error('Error adding experience:', error);
+                console.error('Error adding/updating experience:', error);
             }
         }
     };
@@ -50,19 +77,19 @@ export function AddRole({onClose}) {
     const handleInput = (event) => {
         const { name, value } = event.target;
         let updatedRoleValue = { ...roleValue, [name]: value };
-    
+
         if (name === 'startDateMonth' || name === 'startDateYear') {
             if (updatedRoleValue.startDateMonth && updatedRoleValue.startDateYear) {
-                updatedRoleValue.startDate = (updatedRoleValue.startDateMonth + " " + updatedRoleValue.startDateYear);
+                updatedRoleValue.startDate = `${updatedRoleValue.startDateMonth} ${updatedRoleValue.startDateYear}`;
             }
         }
-        
+
         if (name === 'endDateMonth' || name === 'endDateYear') {
             if (updatedRoleValue.endDateMonth && updatedRoleValue.endDateYear) {
-                updatedRoleValue.endDate = (updatedRoleValue.endDateMonth + " " + updatedRoleValue.endDateYear);
+                updatedRoleValue.endDate = `${updatedRoleValue.endDateMonth} ${updatedRoleValue.endDateYear}`;
             }
         }
-    
+
         setRoleValue(updatedRoleValue);
     };
 
@@ -72,12 +99,12 @@ export function AddRole({onClose}) {
     return (
         <div className="addrole fixed inset-0 flex items-center justify-end bg-black bg-opacity-50">
             <div className="bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full overflow-y-auto z-2001">
-                <button onClick={() => onClose(null)} className='absolute top-2 right-2 text-xl font-bold'>
+                <button onClick={onClose} className='absolute top-2 right-2 text-xl font-bold'>
                     &times;
                 </button>
                 <div className="py-4 px-6 bg-white">
                     <form onSubmit={handleSubmit} className='flex flex-col gap-6'>
-                        <h1 className="text-2xl font-bold mb-4">Add Role</h1>
+                        <h1 className="text-2xl font-bold mb-4">{role ? "Edit Role" : "Add Role"}</h1>
                         <label>Job title</label>
                         <input
                             type="text"
@@ -86,8 +113,7 @@ export function AddRole({onClose}) {
                             value={roleValue.title}
                             onChange={handleInput}
                         />
-                       
-                        
+
                         <label>Company name</label>
                         <input
                             type="text"
@@ -96,8 +122,7 @@ export function AddRole({onClose}) {
                             value={roleValue.companyName}
                             onChange={handleInput}
                         />
-                       
-                        
+
                         <label>Company location</label>
                         <input
                             type="text"
@@ -106,7 +131,7 @@ export function AddRole({onClose}) {
                             value={roleValue.location}
                             onChange={handleInput}
                         />
-                        
+
                         <label>Location type</label>
                         <input
                             type="text"
@@ -115,6 +140,7 @@ export function AddRole({onClose}) {
                             value={roleValue.locationType}
                             onChange={handleInput}
                         />
+
                         <label>Job type</label>
                         <input
                             type="text"
@@ -123,7 +149,7 @@ export function AddRole({onClose}) {
                             value={roleValue.jobType}
                             onChange={handleInput}
                         />
-                        
+
                         <label>Started date</label>
                         <div className='flex gap-2 relative z-10'>
                             <select
@@ -145,7 +171,7 @@ export function AddRole({onClose}) {
                                 {years.map((year, index) => <option key={index} value={year}>{year}</option>)}
                             </select>
                         </div>
-                        
+
                         <label>Ended date</label>
                         <div className='flex gap-2 relative z-10'>
                             <select
@@ -167,7 +193,7 @@ export function AddRole({onClose}) {
                                 {years.map((year, index) => <option key={index} value={year}>{year}</option>)}
                             </select>
                         </div>
-                        
+
                         <label>Description</label>
                         <p>Summarize your responsibilities, skills, and achievements.</p>
                         <textarea
@@ -177,7 +203,7 @@ export function AddRole({onClose}) {
                             onChange={handleInput}
                             rows={5}
                         />
-                       
+
                         <button type="submit" className='mt-4 bg-blue-500 text-white p-2 rounded'>Submit</button>
                     </form>
                 </div>
