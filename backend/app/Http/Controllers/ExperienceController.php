@@ -19,8 +19,8 @@ class ExperienceController extends Controller
             'companyName' => 'required',
             'location' => 'required',
             'locationType' => 'required',
-            'startDate' => 'required|date_format:m-Y',
-            'endDate' => 'required|date_format:m-Y|after:startDate',
+            'startDate' => 'required|date_format:F Y',
+            'endDate' => 'required|date_format:F Y|after:startDate',
             'description' => 'sometimes|min:5',
         ]);
 
@@ -56,14 +56,14 @@ class ExperienceController extends Controller
         $user = $request->user();
 
         $validator = Validator::make($request->all(), [
-            'title' => 'sometimes | required',
-            'jobType' => 'sometimes | required',
-            'companyName' => 'sometimes | required',
-            'location' => 'sometimes | required',
-            'locationType' => 'sometimes | required',
-            'startDate' => 'sometimes | required | date_format:m-Y',
-            'endDate' => 'sometimes | required | date_format:m-Y | after:startDate',
-            'description' => 'sometimes | min:5',
+            'title' => 'sometimes|required',
+            'jobType' => 'sometimes|required',
+            'companyName' => 'sometimes|required',
+            'location' => 'sometimes|required',
+            'locationType' => 'sometimes|required',
+            'startDate' => 'sometimes|required|date_format:F Y',
+            'endDate' => 'sometimes|required|date_format:F Y|after:startDate',
+            'description' => 'sometimes|min:5',
         ]);
 
         if ($validator->fails()) {

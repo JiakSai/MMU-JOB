@@ -9,6 +9,7 @@ use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\ApplicationController;
 
 //Public
 Route::get('/ShowUserAndCompany',[EmployerController::class, 'showUserAndCompany']);
@@ -27,6 +28,7 @@ Route::middleware(['auth:sanctum', 'user'])->group(function(){
     Route::patch('/UpdateEducation/{id}', [EducationController::class, 'update']);
     Route::post('/AddExperience', [ExperienceController::class, 'store']);
     Route::patch('/UpdateExperience/{id}', [ExperienceController::class, 'update']);
+    Route::post('/ApplyJob', [ApplicationController::class, 'store']);
     Route::get('/UserLogout', [UserController::class, 'logoutUser']);
 });
 

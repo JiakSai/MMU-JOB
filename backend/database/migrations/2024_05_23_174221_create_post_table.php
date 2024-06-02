@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id');
             // $table->unsignedInteger('company_category_id');
-            $table->string('job_title', 50);
-            $table->string('job_type', 20);
-            $table->string('salary', 30);
+            $table->string('job_title');
+            $table->string('job_type');
+            $table->string('salary');
             $table->string('job_location');
             $table->string('education_level');
             $table->string('experience');

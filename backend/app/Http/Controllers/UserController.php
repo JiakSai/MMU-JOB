@@ -119,15 +119,16 @@ class UserController extends Controller
 
         $validate = Validator::make($request->all(),
         [
-            'name' => 'sometimes | required',
-            'profilePic' => 'sometimes | required | mimes:jpeg,jpg,png',
-            'phoneNumber' => 'sometimes | required',
-            'gender' => 'sometimes | required',
-            'nationality' => 'sometimes | required',
-            'state' => 'sometimes | required',
-            'city' => 'sometimes | required',
-            'major' => 'sometimes | required',
-            'resume' => 'sometimes | required | mimes:pdf',
+            'name' => 'sometimes|required',
+            'profilePic' => 'sometimes|required|mimes:jpeg,jpg,png',
+            'phoneNumber' => 'sometimes|required',
+            'gender' => 'sometimes|required',
+            'nationality' => 'sometimes|required',
+            'state' => 'sometimes|required',
+            'city' => 'sometimes|required',
+            'major' => 'sometimes|required',
+            'skills' => 'sometimes|required',
+            'resume' => 'sometimes|required|mimes:pdf',
         ]);
         
         if($validate->fails()){
@@ -138,7 +139,7 @@ class UserController extends Controller
             ], 401);
         }
     
-        $data = $request->only('name', 'phoneNumber','gender', 'nationality', 'state', 'city', 'major');
+        $data = $request->only('name', 'phoneNumber','gender', 'nationality', 'state', 'city', 'major', 'skills');
 
         if($request->hasFile('profilePic')){
             $profilePic = $request->file('profilePic');
@@ -177,7 +178,8 @@ class UserController extends Controller
             'state' => 'required',
             'city' => 'required',
             'major' => 'required',
-            'resume' => 'sometimes | mimes:pdf',
+            'skills' => 'sometimes',
+            'resume' => 'sometimes|mimes:pdf',
         ]);
 
         if($validate->fails()){
@@ -188,7 +190,7 @@ class UserController extends Controller
             ], 401);
         }
 
-        $data = $request->only('name', 'phoneNumber', 'gender', 'nationality', 'state', 'city', 'major');
+        $data = $request->only('name', 'phoneNumber', 'gender', 'nationality', 'state', 'city', 'major', 'skills');
         
         if($request->hasFile('resume')){
             $resume = $request->file('resume');

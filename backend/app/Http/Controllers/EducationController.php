@@ -18,8 +18,8 @@ class EducationController extends Controller
         [
             'school' => 'required',
             'degree' => 'required',
-            'startDate' => 'required|date_format:m-Y' ,
-            'endDate' => 'required|date_format:m-Y|after:startDate',
+            'startDate' => 'required|date_format:F Y' ,
+            'endDate' => 'required|date_format:F Y|after:startDate',
             'grade' => 'required',
         ]);
 
@@ -55,11 +55,11 @@ class EducationController extends Controller
 
         $validate = Validator::make($request->all(), 
         [
-            'school' => 'sometimes | required',
-            'degree' => 'sometimes | required',
-            'startDate' => 'sometimes | required | date_format:m-Y',
-            'endDate' => 'sometimes | required | date_format:m-Y | after:startDate',
-            'grade' => 'sometimes | required',
+            'school' => 'sometimes|required',
+            'degree' => 'sometimes|required',
+            'startDate' => 'sometimes|required|date_format:F Y',
+            'endDate' => 'sometimes|required|date_format:F Y|after:startDate',
+            'grade' => 'sometimes|required',
         ]);
 
         if($validate->fails()){
