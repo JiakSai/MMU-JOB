@@ -1,41 +1,96 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import profilePic from './photo/profilePic1.svg';
 import addInfo from './photo/addInfo.svg';
-import{ AddRole}  from './popUp-Components/addRole.jsx';
+import { AddRole } from './popUp-Components/addRole.jsx';
+// import { AddEducation } from './popUp-Components/addEducation.jsx';
 
 const UserProfile = () => {
     const [showAddRole, setShowAddRole] = useState(false);
+    const [showAddEducation, setShowAddEducation] = useState(false);
+    const [roleValues, setRoleValues] = useState([]);
+    const [educationValues, setEducationValues] = useState([]);
+
+    useEffect(() => {
+        if (showAddRole || showAddEducation) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+    }, [showAddRole, showAddEducation]);
+
     const myConstants = [
         {
             title: "Career History",
             value: "Add a personal summary to your profile as a way to introduce who you are",
             button: "Add role",
-            action: () => setShowAddRole(true)
+            userValue: roleValues,
+            action: () => setShowAddRole(true),
+            renderFunction: (value) => (
+                <div>
+                    <p>{value.jobTitle}</p>
+                    <p>{value.companyName}</p>
+                    <p>{value.location}</p>
+                    <p>{value.locationType}</p>
+                    <div className='flex gap-2'>
+                        <p>{value.startDateMonth}</p>
+                        <p>{value.startDateYear}</p>
+                    </div>
+                    <div className='flex gap-2'>
+                        <p>{value.endDateMonth}</p>
+                        <p>{value.endDateYear}</p>
+                    </div>
+                </div>
+            )
         },
         {
             title: "Education",
             value: "Tell employers about your education.",
-            button: "Add education"
+            button: "Add education",
+            userValue: educationValues,
+            action: () => setShowAddEducation(true),
+            renderFunction: (value) => (
+                <div>
+                    <p>{value.degree}</p>
+                    <p>{value.institution}</p>
+                    <p>{value.location}</p>
+                    <p>{value.startDate}</p>
+                    <p>{value.endDate}</p>
+                </div>
+            )
         },
         {
             title: "Resume",
             value: "Upload a resumé for easy applying and access no matter where you are.",
-            button: "Add education"
+            button: "Add resume",
+            userValue: [],
+            action: () => {},
+            renderFunction: () => null 
         },
         {
             title: "Skills",
             value: "Add your skills to show employers what you're good at",
-            button: "Add Skills"
+            button: "Add Skills",
+            userValue: [],
+            action: () => {},
+            renderFunction: () => null
         },
     ];
-    const [roleValue, setRoleValue] = useState('');
-    const handleAddRoleClose = (value) => {
+
+    const handleAddRoleClose = (newRoleValue) => {
         setShowAddRole(false);
-        if (value) {
-            setRoleValue(value);
-            console.log(value);
+        if (newRoleValue) {
+            setRoleValues([...roleValues, newRoleValue]);
+            console.log(newRoleValue);
+        }
+    };
+
+    const handleAddEducationClose = (newEducationValue) => {
+        setShowAddEducation(false);
+        if (newEducationValue) {
+            setEducationValues([...educationValues, newEducationValue]);
+            console.log(newEducationValue);
         }
     };
 
@@ -68,16 +123,37 @@ const UserProfile = () => {
                         {myConstants.map((item, index) => (
                             <div key={index} className='mb-[25px]'>
                                 <h1 className='font-bold text-[26px]'>{item.title}</h1>
-                                <p className='text-lg'>{item.value}</p>
+                                {item.userValue && item.userValue.length > 0 ? 
+                                    item.userValue.map((value, idx) => (
+                                        <div key={idx}>
+                                            {item.renderFunction(value)}
+                                        </div>
+                                    ))
+                                    :
+                                    <p className='text-lg'>{item.value}</p> 
+                                }
                                 <button onClick={item.action} className='text-lg border border-black px-4 py-1 mt-[12.5px]'>{item.button}</button>
                             </div>
                         ))}
-                        {showAddRole && <AddRole onClose={handleAddRoleClose} />}
-
-                        {/* 显示用户角色信息 */}
+                        {showAddRole && (
+                            <AddRole 
+                                roleValue={{}} 
+                                onClose={handleAddRoleClose} 
+                            />
+                        )}
+                        {showAddEducation && (
+                            <AddEducation 
+                                educationValue={{}} 
+                                onClose={handleAddEducationClose} 
+                            />
+                        )}
                         <div>
                             <h2>User Profile</h2>
-                            <p>Role: {roleValue}</p>
+                            {roleValues.map((role, index) => (
+                                <div key={index}>
+                                    <p>Role: {role.jobTitle}</p>
+                                </div>
+                            ))}
                         </div>
                     </div>
                     <img src={addInfo} alt="addInfo" className='w-[656px] h-[480px] ml-[260px] mt-[50px]' />

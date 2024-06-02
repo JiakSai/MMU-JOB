@@ -10,7 +10,7 @@ const SearchBar = () =>{
   var numF = 0, numS = 0, numSt = 0, numJ = 0, numE = 0;
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/job-categories')
+    axios.get('http://localhost:8000/api/JobCategories')
       .then(response => {
         setApi(response.data);
       })
