@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginphoto from './photo/ZombieingDoodle.png';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import axios from 'axios';
 import Footer from './Footer.jsx';
+import Cookies from 'js-cookie';
 
 export default function UserLogin() {
+    const navigate = useNavigate();
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [loginPost, setLoginPost] = useState({
         email: '',
@@ -55,6 +57,10 @@ export default function UserLogin() {
         axios.post('http://localhost:8000/api/UserLogin', loginPost)
             .then(response => {
                 console.log(response);
+                const token = response.data.token; 
+                    Cookies.set('token', token); 
+                    console.log(token);
+                    navigate('/SearchJob');
             })
             .catch(error => {
                 console.log(error);

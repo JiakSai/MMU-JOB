@@ -8,6 +8,7 @@ import JobDetails from "./jobDetails.jsx";
 import JobList from "./jobList.jsx";
 import SearchBar from "./searchBar.jsx";
 import{ AddRole}  from './popUp-Components/addRole.jsx';
+import SearchJob from "./searchJob.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const router = createBrowserRouter([
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: "AddRole",
     element: <AddRole />,
+  },
+  {
+    path: "SearchJob",
+    element: <SearchJob />,
   },
 ]);
 
