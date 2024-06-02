@@ -3,14 +3,12 @@ import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import profilePic from './photo/profilePic1.svg';
 import addInfo from './photo/addInfo.svg';
+import Cookies from 'js-cookie';
 import { AddRole } from './popUp-Components/addRole.jsx';
-// import { AddEducation } from './popUp-Components/addEducation.jsx';
-
 const UserProfile = () => {
     const [showAddRole, setShowAddRole] = useState(false);
     const [showAddEducation, setShowAddEducation] = useState(false);
     const [roleValues, setRoleValues] = useState([]);
-    const [educationValues, setEducationValues] = useState([]);
 
     useEffect(() => {
         if (showAddRole || showAddEducation) {
@@ -20,6 +18,32 @@ const UserProfile = () => {
         }
     }, [showAddRole, showAddEducation]);
 
+    useEffect(() => {
+        const token = Cookies.get('token');
+        if (!token) {
+            console.error('No token found');
+            return;
+        }
+        fetch('http://localhost:8000/api/ShowUserProfile', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Data:', data);
+            if (data && Array.isArray(data.experience)) {
+                setRoleValues(data.experience);
+            } else {
+                console.error('Experience data is not an array:', data.experience);
+                setRoleValues([]);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }, []);
+    
+    
+    
     const myConstants = [
         {
             title: "Career History",
@@ -28,19 +52,24 @@ const UserProfile = () => {
             userValue: roleValues,
             action: () => setShowAddRole(true),
             renderFunction: (value) => (
-                <div>
-                    <p>{value.jobTitle}</p>
-                    <p>{value.companyName}</p>
-                    <p>{value.location}</p>
-                    <p>{value.locationType}</p>
-                    <div className='flex gap-2'>
-                        <p>{value.startDateMonth}</p>
-                        <p>/{value.startDateYear}</p>
+                <div className='border border-black px-4 py-1 '>
+                    <p>{value.title}</p>
+                    <div className='flex '>
+                        <span>{value.companyName}</span>
+                        <span className='font-bold mx-[5px]'>·</span>
+                        <span>{value.jobType}</span>
                     </div>
-                    <div className='flex gap-2'>
-                        <p>{value.endDateMonth}</p>
-                        <p>{value.endDateYear}</p>
+                    <div>
+                        <span>{value.startDate}</span>
+                        <span className=' mx-[5px]'>-</span>
+                        <span>{value.endDate}</span>
                     </div>
+                    <div>
+                        <span>{value.location}</span>
+                        <span className='font-bold mx-[5px]'>·</span>
+                        <span>{value.locationType}</span>
+                    </div>
+                    <p>{value.description}</p>
                 </div>
             )
         },
@@ -48,17 +77,8 @@ const UserProfile = () => {
             title: "Education",
             value: "Tell employers about your education.",
             button: "Add education",
-            userValue: educationValues,
+            userValue: [],
             action: () => setShowAddEducation(true),
-            renderFunction: (value) => (
-                <div>
-                    <p>{value.degree}</p>
-                    <p>{value.institution}</p>
-                    <p>{value.location}</p>
-                    <p>{value.startDate}</p>
-                    <p>{value.endDate}</p>
-                </div>
-            )
         },
         {
             title: "Resume",
@@ -78,21 +98,10 @@ const UserProfile = () => {
         },
     ];
 
-    const handleAddRoleClose = (newRoleValue) => {
+    const handleAddRoleClose = () => {
         setShowAddRole(false);
-        if (newRoleValue) {
-            setRoleValues([...roleValues, newRoleValue]);
-            console.log(newRoleValue);
-        }
     };
-
-    const handleAddEducationClose = (newEducationValue) => {
-        setShowAddEducation(false);
-        if (newEducationValue) {
-            setEducationValues([...educationValues, newEducationValue]);
-            console.log(newEducationValue);
-        }
-    };
+    
 
     return (
         <>
@@ -121,37 +130,30 @@ const UserProfile = () => {
                 <div className='mx-[120px] mt-[120px] mb-[40px] flex'>
                     <div>
                         {myConstants.map((item, index) => (
-                            <div key={index} className='mb-[25px]'>
-                                <h1 className='font-bold text-[26px]'>{item.title}</h1>
-                                {item.userValue && item.userValue.length > 0 ? 
+                            <div key={index} className='mb-[40px]'>
+                                <h1 className='font-bold text-[26px] mb-[30px]'>{item.title}</h1>
+                                {Array.isArray(item.userValue) && item.userValue.length > 0 ? 
                                     item.userValue.map((value, idx) => (
-                                        <div key={idx}>
+                                        <div key={idx} className='mb-[10px]'>
                                             {item.renderFunction(value)}
                                         </div>
                                     ))
                                     :
                                     <p className='text-lg'>{item.value}</p> 
                                 }
-                                <button onClick={item.action} className='text-lg border border-black px-4 py-1 mt-[12.5px]'>{item.button}</button>
+                                <button onClick={item.action} className='text-lg border border-black px-4 py-1 mt-[10px]'>{item.button}</button>
                             </div>
                         ))}
                         {showAddRole && (
-                            <AddRole 
-                                roleValue={{}} 
+                            <AddRole
                                 onClose={handleAddRoleClose} 
-                            />
-                        )}
-                        {showAddEducation && (
-                            <AddEducation 
-                                educationValue={{}} 
-                                onClose={handleAddEducationClose} 
                             />
                         )}
                         <div>
                             <h2>User Profile</h2>
                             {roleValues.map((role, index) => (
                                 <div key={index}>
-                                    <p>Role: {role.jobTitle}</p>
+                                    {/* <p>Role: {role.experience.jobTitle}</p> */}
                                 </div>
                             ))}
                         </div>
