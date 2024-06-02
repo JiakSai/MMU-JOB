@@ -28,6 +28,7 @@ class User extends Authenticatable
         'state',
         'city',
         'major',
+        'skills',
         'resume',
     ];
 
@@ -62,5 +63,10 @@ class User extends Authenticatable
     public function experience()
     {
         return $this->hasMany('App\Models\Experience');
+    }
+
+    public function applications()
+    {
+        return $this->hasMany('App\Models\Application');
     }
 }

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('state')->nullable();
             $table->string('city')->nullable();
             $table->string('major')->nullable();
+            $table->string('skills')->nullable();
             $table->string('resume')->nullable();
             $table->rememberToken();
             $table->timestamps();
