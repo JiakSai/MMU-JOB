@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use App\Models\Employer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,6 +28,54 @@ class EmployerController extends Controller
             'employer' => $employer,
         ]);
     }
+
+    public function showApplications()
+    {
+        $employer = Auth::guard('employer')->user();
+        $applications = $employer->applications()->with('user', 'user.experience', 'user.education' ,'post')->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $applications
+        ], 200);
+    }
+
+    public function updateApplicationStatus(Request $request, $id)
+    {
+        $application = Application::find($id);
+
+        // Check if application exists
+        if (!$application) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Application not found'
+            ], 404);
+        }
+
+        // Check if the employer is authorized to update the application
+        if ($application->employer_id != Auth::guard('employer')->id()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        // Validate the request
+        $request->validate([
+            'status' => 'required|in:Accepted,Rejected'
+        ]);
+
+        // Update the application status
+        $application->status = $request->status;
+        $application->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Application status updated',
+            'application' => $application
+        ], 200);
+    }
+    
     public function createEmployer(Request $request)
     {
         try {

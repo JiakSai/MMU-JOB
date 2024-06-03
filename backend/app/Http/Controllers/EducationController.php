@@ -87,4 +87,25 @@ class EducationController extends Controller
             ], 404);
         }
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $user = $request->user();
+
+        $education = Education::find($id);
+        
+        if($education && $education->user_id == $user->id) {
+            $education->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Education Deleted Successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Education not found or not owned by the user',
+            ], 404);
+        }
+    }
 }

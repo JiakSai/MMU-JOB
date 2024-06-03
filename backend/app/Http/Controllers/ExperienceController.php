@@ -21,7 +21,7 @@ class ExperienceController extends Controller
             'locationType' => 'required',
             'startDate' => 'required|date_format:F Y',
             'endDate' => 'required|date_format:F Y|after:startDate',
-            'description' => 'sometimes|min:5',
+            'description' => 'sometimes',
         ]);
 
         if ($validator->fails()) {
@@ -63,7 +63,7 @@ class ExperienceController extends Controller
             'locationType' => 'sometimes|required',
             'startDate' => 'sometimes|required|date_format:F Y',
             'endDate' => 'sometimes|required|date_format:F Y|after:startDate',
-            'description' => 'sometimes|min:5',
+            'description' => 'sometimes',
         ]);
 
         if ($validator->fails()) {
@@ -82,6 +82,27 @@ class ExperienceController extends Controller
                 'status' => true,
                 'message' => 'Experience Updated Successfully',
                 'data' => $experience
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Experience not found or not owned by the user',
+            ], 404);
+        }
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $user = $request->user();
+        
+        $experience = Experience::find($id);
+
+        if($experience && $experience->user_id == $user->id){
+            $experience->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Experience deleted successfully',
             ], 200);
         } else {
             return response()->json([
