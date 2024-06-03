@@ -1,5 +1,5 @@
-import JobList from "./jobList.jsx";
-import SearchBar from './searchBar.jsx';
+import JobList from "./jobSearch-components/jobList.jsx";
+import SearchBar from './jobSearch-components/searchBar.jsx';
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
 const SearchJob = () =>{

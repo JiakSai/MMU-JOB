@@ -29,6 +29,9 @@ function Header() {
             navigate('/userLogin');
         }
     };
+    const handleLogout = () => {
+        Cookies.remove('token');
+    };
 
     return (
         <header>
@@ -53,7 +56,7 @@ function Header() {
                                 <li><a href="#">Job application</a></li>
                                 <li><a href="#">Recommended Job</a></li>
                                 <li><a href="#">Setting</a></li>
-                                <li style={{ color: 'red' }}><a href="#">Logout</a></li>
+                                <li style={{ color: 'red' }}><a href="#" onClick={handleLogout}>Logout</a></li>
                             </ul>
                         )}
                     </li>
@@ -80,7 +83,7 @@ function Header() {
                                         <li><a href="#">Job application</a></li>
                                         <li><a href="#">Recommended Job</a></li>
                                         <li><a href="#">Setting</a></li>
-                                        <li style={{ color: 'red' }}><a href="#">Logout</a></li>
+                                        <li style={{ color: 'red' }}><a href="#" onClick={handleLogout}>Logout</a></li>
                                     </ul>
                                 )}
                             </li>

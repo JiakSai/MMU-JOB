@@ -64,6 +64,7 @@ const UserProfile = () => {
         })
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             if (data && Array.isArray(data.experience)) {
                 setRoleValues(data.experience);
             } else {
@@ -74,7 +75,6 @@ const UserProfile = () => {
             } else {
                 setEducationValues([]);
             }
-            console.log(data);
         })
         .catch(error => console.error('Error:', error));
     }, []);

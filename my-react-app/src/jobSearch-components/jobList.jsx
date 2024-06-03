@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IoBookmarkOutline } from "react-icons/io5";
 import { LiaAngleDownSolid } from "react-icons/lia";
-import JobDetails from "./jobDetails.jsx";
+import JobDetails from "../jobDetails.jsx";
 import axios from 'axios';
 
 export default function JobList() {
