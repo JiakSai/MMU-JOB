@@ -5,35 +5,51 @@ import profilePic from './photo/profilePic1.svg';
 import addInfo from './photo/addInfo.svg';
 import Cookies from 'js-cookie';
 import { AddRole } from './popUp-Components/addRole.jsx';
+import { AddEducation } from './popUp-Components/addEducation.jsx';
 import { MdOutlineEdit } from "react-icons/md";
 
 const UserProfile = () => {
     const [showAddRole, setShowAddRole] = useState(false);
-    const [selectedRole, setSelectedRole] = useState(null); // New state for selected role
+    const [showAddEducation, setShowAddEducation] = useState(false);
+    const [selectedRole, setSelectedRole] = useState(null);
+    const [selectedEducation, setSelectedEducation] = useState(null);
     const [roleValues, setRoleValues] = useState([]);
+    const [educationValues, setEducationValues] = useState([]);
+    const [resumeValues, setResumeValues] = useState([]);
+    const [skillsValues, setSkillsValues] = useState([]);
 
     const handleEditClick = (role) => {
-        setSelectedRole(role); // Set the role to be edited
+        setSelectedRole(role);
         setShowAddRole(true);
     };
-
     const handleAddRoleClick = () => {
-        setSelectedRole(null); // Reset selected role when adding a new one
+        setSelectedRole(null);
         setShowAddRole(true);
     };
-
     const handleClose = () => {
         setShowAddRole(false);
-        setSelectedRole(null); // Clear selected role on close
+        setSelectedRole(null);
+    };
+    const handleAddEducationClick = () => {
+        setSelectedEducation(null);
+        setShowAddEducation(true);
+    };
+    const handleEditEducationClick = (education) => {
+        setSelectedEducation(education);
+        setShowAddEducation(true);
+    };
+    const handleCloseEducation = () => {
+        setShowAddEducation(false);
+        setSelectedEducation(null);
     };
 
     useEffect(() => {
-        if (showAddRole) {
+        if (showAddRole || showAddEducation) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'unset';
         }
-    }, [showAddRole]);
+    }, [showAddRole, showAddEducation]);
 
     useEffect(() => {
         const token = Cookies.get('token');
@@ -53,6 +69,12 @@ const UserProfile = () => {
             } else {
                 setRoleValues([]);
             }
+            if (data && Array.isArray(data.education)) {
+                setEducationValues(data.education);
+            } else {
+                setEducationValues([]);
+            }
+            console.log(data);
         })
         .catch(error => console.error('Error:', error));
     }, []);
@@ -91,7 +113,53 @@ const UserProfile = () => {
                 </div>
             )
         },
-        // Other sections...
+        {
+            title: "Education",
+            value: "Tell employers about your education.",
+            button: "Add education",
+            userValue: educationValues,
+            action: handleAddEducationClick,
+            renderFunction: (value) => (
+                <div className='border border-black px-4 py-2 w-[460px] flex justify-between'>
+                    <div>
+                        <p className='font-semibold text-lg text-gray-900'>{value.school}</p>
+                        <div className='text-sm text-gray-900 font-light'>
+                            <span>{value.degree}</span>
+                            <span className='font-bold mx-[5px]'>·</span>
+                            <span>{value.fieldOfStudy}</span>
+                        </div>
+                        <div className='text-sm text-gray-500 font-light'>
+                            <span>{value.startDate}</span>
+                            <span className=' mx-[5px]'>-</span>
+                            <span>{value.endDate}</span>
+                        </div>
+                        <div className='text-sm text-gray-500 font-light'>
+                            <span>{value.location}</span>
+                        </div>
+                        <p className='text-base text-gray-900 font-light mt-[5px]'>{value.description}</p>
+                    </div>
+                    <div>
+                        <MdOutlineEdit onClick={() => handleEditEducationClick(value)} />
+                    </div>
+                </div>
+            )
+        },
+        {
+            title: "Resume",
+            value: "Upload a resumé for easy applying and access no matter where you are.",
+            button: "Add resume",
+            userValue: [],
+            action: () => {},
+            renderFunction: () => null 
+        },
+        {
+            title: "Skills",
+            value: "Add your skills to show employers what you're good at",
+            button: "Add Skills",
+            userValue: [],
+            action: () => {},
+            renderFunction: () => null
+        },
     ];
 
     return (
@@ -139,6 +207,12 @@ const UserProfile = () => {
                             <AddRole
                                 onClose={handleClose} 
                                 role={selectedRole}
+                            />
+                        )}
+                        {showAddEducation && (
+                            <AddEducation
+                                onClose={handleCloseEducation}
+                                education={selectedEducation}
                             />
                         )}
                     </div>

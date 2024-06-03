@@ -9,6 +9,7 @@ import JobList from "./jobList.jsx";
 import SearchBar from "./searchBar.jsx";
 import{ AddRole}  from './popUp-Components/addRole.jsx';
 import SearchJob from "./searchJob.jsx";
+import UserProfile from "./userProfile.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const router = createBrowserRouter([
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
     path: "SearchJob",
     element: <SearchJob />,
   },
+  {
+    path: "UserProfile",
+    element: <UserProfile/>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

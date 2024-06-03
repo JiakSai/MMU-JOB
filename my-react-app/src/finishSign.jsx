@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import axios from "axios";
+import Cookies from 'js-cookie'; // Import Cookies
 import Footer from "./Footer.jsx";
 import uploadCloud from './photo/uploadCloud.png';
 import { FaFileAlt } from "react-icons/fa";
@@ -16,12 +17,12 @@ function FinishSign() {
   const [post, setPost] = useState({
     name: '',
     phoneNumber: '',
-    Gender: '',
-    Address: '',
-    Nationality: "",
-    jobCategory: '',
-    workExp: '',
-    resume: '',
+    gender: '',
+    nationality: '',
+    major: '',
+    resume: null, 
+    state: '',
+    city: ''
   });
 
   const handleChange = (value) => {
@@ -32,12 +33,16 @@ function FinishSign() {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0]; 
-    setPost({ ...post, resume: file }); 
+    setPost({ ...post, resume: file });
     setFileName(file.name); 
   };
 
   const handleCheckboxChange = () => {
     setShowFileInput(!showFileInput);
+    if (!showFileInput) {
+      setPost({ ...post, resume: null });
+      setFileName("No selected file");
+    }
   };
 
   const validatePhoneNumber = (phoneNumber) => {
@@ -49,33 +54,46 @@ function FinishSign() {
     return showFileInput ? 'h-[850px] mt-[120px]' : 'h-[600px] mt-[50px]';
   };
 
-  const Genders = ["Male", "Female", "Other"];
+  const genders = ["Male", "Female", "Other"];
 
   const handleInput = (event) => {
     const { name, value } = event.target;
     setPost({ ...post, [name]: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (valid) {
-      axios.post('http://localhost:8000/api/UserRegister', post)
-        .then(response => {
-          console.log(response);
-          console.log(post);
-        })
-        .catch(error => {
-          console.log(error);
-          console.log(post);
-        });
+        const token = Cookies.get('token');
+        if (!token) {
+            console.error('No token found');
+            return;
+        }
+
+        try {
+            const response = await axios.patch('http://localhost:8000/api/UserFinishSignup', post, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log(response);
+        } 
+        catch (error) {
+            console.error('AxiosError', error);
+            if (error.response && error.response.data) {
+                console.log('Validation Errors:', error.response.data);
+                console.log('post:', post);
+            }
+        }
     } else {
-      console.log("Invalid phone number");
+        console.log("Invalid phone number");
     }
-  };
+};
 
   const [api, setApi] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:8000/api/job-categories')
+    fetch('http://localhost:8000/api/JobCategories')
       .then(data => data.json())
       .then(val => setApi(val));
   }, []);
@@ -122,29 +140,29 @@ function FinishSign() {
               </div>
               <div className="relative">
                 <select
-                  name="Gender"
-                  value={post.Gender}
+                  name="gender"
+                  value={post.gender}
                   onChange={handleInput}
                   className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded"
                   required>
                   <option value="" disabled className="hidden"></option>
-                  {Genders.filter(exp => exp).map((Gender, index) => (
-                    <option key={index} value={Gender}>
-                      {Gender}
+                  {genders.filter(exp => exp).map((gender, index) => (
+                    <option key={index} value={gender}>
+                      {gender}
                     </option>
                   ))}
                 </select>
                 <label
-                  className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post.Gender ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
-                  Gender
+                  className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post.gender ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
+                  gender
                 </label>
               </div>
-              {["Nationality", "State", "City"].map((field) => (
+              {["nationality", "state", "city"].map((field) => (
                 <div className="relative" key={field}>
                   <input
                     type="text"
                     name={field}
-                    value={post[field]}
+                    value={post[field] || ''} // Ensure it has a default value
                     required
                     className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-2 rounded"
                     onChange={handleInput}
@@ -158,20 +176,20 @@ function FinishSign() {
               ))}
               <div className="relative">
                 <select
-                  name="jobCategory"
-                  value={post.jobCategory}
+                  name="major"
+                  value={post.major}
                   onChange={handleInput}
                   className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded"
                   required>
                   <option value="" disabled className="hidden"></option>
-                  {api.map((jobCategory, index) => (
-                    <option key={index} value={jobCategory.name}>
-                      {jobCategory.name}
+                  {api.map((major, index) => (
+                    <option key={index} value={major.name}>
+                      {major.name}
                     </option>
                   ))}
                 </select>
                 <label
-                  className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post.jobCategory ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
+                  className={`input-text absolute left-2 top-2 transition-all duration-200 transform origin-0 ${post.major ? 'top-[-12px] left-2 text-customBlue font-semibold' : 'peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue'}`}>
                   Major
                 </label>
               </div>
@@ -183,22 +201,23 @@ function FinishSign() {
                 <>
                   <div className="flex flex-col items-center justify-center border-2 border-dashed border-black h-[300px] w-full cursor-pointer mt-[5px]" 
                     onClick={() => document.querySelector(".input-field").click()}>
-                    <input type="file" accept="image/*,application/pdf" className="input-field hidden"
+                    <input type="file"className="input-field hidden"
                       onChange={handleFileChange} 
                     />
                     <img src={uploadCloud} alt="Upload Icon" className="w-28 h-28" />
                     <p className="font-bold">Upload Your Resume</p>
-                    <p>Support file type: .pdf, .doc, .docx</p>
+                    <p>Support file type: .pdf</p> 
                   </div>
                   <div className="flex items-center ">
                     <FaFileAlt />
                     <span className="flex items-center justify-between w-full"> 
                       {fileName}
-                      <RiDeleteBin6Line onClick={() => { setFileName("No selected File"); }} />
+                      <RiDeleteBin6Line onClick={() => { setFileName("No selected file"); setPost({ ...post, resume: null }); }} />
                     </span>
                   </div>
                 </>
               )}
+
               <button type="submit" className="px-4 py-2 bg-black text-white rounded w-full">
                 Save And Continue
               </button>

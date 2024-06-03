@@ -4,6 +4,7 @@ import registerPhoto from './photo/MoshingDoodle (1).png';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from './Footer.jsx';
+import Cookies from 'js-cookie';
 
 function UserRegister() {
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -70,8 +71,12 @@ function UserRegister() {
         axios.post('http://localhost:8000/api/UserRegister', post)
             .then(response => {
                 if (response.status === 200) {
-                    navigate('/userFinishSign'); // Navigate to success page
+                    const token = response.data.token; 
+                    Cookies.set('token', token); 
+                    navigate('/userFinishSign');
+                    console.log(token);
                 }
+                console.log(response);
             })
             .catch(error => {
                 if (error.response && error.response.data) {
@@ -106,7 +111,7 @@ function UserRegister() {
                                 name="email" 
                                 value={post.email} 
                                 onChange={handleInput} 
-                                style={{ border: formError.password ? '1px solid red' : '' }}
+                                style={{ border: formError.email ? '1px solid red' : '' }}
                             />
                             <p className="error-message">{formError.email}</p>
                             <label htmlFor="password">Password</label>
@@ -148,7 +153,7 @@ function UserRegister() {
                         </form>
                     </div>
                 </div>
-                <img src={registerPhoto} alt="Login" className='w-[840px] h-[520px] mt-[45px]'/>
+                <img src={registerPhoto} alt="Register" className='w-[840px] h-[520px] mt-[45px]'/>
             </div>
         </section>
         <Footer />
