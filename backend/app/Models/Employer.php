@@ -35,4 +35,14 @@ class Employer extends Authenticatable
     {
         return $this->hasOne('App\Models\Company');
     }
+
+    public function posts()
+    {
+        return $this->hasMany('App\Models\Post');
+    }
+
+    public function applications()
+    {
+        return $this->hasMany('App\Models\Application');
+    }
 }

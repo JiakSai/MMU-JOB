@@ -11,13 +11,9 @@ use Illuminate\Support\Facades\Validator;
 class CompanyController extends Controller
 {
     public function index(){
-        $companies = Company::all();
+        $companies = Company::with('posts')->get();
         return response()->json($companies, 200);
         // return view('index', ['companies' => $company]);
-    }
-
-    public function create(){
-        return view('company.create');
     }
 
     public function store(Request $request)

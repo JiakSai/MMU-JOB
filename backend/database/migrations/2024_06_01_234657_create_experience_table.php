@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('locationType');
             $table->string('startDate');
             $table->string('endDate');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

@@ -45,7 +45,7 @@ class PostController extends Controller
             ], 401);
         }
 
-        $postData = array_merge(['company_id' => auth()->user()->company->id], $request->all());
+        $postData = array_merge(['company_id' => auth()->user()->company->id], ['employer_id'=>$employer->id], $request->all());
 
         $post = Post::create($postData);
         if ($post) {

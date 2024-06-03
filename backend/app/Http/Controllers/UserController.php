@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -178,7 +179,6 @@ class UserController extends Controller
             'state' => 'required',
             'city' => 'required',
             'major' => 'required',
-            'skills' => 'sometimes',
             'resume' => 'sometimes|mimes:pdf',
         ]);
 
@@ -190,7 +190,7 @@ class UserController extends Controller
             ], 401);
         }
 
-        $data = $request->only('name', 'phoneNumber', 'gender', 'nationality', 'state', 'city', 'major', 'skills');
+        $data = $request->only('name', 'phoneNumber', 'gender', 'nationality', 'state', 'city', 'major');
         
         if($request->hasFile('resume')){
             $resume = $request->file('resume');
@@ -209,4 +209,17 @@ class UserController extends Controller
            
     }
 
+    public function showApplications(){
+
+        $user = Auth::user();
+
+        $applications = Application::where('user_id', $user->id)->with('post')->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Applications fetched successfully',
+            'data' => $applications
+        ], 200);
+       
+    }    
 }

@@ -10,7 +10,8 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'company_id', 
+        'company_id',
+        'employer_id', 
         'job_title', 
         'job_type',
         'salary', 
@@ -24,5 +25,10 @@ class Post extends Model
     public function company()
     {
         return $this->belongsTo('App\Models\Company');
+    }
+
+    public function employer()
+    {
+        return $this->belongsTo('App\Models\Employer');
     }
 }
