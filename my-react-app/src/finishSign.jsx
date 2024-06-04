@@ -22,7 +22,8 @@ function FinishSign() {
     major: '',
     resume: null, 
     state: '',
-    city: ''
+    city: '',
+    _method: 'PATCH'
   });
 
   const handleChange = (value) => {
@@ -71,10 +72,10 @@ function FinishSign() {
         }
 
         try {
-            const response = await axios.patch('http://localhost:8000/api/UserFinishSignup', post, {
+            const response = await axios.post('http://localhost:8000/api/UserFinishSignup', post, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'multipart/form-data'
                 }
             });
             console.log(response);
@@ -182,6 +183,7 @@ function FinishSign() {
                   className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-1 rounded"
                   required>
                   <option value="" disabled className="hidden"></option>
+                  <option value="kicap" >Kicap</option>
                   {api.map((major, index) => (
                     <option key={index} value={major.name}>
                       {major.name}
