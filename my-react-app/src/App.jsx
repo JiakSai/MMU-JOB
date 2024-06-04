@@ -7,6 +7,7 @@ import UserRegister from './userRegisterPage.jsx';
 import FinishSign from './finishSign.jsx';
 import UserProfile from './userProfile.jsx';
 import { AddRole } from './popUp-Components/addRole.jsx';
+import { AddResume } from './popUp-Components/addResume.jsx';
 
 function App() {
     return (
@@ -14,9 +15,10 @@ function App() {
             {/* <UserLogin/> */}
             {/* <FinishSign/> */}
             {/* <UserRegister/> */}
-            <UserProfile/>
+            {/* <UserProfile/> */}
             {/* <AddRole /> */}
             {/* <SearchJob />  */}
+            <AddResume />
         </>
     );
 }

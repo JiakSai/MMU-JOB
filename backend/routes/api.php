@@ -22,7 +22,7 @@ Route::post('/UserRegister', [UserController::class, 'createUser']);
 Route::post('/UserLogin', [UserController::class, 'loginUser']);
 Route::middleware(['auth:sanctum', 'user'])->group(function(){
     Route::patch('/UserFinishSignup', [UserController::class, 'finishSignup']);
-    Route::patch('/UserUpdate', [UserController::class, 'updateUser']);
+    Route::patch('/UserUpdate', [UserController::class, 'updateUser']);//update user profile
     Route::get('/ShowUserProfile', [UserController::class, 'show']);
     Route::post('/AddEducation', [EducationController::class, 'store']);
     Route::patch('/UpdateEducation/{educationId}', [EducationController::class, 'update']);

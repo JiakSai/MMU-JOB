@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import axios from "axios";
-import Cookies from 'js-cookie'; // Import Cookies
+import Cookies from 'js-cookie';
 import Footer from "./Footer.jsx";
 import uploadCloud from './photo/uploadCloud.png';
 import { FaFileAlt } from "react-icons/fa";
@@ -66,6 +66,7 @@ function FinishSign() {
     event.preventDefault();
     if (valid) {
         const token = Cookies.get('token');
+        console.log(token);
         if (!token) {
             console.error('No token found');
             return;
@@ -85,6 +86,7 @@ function FinishSign() {
             if (error.response && error.response.data) {
                 console.log('Validation Errors:', error.response.data);
                 console.log('post:', post);
+                console.log('fd:', fd)
             }
         }
     } else {
@@ -109,7 +111,7 @@ function FinishSign() {
           <div className="bg-white w-[560px] py-[30px] px-[30px] h-fit">
             <h1 className="text-[28px] font-bold text-gray-900">Almost done</h1>
             <p>Fill in this form to complete your account.</p>
-            <form className="finishSignForm space-y-4 flex flex-col mt-[60px]" onSubmit={handleSubmit}>
+            <form className="finishSignForm space-y-4 flex flex-col mt-[60px]" encType="multipart/form-data" onSubmit={handleSubmit}>
               <div className="relative">
                 <input
                   type="text"
@@ -163,7 +165,7 @@ function FinishSign() {
                   <input
                     type="text"
                     name={field}
-                    value={post[field] || ''} // Ensure it has a default value
+                    value={post[field] || ''}
                     required
                     className="peer w-full h-10 border border-black outline-none transition duration-200 py-4c px-2 rounded"
                     onChange={handleInput}

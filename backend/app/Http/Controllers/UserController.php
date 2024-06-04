@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -169,7 +170,8 @@ class UserController extends Controller
     public function finishSignup(Request $request){
 
         $user = $request->user();
-
+        
+        Log::channel('post_log')->debug("Post Value", ["post" => $request->all()]);
         $validate = Validator::make($request->all(),
         [
             'name' => 'required',
@@ -179,7 +181,7 @@ class UserController extends Controller
             'state' => 'required',
             'city' => 'required',
             'major' => 'required',
-            'resume' => 'sometimes|mimes:pdf',
+            'resume' => 'sometimes',
         ]);
 
         if($validate->fails()){

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import SearchJob from './searchJob';
+import axios from 'axios';
 
 function Header() {
     const hideSidebar = () => {
@@ -30,7 +30,14 @@ function Header() {
         }
     };
     const handleLogout = () => {
-        Cookies.remove('token');
+        axios.get('/UserLogout')
+            .then(response => {
+                console.log(response.data);
+                Cookies.remove('token');
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
     };
 
     return (

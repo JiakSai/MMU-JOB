@@ -12,6 +12,7 @@ import SearchJob from "./searchJob.jsx";
 import UserProfile from "./userProfile.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AddResume } from "./popUp-Components/addResume.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
