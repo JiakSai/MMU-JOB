@@ -1,0 +1,126 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  height: 100vh; /* Ensure body takes full viewport height */
+}
+
+.header {
+  border: 2px solid black;
+  height: 13vh;
+}
+
+.editjobdiv {
+  border: 2px solid red;
+  height: 87vh; /* Adjust height to fill the rest of the viewport below the header */
+  display: flex;
+  background-color: rgba(128, 128, 128, 0.178);
+}
+
+.sidelist {
+  width: 15%;
+  height: 85.5vh;
+  overflow-y: auto;
+  padding-left: 9%;
+
+}
+
+.sidelist::-webkit-scrollbar {
+  display: none;
+}
+
+
+.editbox {
+  width: 60vw;
+  height: 80%;
+  padding-left: 5%;
+  margin-top: 1.5%;
+  border-radius: 5px;
+  background-color: white;
+  margin-left: 80px;
+}
+
+.testbox {
+  width: 200px;
+  height: 200px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  border-radius: 8px;
+  background-color: white;
+  justify-content: center;
+  text-align: center;
+  margin-top: 3vh;
+}
+
+.testbox:hover
+{
+    transform: translateY(-5px);
+    cursor: pointer;
+    box-shadow: rgb(224, 48, 180) 1px 1px 6px 0px;
+}
+
+.testbox.selected {
+  border-color: purple;
+}
+
+.jobtypes
+{
+  border: 0px, 0px, 0px, 1px;
+}
+
+.location, .jobposition
+{
+  font-size: 20px;
+  width: 15vw;
+  border: 0px;
+  box-shadow: 0 4px 2px -3px gray;
+}
+
+.location{
+  margin-left: 15%;
+}
+
+.jobtypes
+{
+  margin-top: 50px;
+  font-size: 19px;
+  border: 0px;
+  box-shadow: 0 4px 2px -3px gray;
+  margin-bottom: 5%;
+}
+
+.subbuttn
+{
+  float:initial;
+  width: 10%;
+  border-radius: 6px;
+  margin-right: 5%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  height:25px;
+  margin-top: 20%;
+  overflow:auto;
+}
+
+.desc {
+  width: 50vw;
+  height: 20vh;
+  overflow-y: scroll;
+  box-sizing: border-box; /* Include padding in the width and height */
+  line-height: 1.5; /* Adjust line height for better readability */
+}
+
+
+.delbutt
+{
+  float: right;
+  
+}
+
+.savebutton
+{
+  float: right;
+  margin-right: 40px;
+  margin-top: 5%;
+  border-radius: 6px;
+}
+
+
