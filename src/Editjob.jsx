@@ -1,164 +1,103 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './addjob.css';
+import './App.css';
 
-const UploadAndDisplayImage = ({ handleImageSelection, resetImage }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
+function Editjob() {
+  const [selectedDiv, setSelectedDiv] = useState(null);
+  const [jobPosition, setJobPosition] = useState('');
+  const [location, setLocation] = useState('');
+  const [jobType, setJobType] = useState('Part-time');
+  const [description, setDescription] = useState('');
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedImage(file);
-    handleImageSelection(file);
+  const handleDivClick = (index) => {
+    setSelectedDiv(index);
   };
 
-  const handleRemoveImage = () => {
-    setSelectedImage(null);
-    resetImage();
-  };
-
-  return (
-    <div>
-      {selectedImage && (
-        <div className='image'>
-          <img alt="not found" height={"100px"} width={"100px"} src={URL.createObjectURL(selectedImage)} />
-          <br /> <br />
-          <button onClick={handleRemoveImage}>Remove</button>
-        </div>
-      )}
-      <input
-        type="file"
-        name="myImage"
-        onChange={handleFileChange}
-      />
-    </div>
-  );
-};
-
-function Addjob() {
-  const [jobposition, setJobPosition] = useState('');
-  const [joblocation, setJobLocation] = useState('');
-  const [companyname, setCompany] = useState('');
-  const [jobtype, setJobType] = useState('Part-Time');
-  const [jobdesc, setJobDesc] = useState('');
-  const [uploadedImage, setUploadedImage] = useState(null);
-
-  const handleJobPositionChange = (event) => {
-    setJobPosition(event.target.value);
-  };
-
-  const handleJobLocationChange = (event) => {
-    setJobLocation(event.target.value);
-  };
-
-  const handleCompanyChange = (event) => {
-    setCompany(event.target.value);
-  };
-
-  const handleJobTypeChange = (event) => {
-    setJobType(event.target.value);
-  };
-
-  const handleJobDescChange = (event) => {
-    setJobDesc(event.target.value);
-  };
-
-  const handleImageSelection = (image) => {
-    setUploadedImage(image);
-  };
-
-  const resetImage = () => {
-    setUploadedImage(null);
+  const deleteDiv = (del) => {
+    const div = del.target.closest('.testbox');
+    if (div) {
+      div.remove();
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const jobData = {
-      jobposition,
-      joblocation,
-      companyname,
-      jobtype,
-      jobdesc
+      jobPosition,
+      location,
+      jobType,
+      description
     };
 
-    // Add image data if uploaded
-    if (uploadedImage) {
-      jobData.image = uploadedImage;
-    }
-
-    setJobPosition('');
-    setJobLocation('');
-    setCompany('');
-    setJobType('Part-Time');
-    setJobDesc('');
-    setUploadedImage(null);
-
-    axios.post('http://localhost:3000/api/Addjob', jobData)
+    axios.post('http://localhost:3000/api/Editjob', jobData)
       .then(response => {
-        console.log('Job successfully Posted:', response.data);
+        console.log('Success:', response.data);
       })
       .catch(error => {
-        console.error('Error:', error);
+        console.error('Error:', error); 
       });
   };
 
   return (
-    <div className='addjobdiv'>
-      <div className='createjobdiv'>
-        <h1 style={{ fontFamily: "Arial", marginLeft: "15px" }}>Create Job</h1>
-
-        <div className='addpic'>
-          <div className='image'>
-            <UploadAndDisplayImage handleImageSelection={handleImageSelection} resetImage={resetImage} />
-            <p>
-            Drop your logo files here<br></br>
-            or<br></br>
-            Browse from Computer
-            </p>
+    <div className='editjobdiv'>
+      <div className='sidelist'>
+        {['*Job Name* 1', '*Job Name* 2', '*Job Name* 3', '*Job Name* 4'].map((job, index) => (
+          <div
+            key={index}
+            className={`testbox ${selectedDiv === index ? 'selected' : ''}`}
+            onClick={() => handleDivClick(index)}
+          >
+            <button className='delbutt' onClick={(e) => { e.stopPropagation(); deleteDiv(e); }}>Delete Job</button><br></br>
+            <h2>{job}</h2>
+            <p>*Location here*</p>
+            <p>*Job type*</p>
+            <p>*Job department*</p>
           </div>
-          
-          <div className='text'>
-            <h2 style={{ fontFamily: "Arial", marginBottom:"0px"}}>Upload Logo</h2>
-            <p style={{marginTop:"0px"}}>Insert your company logo to be seen by the jobseeker</p>
-          </div>
-        </div><br />
+        ))}
+      </div>
 
+      <div className='editbox'>
+        <h1>Edit Job Details</h1><br></br>
         <form onSubmit={handleSubmit}>
           <input
-            className='inputs'
-            placeholder='Enter Job Position'
-            value={jobposition}
-            onChange={handleJobPositionChange}
+            className='jobposition'
+            type="text"
+            placeholder='New job position'
+            value={jobPosition}
+            onChange={(e) => setJobPosition(e.target.value)}
           />
           <input
-            className='inputs'
-            placeholder='Enter Location'
-            value={joblocation}
-            onChange={handleJobLocationChange}
-          />
-          <input
-            className='inputs'
-            placeholder='Enter Company'
-            value={companyname}
-            onChange={handleCompanyChange}
-          />
-          <select className='inputs' value={jobtype} onChange={handleJobTypeChange}>
-            <option value="Part-Time">Part-Time</option>
-            <option value="Full-Time">Full-Time</option>
-            <option value="Internship">Internship</option>
+            className='location'
+            type="text"
+            placeholder='New Location'
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          /><br />
+
+          <select
+            className='jobtypes'
+            value={jobType}
+            onChange={(e) => setJobType(e.target.value)}
+          >
+            <option>Part-time</option>
+            <option>Full-Time</option>
+            <option>Internship</option>
           </select><br></br>
+
           <textarea
-            className='descbox'
-            placeholder='Enter Job Description'
-            value={jobdesc}
-            onChange={handleJobDescChange}
-          ></textarea><br></br>
-          <button className='buttons' type='submit'>Post Job</button>
-          <button className='buttons' type='button'>Cancel</button>
+            className='desc'
+            placeholder='Description'
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <br></br>
+
+          <button className='savebutton'>Save Changes</button>
         </form>
       </div>
     </div>
   );
 }
 
-export default Addjob;
+export default Editjob;
