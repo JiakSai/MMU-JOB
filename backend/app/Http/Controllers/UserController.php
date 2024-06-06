@@ -181,7 +181,7 @@ class UserController extends Controller
             'state' => 'required',
             'city' => 'required',
             'major' => 'required',
-            'resume' => 'sometimes',
+            'resume' => 'sometimes|mines:pdf',
         ]);
 
         if($validate->fails()){

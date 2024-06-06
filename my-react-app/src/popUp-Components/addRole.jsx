@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from "js-cookie";
 
-export function AddRole({ onClose, role }) {
+export function AddRole({ onClose, role, justClose }) {
     const [roleValue, setRoleValue] = useState({
         title: "",
         companyName: "",
@@ -99,12 +99,12 @@ export function AddRole({ onClose, role }) {
     return (
         <div className="addrole fixed inset-0 flex items-center justify-end bg-black bg-opacity-50">
             <div className="bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full overflow-y-auto z-2001">
-                <button onClick={onClose} className='absolute top-2 right-2 text-xl font-bold'>
+                <button onClick={justClose} className='absolute top-2 right-2 text-xl font-bold'>
                     &times;
                 </button>
                 <div className="py-4 px-6 bg-white">
                     <form onSubmit={handleSubmit} className='flex flex-col gap-6'>
-                        <h1 className="text-2xl font-bold mb-4">{role ? "Edit Role" : "Add Role"}</h1>
+                        <h1 className="text-3xl font-bold mb-4">{role ? "Edit Role" : "Add Role"}</h1>
                         <label>Job title</label>
                         <input
                             type="text"

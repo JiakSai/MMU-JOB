@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import profilePic from './photo/profilePic1.svg';
@@ -6,7 +6,14 @@ import addInfo from './photo/addInfo.svg';
 import Cookies from 'js-cookie';
 import { AddRole } from './popUp-Components/addRole.jsx';
 import { AddEducation } from './popUp-Components/addEducation.jsx';
+import { AddResume } from './popUp-Components/addResume.jsx';
+import { AddSkill } from './popUp-Components/addSkill.jsx';
+import { EditProfile } from './popUp-Components/editProfile.jsx';
 import { MdOutlineEdit } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
+import { FaFileAlt } from "react-icons/fa";
+import { AddProfileImage } from './popUp-Components/addProfileImage.jsx';
+import axios from 'axios';
 
 const UserProfile = () => {
     const [showAddRole, setShowAddRole] = useState(false);
@@ -15,18 +22,32 @@ const UserProfile = () => {
     const [selectedEducation, setSelectedEducation] = useState(null);
     const [roleValues, setRoleValues] = useState([]);
     const [educationValues, setEducationValues] = useState([]);
-    const [resumeValues, setResumeValues] = useState([]);
-    const [skillsValues, setSkillsValues] = useState([]);
+    const [resumeValues, setResumeValues] = useState(null);
+    const [showAddResume, setShowAddResume] = useState(false);
+    const [resumeFileName, setResumeFileName] = useState(null);
+    const [skillsValues, setSkillsValues] = useState(null);
+    const [showAddSkills, setShowAddSkills] = useState(false);
+    const [showEditProfile, setShowEditProfile] = useState(false);
+    const [profileValues, setProfileValues] = useState([]);
+    const [selectedProfile, setSelectedProfile] = useState(null);
+    const [showAddProfileImage, setShowAddProfileImage] = useState(false);
+    const [userProfilePic, setUserProfilePic] = useState(null);
 
     const handleEditClick = (role) => {
         setSelectedRole(role);
         setShowAddRole(true);
+       
     };
     const handleAddRoleClick = () => {
         setSelectedRole(null);
         setShowAddRole(true);
     };
     const handleClose = () => {
+        setShowAddRole(false);
+        setSelectedRole(null);
+        window.location.reload();
+    };
+    const handleJustClose = () => {
         setShowAddRole(false);
         setSelectedRole(null);
     };
@@ -41,15 +62,24 @@ const UserProfile = () => {
     const handleCloseEducation = () => {
         setShowAddEducation(false);
         setSelectedEducation(null);
+        window.location.reload();
+    };
+    const handleJustCloseEducation = () => {
+        setShowAddEducation(false);
+        setSelectedEducation(null);
+    };
+    const handleEditProfile = () => {
+        setSelectedProfile(profileValues);
+        setShowEditProfile(true);
     };
 
     useEffect(() => {
-        if (showAddRole || showAddEducation) {
+        if (showAddRole || showAddEducation || showAddResume || showAddSkills) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'unset';
         }
-    }, [showAddRole, showAddEducation]);
+    }, [showAddRole, showAddEducation, showAddResume, showAddSkills]);
 
     useEffect(() => {
         const token = Cookies.get('token');
@@ -75,9 +105,51 @@ const UserProfile = () => {
             } else {
                 setEducationValues([]);
             }
+            setProfileValues(data);
+            setResumeValues(data.resume);
+            setResumeFileName(data.resume ? data.resume.split('_').slice(1).join('_').split('e').slice(2).join('e') : null);
+            setUserProfilePic(data.profilePic);
+            setSkillsValues(data.skills);
         })
         .catch(error => console.error('Error:', error));
     }, []);
+
+    const handleRoleDeleteClick = async (experienceId) => {
+        const token = Cookies.get('token');
+        if (!token) {
+            console.error('No token found');
+            return;
+        }
+        try {
+            await axios.delete(`http://localhost:8000/api/DeleteExperience/${experienceId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            window.location.reload();
+        } catch (error) {
+            console.log(experienceId)
+            console.error('Error deleting experience:', error);
+        }
+    };
+    const handleEduDeleteClick = async (educationId) => {
+        const token = Cookies.get('token');
+        if (!token) {
+            console.error('No token found');
+            return;
+        }
+        try {
+            await axios.delete(`http://localhost:8000/api/DeleteEducation/${educationId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            window.location.reload();
+        } catch (error) {
+            console.log(experienceId)
+            console.error('Error deleting experience:', error);
+        }
+    };
 
     const myConstants = [
         {
@@ -87,7 +159,7 @@ const UserProfile = () => {
             userValue: roleValues,
             action: handleAddRoleClick,
             renderFunction: (value) => (
-                <div className='border border-black px-4 py-2 w-[460px] flex justify-between'>
+                <div className='border border-black px-4 py-2 w-[460px] flex justify-between rounded'>
                     <div>
                         <p className='font-semibold text-lg text-gray-900'>{value.title}</p>
                         <div className='text-sm text-gray-900 font-light'>
@@ -107,8 +179,9 @@ const UserProfile = () => {
                         </div>
                         <p className='text-base text-gray-900 font-light mt-[5px]'>{value.description}</p>
                     </div>
-                    <div>
+                    <div className='flex item-center gap-1'>
                         <MdOutlineEdit onClick={() => handleEditClick(value)} />
+                        <MdDeleteOutline onClick={() => handleRoleDeleteClick(value.id)} />
                     </div>
                 </div>
             )
@@ -120,13 +193,11 @@ const UserProfile = () => {
             userValue: educationValues,
             action: handleAddEducationClick,
             renderFunction: (value) => (
-                <div className='border border-black px-4 py-2 w-[460px] flex justify-between'>
+                <div className='border border-black px-4 py-2 w-[460px] flex justify-between rounded'>
                     <div>
                         <p className='font-semibold text-lg text-gray-900'>{value.school}</p>
                         <div className='text-sm text-gray-900 font-light'>
                             <span>{value.degree}</span>
-                            <span className='font-bold mx-[5px]'>·</span>
-                            <span>{value.fieldOfStudy}</span>
                         </div>
                         <div className='text-sm text-gray-500 font-light'>
                             <span>{value.startDate}</span>
@@ -134,34 +205,19 @@ const UserProfile = () => {
                             <span>{value.endDate}</span>
                         </div>
                         <div className='text-sm text-gray-500 font-light'>
-                            <span>{value.location}</span>
+                            <span>{value.grade}</span>
                         </div>
                         <p className='text-base text-gray-900 font-light mt-[5px]'>{value.description}</p>
                     </div>
-                    <div>
+                    <div className='flex item-center gap-1'>
                         <MdOutlineEdit onClick={() => handleEditEducationClick(value)} />
+                        <MdDeleteOutline onClick={() => handleEduDeleteClick(value.id)} />
                     </div>
                 </div>
             )
         },
-        {
-            title: "Resume",
-            value: "Upload a resumé for easy applying and access no matter where you are.",
-            button: "Add resume",
-            userValue: [],
-            action: () => {},
-            renderFunction: () => null 
-        },
-        {
-            title: "Skills",
-            value: "Add your skills to show employers what you're good at",
-            button: "Add Skills",
-            userValue: [],
-            action: () => {},
-            renderFunction: () => null
-        },
     ];
-
+    
     return (
         <>
             <Header />
@@ -169,17 +225,21 @@ const UserProfile = () => {
                 <div className="userProfileTop relative">
                     <div className='mx-[120px]'>
                         <div className='profileInfo flex items-center justify-between w-[1279.2px] absolute top-[85px]'>
-                            <div className='flex border border-black rounded-full w-[180px] h-[180px] items-center justify-center'>
-                                <img src={profilePic} alt="profilePic" className='w-[160px] h-[160px]' />
+                            <div onClick= {()=> setShowAddProfileImage(true)} className='flex border border-black rounded-full w-[180px] h-[180px] items-center justify-center'>
+                                {userProfilePic ? 
+                                        <img src={userProfilePic} alt="profilePic" className='w-[180px] h-[180px] border-2 border-black rounded-full scale-100' /> 
+                                        : 
+                                        <img src={profilePic} alt="profilePic" className='w-[180px] h-[180px] border-2 border-black rounded-full scale-100' />
+                                }
                             </div>
                             <div className='flex gap-10'>
                                 <div>
-                                    <p className='font-bold text-3xl'>User Name</p>
-                                    <p className='text-2xl'>Location</p>
-                                    <p className='text-2xl'>Gmail</p>
+                                    <p className='font-bold text-3xl'>{profileValues.name}</p>
+                                    <p className='text-2xl'>{profileValues.city}&nbsp;{profileValues.state}</p>
+                                    <p className='text-2xl'>{profileValues.email}</p>
                                 </div>
                                 <div className='flex flex-col justify-center gap-2'>
-                                    <button className='border border-black px-4 py-1 text-2xl'>Edit Profile</button>
+                                    <button className='border border-black px-4 py-1 text-2xl' onClick={handleEditProfile} >Edit Profile</button>
                                     <button className='border border-black px-4 py-1 text-2xl'>Share</button>
                                 </div>
                             </div>
@@ -191,7 +251,7 @@ const UserProfile = () => {
                         {myConstants.map((item, index) => (
                             <div key={index} className='mb-[40px]'>
                                 <h1 className='font-bold text-[26px] mb-[30px]'>{item.title}</h1>
-                                {Array.isArray(item.userValue) && item.userValue.length > 0 ? 
+                                {Array.isArray(item.userValue)&& item.userValue.length > 0  ? 
                                     item.userValue.map((value, idx) => (
                                         <div key={idx} className='mb-[10px]'>
                                             {item.renderFunction(value)}
@@ -200,19 +260,70 @@ const UserProfile = () => {
                                     :
                                     <p className='text-lg'>{item.value}</p> 
                                 }
-                                <button onClick={item.action} className='text-lg border border-black px-4 py-1 mt-[10px]'>{item.button}</button>
+                                <button onClick={item.action} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>{item.button}</button>
                             </div>
                         ))}
+                        <div className='mb-[40px]'>
+                            <h1 className='font-bold text-[26px] mb-[30px]'>Resume</h1>
+                            {resumeValues ?
+                                <div className='border border-black px-4 py-2 w-[460px] flex justify-between rounded'>
+                                        <a href={resumeValues} className='flex items-center gap-2'><FaFileAlt />{resumeFileName}</a>
+                                </div>
+                                :
+                                <p className='text-lg'>Upload a resumé for easy applying and access no matter where you are.</p>
+                            }
+                            <button onClick={()=> setShowAddResume(true)} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>Add resume</button>
+                        </div>
+                        <div className='mb-[40px]'>
+                            <h1 className='font-bold text-[26px] mb-[30px]'>Skills</h1>
+                            {skillsValues ?
+                                <div className='border border-black px-4 py-2 w-[460px] flex justify-between rounded'>
+                                        <p className='font-normal text-sm text-gray-900'>{skillsValues}</p>
+                                </div>
+                                :
+                                <p className='text-lg'>Add your skills to show employers what you're good at</p>
+                            }
+                            <button onClick= {()=> setShowAddSkills(true)} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>Add skills</button>
+                            
+                        </div>
+                        
                         {showAddRole && (
                             <AddRole
+                                justClose={handleJustClose}
                                 onClose={handleClose} 
                                 role={selectedRole}
                             />
                         )}
                         {showAddEducation && (
                             <AddEducation
+                                justClose={handleJustCloseEducation}
                                 onClose={handleCloseEducation}
                                 education={selectedEducation}
+                            />
+                        )}
+                        {showAddResume && (
+                            <AddResume
+                                justClose={() => {setShowAddResume(false);}}
+                                onClose={() => {setShowAddResume(false); window.location.reload();}}
+                            />
+                        )}
+                        {showAddSkills && (
+                            <AddSkill
+                                justClose={() => { setShowAddSkills(false); }}
+                                onClose={() => { setShowAddSkills(false); window.location.reload(); }}
+                            />
+                        )}
+                        {showEditProfile && (
+                            <EditProfile
+                                justClose={() => { setShowEditProfile(false); }}
+                                onClose={() => { setShowEditProfile(false); window.location.reload(); }}
+                                profile={selectedProfile}
+                            />
+                        )}
+                        {showAddProfileImage && (
+                            <AddProfileImage
+                                justClose={() => { setShowAddProfileImage(false); }}
+                                onClose={() => { setShowAddProfileImage(false); window.location.reload(); }}
                             />
                         )}
                     </div>

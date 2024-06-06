@@ -13,6 +13,9 @@ import UserProfile from "./userProfile.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AddResume } from "./popUp-Components/addResume.jsx";
+import { AddEducation } from "./popUp-Components/addEducation.jsx";
+import { AddSkill } from "./popUp-Components/addSkill.jsx";
+import { EditProfile } from "./popUp-Components/editProfile.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -53,7 +56,27 @@ const router = createBrowserRouter([
   {
     path: "UserProfile",
     element: <UserProfile/>
-  }
+  },
+  {
+    path: "AddResume",
+    element: <AddResume />,
+  },
+  {
+    path: "AddEducation",
+    element: <AddEducation />,
+  },
+  {
+    path: "AddSkill",
+    element: <AddSkill />,
+  },
+  {
+    path: "EditProfile",
+    element: <EditProfile />,
+  },
+  {
+    path: "*",
+    element: <h1>404 Not Found</h1>,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

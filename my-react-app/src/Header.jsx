@@ -30,14 +30,20 @@ function Header() {
         }
     };
     const handleLogout = () => {
-        axios.get('/UserLogout')
-            .then(response => {
-                console.log(response.data);
-                Cookies.remove('token');
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
+        const token = Cookies.get('token'); // get the token from cookies
+    
+        axios.get('http://localhost:8000/api/UserLogout', {
+            headers: {
+                'Authorization': `Bearer ${token}` // include the token in the Authorization header
+            }
+        })
+        .then(response => {
+            console.log(response.data);
+            Cookies.remove('token');
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
     };
 
     return (
