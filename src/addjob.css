@@ -1,0 +1,80 @@
+.addjobdiv
+{
+    height: 82vh;
+    justify-content: center;
+    text-align: left;
+    padding: 0px;
+}
+
+.createjobdiv
+{
+    border: 2px solid green;
+    width: 70%;
+    height: 84vh;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.addpic
+{
+    border: 2px solid pink;
+    height: 25vh;
+    text-align: center;
+    display: flex;
+}
+
+
+.image
+{   
+    width: 50%;
+    display: flex;
+    border: 2px solid red;
+}
+
+.text
+{
+    margin-left: 100px;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.inputs
+{
+    font-size: 20px;
+    border: 0px;
+    border-bottom: 1px;
+    box-shadow: 0 4px 2px -3px gray;
+    width:180px;
+    margin-left: 6%;
+}
+
+.options
+{
+    font-size: 20px;
+    border: 0px;
+    border-bottom: 1px;
+    box-shadow: 0 4px 2px -3px gray;
+    width:110px;
+}
+
+.descbox
+{
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 5%;
+    width: 91%;
+    height: 25vh;
+
+}
+
+.buttons
+{
+    border-radius: 10px;
+    width: 100px;
+    height: 40px;
+    float: right;
+    margin-right: 20px;
+    margin-top: 15px;
+}
