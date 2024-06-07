@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { IoBookmarkOutline } from "react-icons/io5";
 import { LiaAngleDownSolid } from "react-icons/lia";
-import JobDetails from "../jobDetails.jsx";
+import JobDetails from "./jobDetails.jsx";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import jobsearch from '/src/photo/jobSearch.png';
 import axios from 'axios';
 
 export default function JobList() {
@@ -34,7 +36,7 @@ export default function JobList() {
         showJob.map((job, index) => (
           <div key={index} className="jobList" onClick={() => handleJobClick(job)}>
             <div className="jobListTop">
-               <img src={`http://localhost:8000/images/company/${job.company.logo}`} alt="company logo" className="jobLogo" />
+               <img src={job.company.logo} alt="company logo" className="jobLogo" />
               <div>
                 <h4>{job.job_title}</h4>
                 <p>{job.company.name}</p>
@@ -54,7 +56,20 @@ export default function JobList() {
         <p>No jobs available</p>
       )}
     </div>
-      {selectedJob && <JobDetails job={selectedJob} />}
+      {selectedJob ?
+        <JobDetails job={selectedJob}/>
+        :
+        <div className='jobDetails'>
+          <div className='py-8 px-8'>
+              <h1 className='flex items-center gap-4 text-2xl font-semibold'><FaArrowLeftLong className='text-3xl'/>Select a job</h1>
+              <p className='ml-[45px] mt-[8px]'>Display job details here!!</p>
+              <div className='grid place-content-center w-full mt-[120px]'>
+                <img src={jobsearch} alt="job search" className="w-[200px] h-[220px]" />
+              </div>
+          </div>
+          
+        </div>
+      }
     </div>
     
   );

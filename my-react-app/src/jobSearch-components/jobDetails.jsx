@@ -12,7 +12,7 @@ import { ImPointRight } from "react-icons/im";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { TfiAngleDown } from "react-icons/tfi";
 import { TfiAngleUp } from "react-icons/tfi";
-import easyParcel from './photo/easyParcel.jpeg';
+import easyParcel from '/src/photo/easyParcel.jpeg';
 import axios from 'axios';
 
 export default function JobDetails(props){
@@ -52,7 +52,7 @@ export default function JobDetails(props){
             <div className='jobScroll'>
                 <div className='jobDetailsTop'>
                 <div className="jobDetailsBox">
-            <img src={easyParcel} alt="bytes" className="jobLogo"/>
+            <img src={job.company.logo} alt="bytes" className="jobLogo"/>
             <p>{job.company.name}</p>
             <p className="viewJob">View all jobs</p>
             </div>
@@ -66,16 +66,16 @@ export default function JobDetails(props){
             </div>
             <div className="minimalistInformation">
                 <div className="jobDetailsBox">
-                <IoLocationOutline /> Bayan Lepas, Penang
+                <IoLocationOutline />{job.job_location}
                 </div>
                 <div className="jobDetailsBox">
                 <FaRegBuilding /> Developers/Programmers (Information & Communication Technology)
                 </div>
                 <div className="jobDetailsBox">
-                <GoClock /> On-site | Internship
+                <GoClock /> On-site | {job.job_type}
                 </div>
                 <div className="jobDetailsBox">
-                <GiPayMoney /> RM 750 - RM 800 per month
+                <GiPayMoney /> RM {job.salary} per month
                 </div>
             </div>
             <h3>Responsibilities</h3>
@@ -95,8 +95,8 @@ export default function JobDetails(props){
             </ul>
             <h3>Company profile</h3>
             <div className="companyInfoBox">
-                <img src={easyParcel} alt="easyParcel" />
-                <h4>Easyparcel Sdn. Bhd.</h4>
+                <img src={job.company.logo} alt="easyParcel" />
+                <h4>{job.company.name}</h4>
                 <div className="jobDetailsBox">
                 <FaStar /> 4.4 · 27 reviews
                 </div>

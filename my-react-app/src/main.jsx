@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import UserRegister from "./userRegisterPage.jsx";
 import UserLogin from "./userLoginPage.jsx";
 import FinishSign from './finishSign.jsx';
-import JobDetails from "./jobDetails.jsx";
+import JobDetails from "./jobSearch-components/jobDetails.jsx";
 import JobList from "./jobSearch-components/jobList.jsx";
 import SearchBar from "./jobSearch-components/searchBar.jsx";
 import{ AddRole}  from './popUp-Components/addRole.jsx';
