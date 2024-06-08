@@ -16,6 +16,8 @@ import { AddResume } from "./popUp-Components/addResume.jsx";
 import { AddEducation } from "./popUp-Components/addEducation.jsx";
 import { AddSkill } from "./popUp-Components/addSkill.jsx";
 import { EditProfile } from "./popUp-Components/editProfile.jsx";
+import Application from "./applicationPage.jsx";
+import { ViewJobDetails } from "./popUp-Components/viewJobDetails.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -76,6 +78,14 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <h1>404 Not Found</h1>,
+  },
+  {
+    path: "application",
+    element: <Application />,
+  },
+  {
+    path: "viewJobDetails",
+    element: <ViewJobDetails />,
   },
 ]);
 

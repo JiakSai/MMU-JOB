@@ -1,13 +1,17 @@
 import React, {useState,useEffect} from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import PhoneInput from "react-phone-input-2";
 
 export function EditProfile({onClose, justClose, profile}){
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [valid, setValid] = useState(true);
     const [profileValue, setProfileValue] = useState({
         name: "",
         email: "",
         city: "",
         state: "",
+        phoneNumber: "",
     });
     const handleInput = (event) => {
         const {name, value} = event.target;
@@ -15,6 +19,15 @@ export function EditProfile({onClose, justClose, profile}){
             ...profileValue,
             [name]: value
         });
+    };
+    const handleChange = (value) => {
+        setPhoneNumber(value);
+        setProfileValue({ ...profileValue, phoneNumber: value });
+        setValid(validatePhoneNumber(value));
+      };
+    const validatePhoneNumber = (phoneNumber) => {
+        const phoneNumberPattern = /^\+?[1-9]\d{1,14}$/;
+        return phoneNumberPattern.test(phoneNumber);
     };
     useEffect(() =>{
         if(profile){
@@ -64,6 +77,9 @@ export function EditProfile({onClose, justClose, profile}){
                                 value={profileValue.name}
                                 onChange={handleInput}
                         />
+                        {!valid && (
+                            <p>Please enter a valid phone number.</p>
+                        )}
                         <label>Email</label>
                         <input 
                                 type="text"
@@ -71,6 +87,16 @@ export function EditProfile({onClose, justClose, profile}){
                                 className='border border-black p-2'
                                 value={profileValue.email}
                                 onChange={handleInput}
+                        />
+                        <label>Phone number</label>
+                        <PhoneInput
+                        country={'my'}
+                        value={phoneNumber}
+                        onChange={handleChange}
+                        inputClass="custom-phone-input"
+                        inputProps={{
+                            required: true,
+                        }}
                         />
                         <div className='flex gap-5'>
                             <div className='flex flex-col'>

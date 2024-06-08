@@ -872,3 +872,43 @@ input[type="checkbox"] {
 .addrole{
   z-index: 2000;
 }
+.profile{
+  background-image: linear-gradient(111.5deg, rgb(187, 232, 255) 11.1%, rgb(4, 78, 116) 107.5%);
+  padding: 20px;
+  border-radius: 16px;
+  width: 500px;
+  justify-content: space-between;
+}
+/* styles.css */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 740px;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.page-enter {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}

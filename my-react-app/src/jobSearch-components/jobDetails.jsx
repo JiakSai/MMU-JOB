@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { IoBookmarkOutline } from "react-icons/io5";
 import { GiPayMoney } from "react-icons/gi";
+import { useNavigate } from 'react-router-dom';
 import { GoClock } from "react-icons/go";
 import { FaRegBuilding } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
@@ -12,21 +13,33 @@ import { ImPointRight } from "react-icons/im";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { TfiAngleDown } from "react-icons/tfi";
 import { TfiAngleUp } from "react-icons/tfi";
-import easyParcel from '/src/photo/easyParcel.jpeg';
+import Cookies from 'js-cookie';
 import axios from 'axios';
 
 export default function JobDetails(props){
     const job = props.job;
     const [showJobDetailBottom, setShowJobDetailBottom] = useState(false);
+    const [selectedJob, setSelectedJob] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
     const paragraphStyles = {
         WebkitBoxOrient: 'vertical',
         WebkitLineClamp: 3,
         overflow: 'hidden',
         display: '-webkit-box',
   };
+  const token = Cookies.get('token');
   const toggleJobDetails = () => {
     setIsOpen(!isOpen);
+  };
+  const handleJobClick = (job) => {
+    setSelectedJob(job);
+    if(token){
+        navigate('/application', {state: {job}});
+    }
+    else{
+        navigate('/userLogin');
+    }
   };
   useEffect(() => {
     const handleScroll = () => {
@@ -61,7 +74,7 @@ export default function JobDetails(props){
             <div className="jobDetailsBox">
                 <button className="btn1"><IoIosMore /></button>
                 <button className="btn2"><IoBookmarkOutline/></button>
-                <button className="btn3">Quick apply</button>
+                <button className="btn3" onClick={() => handleJobClick(job)}>Quick apply</button>
             </div>
             </div>
             <div className="minimalistInformation">
@@ -136,7 +149,7 @@ export default function JobDetails(props){
             </div>
             <div className='jobDetailBottom'style={{ display: showJobDetailBottom ? 'flex' : 'none' }} >
                 <button className="btn2"><IoBookmarkOutline/></button>
-                <button className="btn3">Quick apply</button>
+                <button className="btn3" onClick={() => handleJobClick(job)}>Quick apply</button>
             </div>
             </div>
     </>
