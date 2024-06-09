@@ -10,6 +10,9 @@ import { AddRole } from './popUp-Components/addRole.jsx';
 import { AddResume } from './popUp-Components/addResume.jsx';
 import { AddSkill } from './popUp-Components/addSkill.jsx';
 import { AddProfileImage } from './popUp-Components/addProfileImage.jsx';
+import SearchCompany from './searchCompany.jsx';
+import CompanyProfile from './companyProfile.jsx';
+import { AddReview } from './companySearch-Components/addReview.jsx';
 
 function App() {
     return (
@@ -17,12 +20,15 @@ function App() {
             {/* <UserLogin/> */}
             {/* <FinishSign/> */}
             {/* <UserRegister/> */}
-            <UserProfile/>
+            {/* <UserProfile/> */}
             {/* <AddRole /> */}
             {/* <SearchJob />  */}
             {/* <AddResume /> */}
             {/* <AddSkill /> */}
             {/* <AddProfileImage /> */}
+            {/* <SearchCompany /> */}
+            {/* <CompanyProfile /> */}
+            <AddReview />
         </>
     );
 }
