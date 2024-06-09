@@ -264,6 +264,30 @@ function Application() {
             </> 
         ); }
 
+        const handleSubmit = async () => {
+            const jobId = job.id;
+            const token = Cookies.get('token');
+            if (!token) {
+                console.error('No token found');
+                return;
+            }
+            try {
+                const response = await axios.post(`http://localhost:8000/api/ApplyJob/${jobId}`,{}, 
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+                console.log('Response:', response);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        
+
     return (
         <>
             <Header />
@@ -331,7 +355,12 @@ function Application() {
                         </div>      
                     </div>
                 </div>
-                <button className='text-lg border-2 border-customBlue text-customBlue px-4 py-1 mt-[10px] rounded'>Submit application</button>
+                <button 
+                className='text-lg border-2 border-customBlue text-customBlue px-4 py-1 mt-[10px] rounded'
+                onClick={handleSubmit}
+                >
+                    Submit application
+                </button>
                 {showJobDetail && 
                             <ViewJobDetails
                                 job={selectedValue}
