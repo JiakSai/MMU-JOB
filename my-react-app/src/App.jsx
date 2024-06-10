@@ -13,11 +13,15 @@ import { AddProfileImage } from './popUp-Components/addProfileImage.jsx';
 import SearchCompany from './searchCompany.jsx';
 import CompanyProfile from './companyProfile.jsx';
 import { AddReview } from './companySearch-Components/addReview.jsx';
+import EmployerFooter from './employerFooter.jsx';
+import EmployerHeader from './employerHeader.jsx';
+import EmployerLogin from './employerLogin.jsx';
+import EmployerFinishSign from './employerFinishSign.jsx';
 
 function App() {
     return (
         <>
-            {/* <UserLogin/> */}
+            <UserLogin/>
             {/* <FinishSign/> */}
             {/* <UserRegister/> */}
             {/* <UserProfile/> */}
@@ -28,7 +32,11 @@ function App() {
             {/* <AddProfileImage /> */}
             {/* <SearchCompany /> */}
             {/* <CompanyProfile /> */}
-            <AddReview />
+            {/* <AddReview /> */}
+            {/* <EmployerFooter/>
+            <EmployerHeader/> */}
+            {/* <EmployerLogin/> */}
+            {/* <EmployerFinishSign/> */}
         </>
     );
 }

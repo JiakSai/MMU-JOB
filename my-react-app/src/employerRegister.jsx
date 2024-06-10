@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import registerPhoto from './photo/Messy.svg';
+import registerPhoto from './photo/Dancing.svg';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import Footer from './Footer.jsx';
+import EmployerFooter from './employerFooter';
 import Cookies from 'js-cookie';
 
-function UserRegister() {
+function EmployerRegister() {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [comPasswordVisible, setComPasswordVisible] = useState(false);
     const [formError, setFormError] = useState({
@@ -68,7 +68,7 @@ function UserRegister() {
         setFormError(inputError);
 
         // Submit registration data
-        axios.post('http://localhost:8000/api/UserRegister', post)
+        axios.post('http://localhost:8000/api/EmployerRegister', post)
             .then(response => {
                 if (response.status === 200) {
                     const token = response.data.token; 
@@ -79,6 +79,7 @@ function UserRegister() {
                 console.log(response);
             })
             .catch(error => {
+                console.error('Registration error:', error);
                 if (error.response && error.response.data) {
                     const backendErrors = error.response.data.errors || {};
                     setFormError({
@@ -90,19 +91,20 @@ function UserRegister() {
                     console.log('Error: Unable to register user');
                 }
             });
+            
     };
 
     return (
         <>
         <section>
             <div className='LoginRegisterTop'>
-                <h1 className='logoUser'>" MMUJOB "</h1> 
+                <h1 className='logoEmp'>" MMUJOB "</h1> 
             </div>
             <div className="registerContainer">
                 <div>
-                    <p className='rchangeSite'>Are you an employer?</p>
+                    <p className='rchangeSite'>Are you a job seeker?</p>
                     <div className="userRegisterFormContainer">
-                        <h1 className='text-[28px] font-bold text-customBlue'>Register as New User</h1>
+                        <h1 className='text-[28px] font-bold text-customPink'>Register as employer</h1>
                         <p>Fill in this form to create an account.</p>
                         <form className="registerForm" onSubmit={handleSubmit}>
                             <label htmlFor="email">Email Address</label>
@@ -149,16 +151,16 @@ function UserRegister() {
                                 <a href="#">Forgot password?</a>
                             </div>
                             <button type="submit">Register</button>
-                            <p>Already have an account? <Link to="/userLogin">Login</Link></p>
+                            <p>Already have an account? <Link to="/employerLogin">Login</Link></p>
                         </form>
                     </div>
                 </div>
                 <img src={registerPhoto} alt="Register" className='w-[840px] h-[520px] mt-[45px]'/>
             </div>
         </section>
-        <Footer />
+        <EmployerFooter />
         </>
     );
 }
 
-export default UserRegister;
+export default EmployerRegister;

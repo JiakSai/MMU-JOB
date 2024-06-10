@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
-function Header() {
+function EmployerHeader() {
     const hideSidebar = () => {
         const sidebar = document.querySelector('.sidebar');
         sidebar.style.display = 'none';
@@ -51,7 +51,7 @@ function Header() {
             <nav>
                 <ul className="sidebar">
                     <li onClick={hideSidebar}><FontAwesomeIcon icon={faTimes} className="closeIcon" /></li>
-                    <li className="logo"><a href="#">" MMUJOB "</a></li>
+                    <li className="empLogo"><a href="#">" MMUJOB "</a></li>
                     <li><a href="#">Job search</a></li>
                     <li>
                         <Link to={token ? "/UserProfile" : "#"} onClick={handleProfileClick}>
@@ -76,14 +76,14 @@ function Header() {
                     <li><a href="#">Employer site</a></li>
                 </ul>
                 <ul>
-                    <li className="logo"><a href="#">" MMUJOB "</a></li>
+                    <li className="empLogo"><a href="#">" MMUJOB "</a></li>
                     <li className="hideOnMobile"><Link to={"/SearchJob"}>job search</Link></li>
                     <li className="hideOnMobile">
                         <Link to={token ? "/UserProfile" : "#"} onClick={handleProfileClick}>
                             Profile
                         </Link>
                     </li>
-                    <li className="hideOnMobile"><Link to="/searchCompany" >Company profiles</Link></li>
+                    <li className="hideOnMobile"><a href="#">Company profiles</a></li>
                     <li className="hideOnMobile">
                         <ul>
                             <li id="user" className="User">
@@ -110,4 +110,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default EmployerHeader;

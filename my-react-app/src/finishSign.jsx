@@ -7,9 +7,11 @@ import Footer from "./Footer.jsx";
 import uploadCloud from './photo/uploadCloud.png';
 import { FaFileAlt } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import registerPhoto from './photo/MoshingDoodle (1).png';
+import registerPhoto from './photo/Messy.svg';
+import { useNavigate } from "react-router-dom";
 
 function FinishSign() {
+  const navigate = useNavigate();
   const [fileName, setFileName] = useState("No selected file");
   const [showFileInput, setShowFileInput] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -52,7 +54,7 @@ function FinishSign() {
   };
 
   const containerStyle = () => {
-    return showFileInput ? 'h-[850px] mt-[120px]' : 'h-[600px] mt-[50px]';
+    return showFileInput ? 'h-[1000px] mt-[50px]' : 'h-[600px] mt-[50px]';
   };
 
   const genders = ["Male", "Female", "Other"];
@@ -80,13 +82,14 @@ function FinishSign() {
                 }
             });
             console.log(response);
+            if (response.status === 200) {
+                navigate('/SearchJob');
+            }
         } 
         catch (error) {
             console.error('AxiosError', error);
             if (error.response && error.response.data) {
                 console.log('Validation Errors:', error.response.data);
-                console.log('post:', post);
-                console.log('fd:', fd)
             }
         }
     } else {
@@ -109,7 +112,7 @@ function FinishSign() {
         </div>
         <div className="finishSignContainer">
           <div className="bg-white w-[560px] py-[30px] px-[30px] h-fit">
-            <h1 className="text-[28px] font-bold text-gray-900">Almost done</h1>
+            <h1 className="text-[28px] font-bold text-customBlue">Almost done</h1>
             <p>Fill in this form to complete your account.</p>
             <form className="finishSignForm space-y-4 flex flex-col mt-[60px]" encType="multipart/form-data" onSubmit={handleSubmit}>
               <div className="relative">
@@ -230,7 +233,7 @@ function FinishSign() {
           <img
             src={registerPhoto}
             alt="Login"
-            className={` w-[850px] ml-[-20px] ${containerStyle()}`}
+            className={` w-[730px] ml-[40px] ${containerStyle()}`}
           />
         </div>
       </section>

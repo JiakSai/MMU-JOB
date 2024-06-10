@@ -916,3 +916,30 @@ input[type="checkbox"] {
       opacity: 1;
   }
 }
+.employerLogo{
+  font-size: 35px; 
+  font-weight: bolder;
+  color: #EC407A ;
+}
+.empLogo{
+  margin-right: 10px;
+  font-weight: bolder;
+  font-size: 30px;
+  color: #EC407A;
+  margin-left: -15px;
+}
+.empLogo a{
+  color: #EC407A;
+}
+.sidebar .empLogo{
+  margin-left: auto;
+}
+.sidebar li:not(.empLogo) {
+  margin-left: 23px;
+}
+.logoEmp{
+  margin-right: 10px;
+  font-weight: bolder;
+  font-size: 30px;
+  color: #EC407A;
+}
