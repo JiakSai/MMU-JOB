@@ -21,7 +21,7 @@ import EmployerFinishSign from './employerFinishSign.jsx';
 function App() {
     return (
         <>
-            <UserLogin/>
+            {/* <UserLogin/> */}
             {/* <FinishSign/> */}
             {/* <UserRegister/> */}
             {/* <UserProfile/> */}
@@ -31,7 +31,7 @@ function App() {
             {/* <AddSkill /> */}
             {/* <AddProfileImage /> */}
             {/* <SearchCompany /> */}
-            {/* <CompanyProfile /> */}
+            <CompanyProfile />
             {/* <AddReview /> */}
             {/* <EmployerFooter/>
             <EmployerHeader/> */}

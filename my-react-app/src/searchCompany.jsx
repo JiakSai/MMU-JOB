@@ -49,11 +49,11 @@ const SearchCompany = () => {
                     <div key={index}>
                             <div className='flex items-center py-4 border-b border-black'>
                                 <img src={company.company.logo} alt="company logo" className='h-[75px] w-[75px] rounded-md' />
-                                <p className='font-medium text-3xl ml-8'>{company.company.name}</p>
+                                <p className='font-medium text-2xl ml-8'>{company.company.name}</p>
                                 <div className='flex items-center ml-[760px]'>
-                                    <FaStar color='yellow' size={40}/>
+                                    <FaStar color='yellow' size={35}/>
                                     <div className='ml-6'>
-                                        <span className='font-extralight text-3xl'>4.5</span><span className='text-3xl font-bold'>·</span><span className='font-extralight text-3xl'>300 reviews</span>
+                                        <span className='font-extralight text-2xl'>4.5</span><span className='text-2xl font-bold'>·</span><span className='font-extralight text-2xl'>300 reviews</span>
                                     </div>
                                 </div>
                             </div>

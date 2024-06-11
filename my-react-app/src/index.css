@@ -712,13 +712,20 @@ input[type="checkbox"] {
   width: 20px;
   height: 20px;
 }
-.jobTList, .stateList, .experienceList, .SpecializationList{
+.jobTList, .stateList, .experienceList, .SpecializationList, .salary{
   border: solid 1px #9b9b9b;
   border-radius: 20px;
   padding: 5px ;
   width: 326.4px;
   height: auto;
   display: none;
+}
+.salary{
+  margin: 15px 0;
+}
+.salaryInput{
+  width: 100px;
+  border: solid 1px #9b9b9b;
 }
 .jobTList li, .stateList li, .experienceList li, .SpecializationList li{
   border: none;
@@ -876,7 +883,7 @@ input[type="checkbox"] {
   background-image: linear-gradient(111.5deg, rgb(187, 232, 255) 11.1%, rgb(4, 78, 116) 107.5%);
   padding: 20px;
   border-radius: 16px;
-  width: 500px;
+  width: 520px;
   justify-content: space-between;
 }
 
