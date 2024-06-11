@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('employer_id');
-            // $table->unsignedInteger('company_category_id');
-            $table->string('job_title');
-            $table->string('job_type');
+            $table->string('jobTitle');
+            $table->string('jobType');
+            $table->string('jobCategory');
             $table->string('salary');
-            $table->string('job_location');
-            $table->string('education_level');
+            $table->string('jobLocation');
+            $table->string('locationType');
             $table->string('experience');
             $table->string('requirement');
             $table->text('description');

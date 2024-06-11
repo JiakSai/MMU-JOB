@@ -16,7 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('employer_id');
             $table->string('logo');
             $table->string('name', 50);
+            $table->string('category');
+            $table->string('companySize');
             $table->text('description');
+            $table->string('benefits');
             $table->string('website');
             $table->string('cover');
             $table->timestamps();

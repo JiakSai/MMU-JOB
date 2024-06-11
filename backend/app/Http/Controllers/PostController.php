@@ -27,11 +27,12 @@ class PostController extends Controller
 
         $validate = Validator::make($request->all(),
         [   
-            'job_title' => 'required|min:3',
-            'job_type' => 'required',
+            'jobTitle' => 'required|min:3',
+            'jobType' => 'required',
+            'jobCategory' => 'required',
             'salary' => 'required',
-            'job_location' => 'required',
-            'education_level' => 'required',
+            'jobLocation' => 'required',
+            'locationType' => 'required',
             'experience' => 'required',
             'requirement' => 'required',
             'description' => 'sometimes|min:5',

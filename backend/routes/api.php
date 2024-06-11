@@ -19,7 +19,7 @@ Route::get('/ShowPost', [PostController::class, 'index']);
 
 //User
 Route::post('/UserRegister', [UserController::class, 'createUser']);
-Route::post('/UserLogin', [UserController::class, 'loginUser']);
+Route::post('/UserLogin', [UserController::class, 'loginUser']); 
 Route::middleware(['auth:sanctum', 'user'])->group(function(){
     Route::patch('/UserFinishSignup', [UserController::class, 'finishSignup']);
     Route::patch('/UserUpdate', [UserController::class, 'updateUser']);//update user profile
@@ -46,3 +46,6 @@ Route::middleware(['auth:sanctum', 'employer'])->group(function(){
     Route::get('/ShowApplications', [EmployerController::class, 'showApplications']);
     Route::put('/UpdateApplicationStatus/{applicationsId}', [EmployerController::class, 'updateApplicationStatus']);
 });
+
+//Admin
+Route::post('/AddJobCategory', [JobCategoryController::class, 'store']);

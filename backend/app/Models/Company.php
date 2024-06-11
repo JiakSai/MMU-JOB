@@ -11,6 +11,18 @@ class Company extends Model
 {
     use HasFactory, Notifiable, HasApiTokens;
 
+    protected $fillable = [
+        'employer_id',
+        'name',
+        'logo',
+        'category',
+        'companySize',
+        'description',
+        'benefits',
+        'website',
+        'cover'
+    ];
+
     public function posts()
     {
         return $this->hasMany('App\Models\Post');

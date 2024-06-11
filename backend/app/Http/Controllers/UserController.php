@@ -171,7 +171,6 @@ class UserController extends Controller
 
         $user = $request->user();
         
-        Log::channel('post_log')->debug("Post Value", ["post" => $request->all()]);
         $validate = Validator::make($request->all(),
         [
             'name' => 'required',
@@ -181,7 +180,7 @@ class UserController extends Controller
             'state' => 'required',
             'city' => 'required',
             'major' => 'required',
-            'resume' => 'sometimes|mines:pdf',
+            'resume' => 'sometimes|mimes:pdf',
         ]);
 
         if($validate->fails()){
