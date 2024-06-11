@@ -10,11 +10,13 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\RatingController;
 
 //Public
 Route::get('/ShowUserAndCompany',[EmployerController::class, 'showUserAndCompany']);
 Route::get('/JobCategories', [JobCategoryController::class, 'index']);
-// Route::get('/ShowCompany', [CompanyController::class, 'index']);
+Route::get('/ShowCompany', [CompanyController::class, 'index']);
+Route::get('/ShowCompanyDetails/{company}', [CompanyController::class, 'show']);
 Route::get('/ShowPost', [PostController::class, 'index']);
 
 //User
@@ -32,6 +34,7 @@ Route::middleware(['auth:sanctum', 'user'])->group(function(){
     Route::delete('/DeleteEducation/{educationId}', [EducationController::class, 'destroy']);
     Route::post('/ApplyJob/{postId}', [ApplicationController::class, 'store']);
     Route::get('/ShowUserApplications', [UserController::class, 'showApplications']);
+    Route::post('/AddRating/{companyId}', [RatingController::class, 'store']);
     Route::get('/UserLogout', [UserController::class, 'logoutUser']);
 });
 

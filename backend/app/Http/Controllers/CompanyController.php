@@ -11,6 +11,33 @@ use Illuminate\Support\Facades\Validator;
 class CompanyController extends Controller
 {
     public function index(){
+        $companies = Company::withCount('ratings as totalReviews')
+                            ->withAvg('ratings as averageRating', 'rating')
+                            ->get();
+
+        $companiesArray = [];
+
+        foreach ($companies as $company) {
+            $companiesArray[] = [
+                'company' => $company->only(['id', 'logo', 'name']),
+                'averageRating' => $company->averageRating ?? 0,
+                'totalReviews' => $company->totalReviews,
+            ];
+        }
+        
+        return response()->json($companiesArray, 200);
+    }
+
+    public function show(Company $company){
+        $company->rating = $company->ratings->avg('rating');
+
+        $company->load('ratings');
+        $company->totalRatings = $company->ratings->count();
+
+        return response()->json($company, 200);
+    }
+
+    public function showcompanyposts(){
         $companies = Company::with('posts')->get();
         return response()->json($companies, 200);
     }

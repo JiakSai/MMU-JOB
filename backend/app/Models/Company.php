@@ -28,4 +28,9 @@ class Company extends Model
         return $this->hasMany('App\Models\Post');
     }
 
+    public function ratings()
+    {
+        return $this->hasMany('App\Models\Rating');
+    }
+
 }
