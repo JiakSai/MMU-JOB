@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class jobcategory extends Model
+class JobCategory extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, HasApiTokens;
 
-    protected $table = 'job_categories';
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+    ];
 }

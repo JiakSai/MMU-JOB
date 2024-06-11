@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('ratings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('company_id');
-            $table->unsignedBigInteger('employer_id');
+            $table->integer('rating');
+            $table->string('employeeType');
             $table->string('jobTitle');
-            $table->string('jobType');
-            $table->string('jobCategory');
-            $table->string('salary');
-            $table->string('jobLocation');
-            $table->string('locationType');
-            $table->string('experience');
-            $table->string('requirement');
-            $table->text('description');
+            $table->string('headline');
+            $table->text('review');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post');
+        Schema::dropIfExists('rating');
     }
 };

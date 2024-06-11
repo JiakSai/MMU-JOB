@@ -11,9 +11,35 @@ use Illuminate\Support\Facades\Validator;
 class CompanyController extends Controller
 {
     public function index(){
+        $companies = Company::withCount('ratings as totalReviews')
+                            ->withAvg('ratings as averageRating', 'rating')
+                            ->get();
+
+        $companiesArray = [];
+
+        foreach ($companies as $company) {
+            $companiesArray[] = [
+                'company' => $company->only(['id', 'logo', 'name']),
+                'averageRating' => $company->averageRating ?? 0,
+                'totalReviews' => $company->totalReviews,
+            ];
+        }
+        
+        return response()->json($companiesArray, 200);
+    }
+
+    public function show(Company $company){
+        $company->rating = $company->ratings->avg('rating');
+
+        $company->load('ratings');
+        $company->totalRatings = $company->ratings->count();
+
+        return response()->json($company, 200);
+    }
+
+    public function showcompanyposts(){
         $companies = Company::with('posts')->get();
         return response()->json($companies, 200);
-        // return view('index', ['companies' => $company]);
     }
 
     public function store(Request $request)
@@ -31,9 +57,12 @@ class CompanyController extends Controller
         [
             'name' => 'required',
             'website' => 'required',
+            'companySize' => 'required',
+            'category' => 'required',
             'logo' => 'required|image|max:2999',
             'cover' => 'required|image|max:3999',
             'description' => 'required|min:5',
+            'benefits' => 'required',
         ]);
 
         if($validate->fails()){
@@ -49,12 +78,14 @@ class CompanyController extends Controller
         $company->employer_id = $employer->id;
         $company->name = $request->name;
         $company->website = $request->website;
+        $company->category = $request->category;
+        $company->companySize = $request->companySize;
         $company->description = $request->description;
+        $company->benefits = $request->benefits;
 
         if($request->hasFile('logo')){
             $logoFile = $request->file('logo');
             $logoFilename = time() . '_logo.' . $logoFile->getClientOriginalExtension();
-            // asset('images/company/' . $logoFilename);
             $logoFile->move(public_path('images/company'), $logoFilename);
             $company->logo = asset('images/company/'.$logoFilename);
         }

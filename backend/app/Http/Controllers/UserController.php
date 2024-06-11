@@ -171,7 +171,6 @@ class UserController extends Controller
 
         $user = $request->user();
         
-        Log::channel('post_log')->debug("Post Value", ["post" => $request->all()]);
         $validate = Validator::make($request->all(),
         [
             'name' => 'required',
