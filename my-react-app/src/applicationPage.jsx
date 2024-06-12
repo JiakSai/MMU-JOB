@@ -193,7 +193,7 @@ function Application() {
             userValue: roleValues,
             action: handleAddRoleClick,
             renderFunction: (value) => (
-                <div className='border border-black px-4 py-2 w-[460px] flex justify-between rounded'>
+                <div className='border border-black px-4 py-2 w-[520px] flex justify-between rounded'>
                     <div>
                         <p className='font-semibold text-lg text-gray-900'>{value.title}</p>
                         <div className='text-sm text-gray-900 font-light'>
@@ -227,7 +227,7 @@ function Application() {
             userValue: educationValues,
             action: handleAddEducationClick,
             renderFunction: (value) => (
-                <div className='border border-black px-4 py-2 w-[460px] flex justify-between rounded'>
+                <div className='border border-black px-4 py-2 w-[520px] flex justify-between rounded'>
                     <div>
                         <p className='font-semibold text-lg text-gray-900'>{value.schoolName}</p>
                         <div className='text-sm text-gray-900 font-light'>
@@ -298,12 +298,12 @@ function Application() {
                     </div>
                     <div className='flex flex-col space-y-2 mt-[7px]'>
                         <p className='text-sm'>Applying for</p>
-                        <p className='text-3xl font-semibold'>{job.job_title}</p>
+                        <p className='text-3xl font-bold'>{job.job_title}</p>
                         <p className='text-xl'>{job.company.name}</p>
                         <p className='text-sm font-semibold underline underline-offset-4' onClick={() => handleOnclick(job)}>view job description</p>
                     </div>
                 </div>
-                <div className='profile flex'>
+                <div className='profile flex drop-shadow-x my-10'>
                         <div>
                             <p className='font-bold text-2xl'>{profileValues.name}</p>
                             <p className='text-base flex items-center gap-3'><IoLocationOutline />{profileValues.city}&nbsp;{profileValues.state}</p>
@@ -314,11 +314,11 @@ function Application() {
                             <button className='border border-black px-4 py-1 text-xl' onClick={handleEditProfile} >Edit Profile</button>
                     </div>
                 </div>
-                <div className='mt-[120px] mb-[40px] flex'>
+                <div className='mb-[40px] flex'>
                     <div>
                         {myConstants.map((item, index) => (
                             <div key={index} className='mb-[40px]'>
-                                <h1 className='font-bold text-[26px] mb-[30px]'>{item.title}</h1>
+                                <h1 className='font-bold text-[26px] mb-[30px] underline underline-offset-8'>{item.title}</h1>
                                 {Array.isArray(item.userValue) && item.userValue.length > 0 ? 
                                     item.userValue.map((value, idx) => (
                                         <div key={idx} className='mb-[10px]'>
@@ -326,15 +326,15 @@ function Application() {
                                         </div>
                                     ))
                                     :
-                                    <p className='text-lg'>{item.value}</p> 
+                                    <p className='text-lg '>{item.value}</p> 
                                 }
                                 <button onClick={item.action} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>{item.button}</button>
                             </div>
                         ))}
                         <div className='mb-[40px]'>
-                            <h1 className='font-bold text-[26px] mb-[30px]'>Resume</h1>
+                            <h1 className='font-bold text-[26px] mb-[30px] underline underline-offset-8'>Resume</h1>
                             {resumeValues ?
-                                <div className='border border-black px-4 py-2 w-[460px] flex justify-between rounded'>
+                                <div className='border border-black px-4 py-2 w-[520px] flex justify-between rounded'>
                                     <a href={resumeValues} className='flex items-center gap-2'><FaFileAlt />{resumeFileName}</a>
                                 </div>
                                 :
@@ -342,10 +342,10 @@ function Application() {
                             }
                             <button onClick={() => setShowAddResume(true)} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>Add resume</button>
                         </div>
-                        <div className='mb-[40px]'>
-                            <h1 className='font-bold text-[26px] mb-[30px]'>Skills</h1>
+                        <div>
+                            <h1 className='font-bold text-[26px] mb-[30px] underline underline-offset-8'>Skills</h1>
                             {skillsValues ?
-                                <div className='border border-black px-4 py-2 w-[460px] flex justify-between rounded'>
+                                <div className='border border-black px-4 py-2 w-[520px] flex justify-between rounded'>
                                     <p className='font-normal text-sm text-gray-900'>{skillsValues}</p>
                                 </div>
                                 :
@@ -356,7 +356,7 @@ function Application() {
                     </div>
                 </div>
                 <button 
-                className='text-lg border-2 border-customBlue text-customBlue px-4 py-1 mt-[10px] rounded'
+                className='text-lg border-2 border-customBlue text-customBlue px-4 py-1 rounded'
                 onClick={handleSubmit}
                 >
                     Submit application

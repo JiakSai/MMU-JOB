@@ -18,6 +18,9 @@ import { AddSkill } from "./popUp-Components/addSkill.jsx";
 import { EditProfile } from "./popUp-Components/editProfile.jsx";
 import Application from "./applicationPage.jsx";
 import { ViewJobDetails } from "./popUp-Components/viewJobDetails.jsx";
+import EmployerRegister from "./employerRegister.jsx";
+import EmployerLogin from "./employerLogin.jsx";
+import SearchCompany from "./searchCompany.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -87,6 +90,18 @@ const router = createBrowserRouter([
     path: "viewJobDetails",
     element: <ViewJobDetails />,
   },
+  {
+    path: "employerRegister",
+    element: <EmployerRegister />,
+  },
+  {
+    path: "employerLogin",
+    element: <EmployerLogin />,
+  },
+  {
+    path: "searchCompany",
+    element: <SearchCompany />,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

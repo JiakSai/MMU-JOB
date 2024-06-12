@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import loginphoto from './photo/Zombieing.svg';
+import loginphoto from './photo/Strolling.svg';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import axios from 'axios';
-import Footer from './Footer.jsx';
+import EmployerFooter from './employerFooter';
 import Cookies from 'js-cookie';
 
-export default function UserLogin() {
+export default function EmployerLogin() {
     const navigate = useNavigate();
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [loginPost, setLoginPost] = useState({
@@ -54,7 +54,7 @@ export default function UserLogin() {
         setFormError(inputError);
 
         // Submit login data
-        axios.post('http://localhost:8000/api/UserLogin', loginPost)
+        axios.post('http://localhost:8000/api/EmployerLogin', loginPost)
             .then(response => {
                 console.log(response);
                 const token = response.data.token; 
@@ -73,13 +73,13 @@ export default function UserLogin() {
     return (
         <>
         <section>
-            <div className='LoginRegisterTop'><h1 className='logoUser'>" MMUJOB "</h1> </div>
+            <div className='LoginRegisterTop'><h1 className='logoEmp'>" MMUJOB "</h1> </div>
             <div className="userLoginContainer">
                 <img src={loginphoto} alt="Login" className='w-[720px] h-[480px] ml-[-25px] mt-[-8px]'/>
                 <div>
-                    <p className='changeSite'><Link to="/employerLogin">Are you an employer?</Link></p>
+                    <p className='changeSite'>Are you a job seeker?</p>
                     <div className='userLoginFormContainer'>
-                        <h1 className='text-[28px] font-bold text-customBlue'>Welcome Back!</h1>
+                        <h1 className='text-[28px] font-bold text-customPink'>Employer Sign In</h1>
                         <p>Please login to your account</p>
                         <form className="userLoginForm" onSubmit={handleSubmit}>
                             <label htmlFor="email">Email Address</label>
@@ -112,13 +112,13 @@ export default function UserLogin() {
                                 <a href="#">Forgot password?</a>
                             </div>
                             <button type="submit">Login</button>
-                            <p className='toRegister'>Do you have an account? <Link to="/userRegister">Register</Link></p>
+                            <p className='toRegister'>Do you have an account? <Link to="/employerRegister">Register</Link></p>
                         </form>
                     </div>
                 </div>
             </div>
         </section>
-        <Footer />
+        <EmployerFooter />
         </>
     );
 }
