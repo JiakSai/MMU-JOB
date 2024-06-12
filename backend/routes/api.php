@@ -46,7 +46,7 @@ Route::middleware(['auth:sanctum', 'employer'])->group(function(){
     Route::get('/EmployerLogout', [EmployerController::class, 'logoutEmployer']);
     Route::post('/AddCompany', [CompanyController::class, 'store']);
     Route::post('/AddPost', [PostController::class, 'store']);
-    Route::get('/ShowCompanyPosts', [CompanyController::class, 'index']);
+    Route::get('/ShowPostsEmployer', [EmployerController::class, 'showForEmployer']);
     Route::get('/ShowApplications', [EmployerController::class, 'showApplications']);
     Route::put('/UpdateApplicationStatus/{applicationsId}', [EmployerController::class, 'updateApplicationStatus']);
 });

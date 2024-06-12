@@ -29,6 +29,20 @@ class EmployerController extends Controller
         ]);
     }
 
+    public function showForEmployer(Request $request)
+    {
+        $employer = $request->user();
+
+        $employer->load('posts');
+        $employer->totalPosts = $employer->posts->count();
+
+        foreach ($employer->posts as $post){
+            $post->time_ago = $post->created_at->diffForHumans();
+        }
+
+        return response()->json($employer->posts, 200);
+    }
+
     public function showApplications()
     {
         $employer = Auth::guard('employer')->user();

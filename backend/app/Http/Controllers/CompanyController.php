@@ -44,6 +44,10 @@ class CompanyController extends Controller
         $company->load('posts');
         $company->totalPosts = $company->posts->count();
 
+        foreach ($company->posts as $post) {
+            $post->time_ago = $post->created_at->diffForHumans();
+        }
+
         return response()->json($company, 200);
     }
 

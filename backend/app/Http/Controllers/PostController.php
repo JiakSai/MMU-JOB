@@ -10,6 +10,11 @@ class PostController extends Controller
 {
     public function index(){
         $posts = Post::with('company')->get();
+
+        foreach ($posts as $post) {
+            $post->time_ago = $post->created_at->diffForHumans();
+        }
+        
         return response()->json($posts, 200);
     }
 
