@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('logo');
             $table->string('name', 50);
             $table->string('category');
+            $table->string('location');
             $table->string('companySize');
             $table->text('description');
             $table->string('benefits');

@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $companies = Company::withCount('ratings as totalReviews')
                             ->withAvg('ratings as averageRating', 'rating')
                             ->get();
@@ -28,7 +29,8 @@ class CompanyController extends Controller
         return response()->json($companiesArray, 200);
     }
 
-    public function show(Company $company){
+    public function show(Company $company)
+    {
         $company->rating = $company->ratings->avg('rating');
 
         $company->load('ratings');
@@ -37,9 +39,12 @@ class CompanyController extends Controller
         return response()->json($company, 200);
     }
 
-    public function showcompanyposts(){
-        $companies = Company::with('posts')->get();
-        return response()->json($companies, 200);
+    public function showCompanyPosts(Company $company)
+    {
+        $company->load('posts');
+        $company->totalPosts = $company->posts->count();
+
+        return response()->json($company, 200);
     }
 
     public function store(Request $request)
@@ -59,6 +64,7 @@ class CompanyController extends Controller
             'website' => 'required',
             'companySize' => 'required',
             'category' => 'required',
+            'location' => 'required',
             'logo' => 'required|image|max:2999',
             'cover' => 'required|image|max:3999',
             'description' => 'required|min:5',
@@ -79,6 +85,7 @@ class CompanyController extends Controller
         $company->name = $request->name;
         $company->website = $request->website;
         $company->category = $request->category;
+        $company->location = $request->location;
         $company->companySize = $request->companySize;
         $company->description = $request->description;
         $company->benefits = $request->benefits;

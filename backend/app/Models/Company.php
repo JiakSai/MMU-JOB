@@ -16,6 +16,7 @@ class Company extends Model
         'name',
         'logo',
         'category',
+        'location',
         'companySize',
         'description',
         'benefits',

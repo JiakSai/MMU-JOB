@@ -17,6 +17,7 @@ Route::get('/ShowUserAndCompany',[EmployerController::class, 'showUserAndCompany
 Route::get('/JobCategories', [JobCategoryController::class, 'index']);
 Route::get('/ShowCompany', [CompanyController::class, 'index']);
 Route::get('/ShowCompanyDetails/{company}', [CompanyController::class, 'show']);
+Route::get('/ShowCompanyPosts/{company}', [CompanyController::class, 'showCompanyPosts']);
 Route::get('/ShowPost', [PostController::class, 'index']);
 
 //User
