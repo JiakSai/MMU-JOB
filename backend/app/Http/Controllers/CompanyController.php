@@ -117,4 +117,63 @@ class CompanyController extends Controller
         ], 201);
     }
 
+    public function update(Request $request)
+    {
+        $employer = $request->user();
+
+        $validate = Validator::make($request->all(),
+        [
+            'name' => 'sometimes|required',
+            'website' => 'sometimes|required',
+            'companySize' => 'sometimes|required',
+            'category' => 'sometimes|required',
+            'location' => 'sometimes|required',
+            'logo' => 'sometimes|image|max:2999',
+            'cover' => 'sometimes|image|max:3999',
+            'description' => 'sometimes|required|min:5',
+            'benefits' => 'sometimes|required',
+        ]);
+
+        if($validate->fails()){
+            return response()->json([
+                'status' => false,
+                'message' => 'validation error',
+                'errors' => $validate->errors()
+            ], 401);
+        }
+
+        $company = $employer->company;
+
+        if (!$company) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Company not found',
+            ], 404);
+        }
+
+        $data = $request->all();
+
+        if($request->hasFile('logo')){
+            $logoFile = $request->file('logo');
+            $logoFilename = time() . '_logo.' . $logoFile->getClientOriginalExtension();
+            $logoFile->move(public_path('images/company'), $logoFilename);
+            $data['logo'] = asset('images/company/'.$logoFilename);
+        }
+
+        if($request->hasFile('cover')){
+            $coverFile = $request->file('cover');
+            $coverFilename = time() . '_cover.' . $coverFile->getClientOriginalExtension();
+            $coverFile->move(public_path('images/company'), $coverFilename);
+            $data['cover'] = asset('images/company/'.$coverFilename);
+        }
+
+        $company->update($data);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Company updated successfully',
+            'data' => $company
+        ], 200);
+    }
+
 }
