@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class Employer
+class Admin
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,10 @@ class Employer
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('employer')->check()) {
+        if (Auth::guard('admin')->check()) {
             return $next($request);
         }
 
         return response()->json(['message' => 'Unauthorized'], 403);
     }
-
 }

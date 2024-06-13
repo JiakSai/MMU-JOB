@@ -56,5 +56,7 @@ Route::middleware(['auth:sanctum', 'employer'])->group(function(){
 
 //Admin
 Route::post('/AdminLogin', [AdminController::class, 'login']);
-Route::get('/ShowUserAndCompany',[EmployerController::class, 'showUserAndCompany']);
-Route::post('/AddJobCategory', [JobCategoryController::class, 'store']);
+Route::middleware(['auth:sanctum', 'admin'])->group(function(){
+    Route::get('/ShowUserAndCompany',[EmployerController::class, 'showUserAndCompany']);
+    Route::post('/AddJobCategory', [JobCategoryController::class, 'store']);
+});
