@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,15 @@ class RatingController extends Controller
     public function store(Request $request, $companyId)
     {
         $user = $request->user();
+
+        $company = Company::find($companyId);
+
+        if (!$company) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Company not found'
+            ], 404);
+        }
 
         if($user->ratings()->where('company_id', $companyId)->exists()){
             return response()->json([

@@ -21,7 +21,7 @@ class CompanyController extends Controller
         foreach ($companies as $company) {
             $companiesArray[] = [
                 'company' => $company->only(['id', 'logo', 'name']),
-                'averageRating' => $company->averageRating ?? 0,
+                'averageRating' => number_format((float)$company->averageRating, 1, '.', ''),
                 'totalReviews' => $company->totalReviews,
             ];
         }
@@ -31,12 +31,24 @@ class CompanyController extends Controller
 
     public function show(Company $company)
     {
-        $company->rating = $company->ratings->avg('rating');
+        $averageRating = $company->ratings->avg('rating');
+        $company->rating = number_format((float)$averageRating, 1, '.', '');
 
-        $company->load('ratings');
+        $company->load(['ratings' => function ($query) {
+            $query->with(['user' => function ($query) {
+                $query->select('id', 'profilePic');
+            }]);
+        }]);
+
         $company->totalRatings = $company->ratings->count();
 
+        foreach ($company->ratings as $rating) {
+            $rating->userProfilePic = $rating->user->profilePic;
+            unset($rating->user);
+    }
+    
         return response()->json($company, 200);
+    
     }
 
     public function showCompanyPosts(Company $company)
