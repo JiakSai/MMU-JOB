@@ -13,7 +13,6 @@ class Employer extends Authenticatable
     use HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
-        'name',
         'email',
         'password',
     ];
@@ -26,7 +25,6 @@ class Employer extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

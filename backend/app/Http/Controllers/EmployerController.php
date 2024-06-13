@@ -149,7 +149,8 @@ class EmployerController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Employer Logged In Successfully',
-            'token' => $token], 200);
+            'token' => $token
+        ], 200);
     }
 
     public function logoutEmployer(){

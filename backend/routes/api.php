@@ -11,9 +11,9 @@ use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\AdminController;
 
 //Public
-Route::get('/ShowUserAndCompany',[EmployerController::class, 'showUserAndCompany']);
 Route::get('/JobCategories', [JobCategoryController::class, 'index']);
 Route::get('/ShowCompany', [CompanyController::class, 'index']);
 Route::get('/ShowCompanyDetails/{company}', [CompanyController::class, 'show']);
@@ -28,8 +28,8 @@ Route::middleware(['auth:sanctum', 'user'])->group(function(){
     Route::patch('/UserUpdate', [UserController::class, 'updateUser']);//update user profile
     Route::get('/ShowUserProfile', [UserController::class, 'show']);
     Route::post('/AddEducation', [EducationController::class, 'store']);
-    Route::patch('/UpdateEducation/{educationId}', [EducationController::class, 'update']);
     Route::post('/AddExperience', [ExperienceController::class, 'store']);
+    Route::patch('/UpdateEducation/{educationId}', [EducationController::class, 'update']);
     Route::patch('/UpdateExperience/{experienceId}', [ExperienceController::class, 'update']);
     Route::delete('/DeleteExperience/{experienceId}', [ExperienceController::class, 'destroy']);
     Route::delete('/DeleteEducation/{educationId}', [EducationController::class, 'destroy']);
@@ -46,10 +46,15 @@ Route::middleware(['auth:sanctum', 'employer'])->group(function(){
     Route::get('/EmployerLogout', [EmployerController::class, 'logoutEmployer']);
     Route::post('/AddCompany', [CompanyController::class, 'store']);
     Route::post('/AddPost', [PostController::class, 'store']);
+    Route::patch('/UpdatePost/{post}', [PostController::class, 'update']);
+    Route::delete('/DeletePost/{post}', [PostController::class, 'destroy']);
+    Route::patch('/UpdateCompany', [CompanyController::class, 'update']);
     Route::get('/ShowPostsEmployer', [EmployerController::class, 'showForEmployer']);
     Route::get('/ShowApplications', [EmployerController::class, 'showApplications']);
     Route::put('/UpdateApplicationStatus/{applicationsId}', [EmployerController::class, 'updateApplicationStatus']);
 });
 
 //Admin
+Route::post('/AdminLogin', [AdminController::class, 'login']);
+Route::get('/ShowUserAndCompany',[EmployerController::class, 'showUserAndCompany']);
 Route::post('/AddJobCategory', [JobCategoryController::class, 'store']);

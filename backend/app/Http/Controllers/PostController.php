@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $posts = Post::with('company')->get();
 
         foreach ($posts as $post) {
@@ -18,8 +19,8 @@ class PostController extends Controller
         return response()->json($posts, 200);
     }
 
-    public function store(Request $request){
-
+    public function store(Request $request)
+    {
         $employer = $request->user(); // Get the authenticated user
 
         // Check if the employer has a company
@@ -67,5 +68,67 @@ class PostController extends Controller
             ], 400);
         }
         
+    }
+
+    public function update(Request $request, Post $post)
+    {
+        $employer = $request->user();
+
+        $validate = Validator::make($request->all(),
+        [   
+            'jobTitle' => 'sometimes|required|min:3',
+            'jobType' => 'sometimes|required',
+            'jobCategory' => 'sometimes|required',
+            'salary' => 'sometimes|required',
+            'jobLocation' => 'sometimes|required',
+            'locationType' => 'sometimes|required',
+            'experience' => 'sometimes|required',
+            'requirement' => 'sometimes|required',
+            'description' => 'sometimes|min:5',
+        ]);
+
+        if($validate->fails()){
+            return response()->json([
+                'status' => false,
+                'message' => 'validation error',
+                'errors' => $validate->errors()
+            ], 401);
+        }
+
+        if($post->employer_id == $employer->id){
+
+            $post->update($request->all());
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Post updated successfully',
+                'data' => $post
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Posts not found or not owned by the user',
+            ], 404);
+        }
+            
+    }
+
+    public function destroy(Request $request, Post $post)
+    {
+        $employer = $request->user();
+
+        if($post->employer_id == $employer->id){
+            $post->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Post deleted successfully',
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Posts not found or not owned by the user',
+            ], 404);
+        }
     }
 }
