@@ -507,7 +507,8 @@ form button {
   margin-bottom: 10px;
 }
 .jobListTop h4{
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 600;
   margin-bottom: 3px;
 }
 .jobListTop .icon{
@@ -949,4 +950,12 @@ input[type="checkbox"] {
   font-weight: bolder;
   font-size: 30px;
   color: #EC407A;
+}
+.progressbar{
+	position: relative;
+	overflow: hidden;
+	width: 280px;
+	height: 19px;
+	border-radius: 15px;
+	background-color: #eee;
 }

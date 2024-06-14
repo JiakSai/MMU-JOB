@@ -5,13 +5,19 @@ import axios from 'axios';
 import { FaStar } from "react-icons/fa6";
 import { Job } from './companySearch-Components/job';
 import { About } from './companySearch-Components/about';
+import { useLocation } from 'react-router-dom';
+import { AddReview } from './companySearch-Components/addReview';
+import { Review } from './companySearch-Components/review';
 
 const CompanyProfile = () => {
-    const [showCompany, setShowCompany] = useState([]);
-    const [activeTab, setActiveTab] = useState('About');
+    const location = useLocation();
+    const company = location.state?.company;
+    const [showCompany, setShowCompany] = useState([]); 
+    const [activeTab, setActiveTab] = useState(localStorage.getItem('activeTab') || 'About');
+    const [showReview, setShowReview] = useState(false);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/ShowPost')
+        axios.get(`http://localhost:8000/api/ShowCompanyDetails/${company.company.id}`)
             .then(response => {
                 setShowCompany(response.data);
                 console.log(response.data);
@@ -19,67 +25,73 @@ const CompanyProfile = () => {
             .catch(error => {
                 console.error('There was an error!', error);
             });
-    }, []);
+    }, [company.company.id]);
 
-    // Conditional rendering for cover image and company details
-    const coverImage = showCompany.length > 0 ? showCompany[0].company.cover : '';
-    const companyLogo = showCompany.length > 0 ? showCompany[0].company.logo : '';
-    const companyName = showCompany.length > 0 ? showCompany[0].company.name : '';
-    
+    useEffect(() => {
+        localStorage.setItem('activeTab', activeTab);
+    }, [activeTab]);
+
+    const { cover, logo, name, rating, totalRatings } = showCompany;
+
     return (
         <>
             <Header />
             <section className='mt-[100px] mb-[30px] mx-[250px]'>
-                <div className='py-10 bg-neutral-300 rounded-t-[30px] shadow-lg	shadow-neutral-400' >
-                    {coverImage && <img className='w-full h-[190px]' src={coverImage} alt="Company Cover" />}
+                <div className='py-10 bg-neutral-300 rounded-t-3xl shadow-lg shadow-neutral-400'>
+                    {cover && <img className='w-full h-[190px]' src={cover} alt="Company Cover" />}
                 </div>
                 <div className='mx-5'>
-                <div className='mt-4 flex justify-between items-center'>
-                    <div className='flex flex-col space-y-1'> 
-                        {companyLogo && <img className='w-20 h-20 rounded-lg' src={companyLogo} alt="Company Logo" />}
-                        {companyName && <p className='text-xl font-[550]'>{companyName}</p>}
-                        <div className='flex'>
-                            <FaStar color='yellow' size={20} />
-                            <FaStar color='yellow' size={20} />
-                            <FaStar color='yellow' size={20} />
-                            <FaStar color='yellow' size={20} />
-                            <FaStar color='yellow' size={20} />
-                            <div className='flex gap-1 ml-[10px] text-gray-800'>
-                                <span>4.5 </span>
-                                <span>total rate from </span>
-                                <span>300 </span>
-                                <span>reviews</span>
+                    <div className='mt-4 flex justify-between items-center'>
+                        <div className='flex flex-col space-y-1'>
+                            {logo && <img className='w-20 h-20 rounded-lg' src={logo} alt="Company Logo" />}
+                            {name && <p className='text-xl font-[550]'>{name}</p>}
+                            <div className='flex'>
+                                {[...Array(5)].map((star, index) => (
+                                    <FaStar key={index} color={index < rating ? 'yellow' : 'gray'} size={20} />
+                                ))}
+                                <div className='flex gap-1 ml-[10px] text-gray-800'>
+                                    <span>{rating || "N/A"}</span>
+                                    <span>total rate from</span>
+                                    <span>{totalRatings || 0}</span>
+                                    <span>reviews</span>
+                                </div>
                             </div>
                         </div>
+                        <button onClick={() => { setShowReview(true) }} className='px-4 py-2 rounded-md border-2 font-semibold border-customBlue h-full text-customBlue text-lg'>
+                            Write Reviews
+                        </button>
                     </div>
-                    <button className='px-4 py-2 rounded-md border-2 font-semibold border-customBlue h-full text-customBlue text-lg'>
-                        Write Reviews
-                    </button>
+                    <div className='flex gap-3 border-b border-neutral-600 pb-2 mt-8 mb-10'>
+                        <p
+                            className={`cursor-pointer ${activeTab === 'About' ? 'text-xl border-b-2 border-blue-500 text-blue-500 mb-[-8px]' : 'text-xl text-gray-700'}`}
+                            onClick={() => setActiveTab('About')}
+                        >
+                            About
+                        </p>
+                        <p
+                            className={`cursor-pointer ${activeTab === 'Job' ? 'text-xl border-b-2 border-blue-500 text-blue-500 mb-[-8px]' : 'text-xl text-gray-700'}`}
+                            onClick={() => setActiveTab('Job')}
+                        >
+                            Job
+                        </p>
+                        <p
+                            className={`cursor-pointer ${activeTab === 'Reviews' ? 'text-xl border-b-2 border-blue-500 text-blue-500 mb-[-8px]' : 'text-xl text-gray-700'}`}
+                            onClick={() => setActiveTab('Reviews')}
+                        >
+                            Reviews
+                        </p>
+                    </div>
+                    {activeTab === 'About' && <About company={showCompany} />}
+                    {activeTab === 'Job' && <Job company={showCompany} />}
+                    {activeTab === 'Reviews' && <Review company={showCompany} />}
+                    {showReview &&
+                        <AddReview
+                            company={showCompany}
+                            justClose={() => { setShowReview(false); }}
+                            onClose={() => { setShowReview(false); window.location.reload(); }}
+                        />
+                    }
                 </div>
-                <div className='flex gap-3 border-b border-neutral-600 pb-2 mt-8 '>
-                    <p
-                        className={`cursor-pointer ${activeTab === 'About' ? 'text-xl border-b-2 border-blue-500 text-blue-500 mb-[-8px]' : 'text-xl'}`}
-                        onClick={() => setActiveTab('About')}
-                    >
-                        About
-                    </p>
-                    <p
-                        className={`cursor-pointer ${activeTab === 'Job' ? 'text-xl border-b-2 border-blue-500 text-blue-500 mb-[-8px]' : 'text-xl'}`}
-                        onClick={() => setActiveTab('Job')}
-                    >
-                        Job
-                    </p>
-                    <p
-                        className={`cursor-pointer ${activeTab === 'Reviews' ? 'text-xl border-b-2 border-blue-500 text-blue-500 mb-[-8px]' : 'text-xl'}`}
-                        onClick={() => setActiveTab('Reviews')}
-                    >
-                        Reviews
-                    </p>
-                </div>
-                {activeTab === 'About' && <About />}
-                {activeTab === 'Job' && <Job />}
-                </div>
-                
             </section>
             <Footer />
         </>

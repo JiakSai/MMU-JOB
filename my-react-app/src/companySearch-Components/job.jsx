@@ -30,12 +30,13 @@ export function Job(){
                 <div className='grid grid-cols-2 md:grid-cols-auto-fit md:grid-rows-2 gap-4'>
                     {showCompany.map((company, index) => (
                         <div key={index} className='ml-4 w-[440px] h-[190px] px-8 py-8 border-b border-r border-black'>
-                            <p>{company.job_title}</p>
-                            <p>{company.job_location}</p>
+                            <p>{company.jobTitle}</p>
+                            <p>{company.jobLocation}</p>
                             <span>Job Description</span>
                             <span>
                                 {truncateText(company.description, 20)}
                             </span>
+                            <p>{company.time_ago}</p>
                         </div>
                     ))}
                 </div>
