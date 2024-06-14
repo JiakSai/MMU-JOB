@@ -73,7 +73,7 @@ function EmployerRegister() {
                 if (response.status === 200) {
                     const token = response.data.token; 
                     Cookies.set('token', token); 
-                    navigate('/userFinishSign');
+                    navigate('/employerFinishSign');
                     console.log(token);
                 }
                 console.log(response);

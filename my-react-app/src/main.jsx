@@ -22,6 +22,8 @@ import EmployerRegister from "./employerRegister.jsx";
 import EmployerLogin from "./employerLogin.jsx";
 import SearchCompany from "./searchCompany.jsx";
 import CompanyProfile from "./companyProfile.jsx";
+import EmployerFinishSign from "./employerFinishSign.jsx";
+import EditComProfile from "./editCompanyProfile.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -52,32 +54,12 @@ const router = createBrowserRouter([
     element: <SearchBar />,
   },
   {
-    path: "AddRole",
-    element: <AddRole />,
-  },
-  {
     path: "SearchJob",
     element: <SearchJob />,
   },
   {
     path: "UserProfile",
     element: <UserProfile/>
-  },
-  {
-    path: "AddResume",
-    element: <AddResume />,
-  },
-  {
-    path: "AddEducation",
-    element: <AddEducation />,
-  },
-  {
-    path: "AddSkill",
-    element: <AddSkill />,
-  },
-  {
-    path: "EditProfile",
-    element: <EditProfile />,
   },
   {
     path: "*",
@@ -106,6 +88,14 @@ const router = createBrowserRouter([
   {
     path: "companyProfile",
     element: <CompanyProfile />,
+  },
+  {
+    path: "employerFinishSign",
+    element: <EmployerFinishSign />,
+  },
+  {
+    path: "editComProfile",
+    element: <EditComProfile />,
   }
 ]);
 

@@ -951,11 +951,24 @@ input[type="checkbox"] {
   font-size: 30px;
   color: #EC407A;
 }
-.progressbar{
-	position: relative;
-	overflow: hidden;
-	width: 280px;
-	height: 19px;
-	border-radius: 15px;
-	background-color: #eee;
+.companyCover {
+  height: 170px;
+  width: 100%;
+  background-image: linear-gradient(111.5deg, rgb(252, 228, 236) 11.1%, rgb(236, 64, 122) 107.5%);
+  display: flex; /* Use flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  position: relative;
+}
+
+.companyCover .content {
+  position: absolute;
+  top: 95%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 180px;
+  width: 180px;
+}
+.companyContent{
+  box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.1);
 }

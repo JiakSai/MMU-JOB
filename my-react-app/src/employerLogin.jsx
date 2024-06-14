@@ -60,7 +60,7 @@ export default function EmployerLogin() {
                 const token = response.data.token; 
                     Cookies.set('token', token); 
                     console.log(token);
-                    navigate('/SearchJob');
+                    navigate('/editComProfile');
             })
             .catch(error => {
                 console.log(error);
