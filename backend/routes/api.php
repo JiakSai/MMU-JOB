@@ -48,6 +48,7 @@ Route::middleware(['auth:sanctum', 'employer'])->group(function(){
     Route::post('/AddPost', [PostController::class, 'store']);
     Route::patch('/UpdatePost/{post}', [PostController::class, 'update']);
     Route::delete('/DeletePost/{post}', [PostController::class, 'destroy']);
+    Route::get('/ShowCompanyProfile', [EmployerController::class, 'showOwnCompany']);
     Route::patch('/UpdateCompany', [CompanyController::class, 'update']);
     Route::get('/ShowPostsEmployer', [EmployerController::class, 'showForEmployer']);
     Route::get('/ShowApplications', [EmployerController::class, 'showApplications']);

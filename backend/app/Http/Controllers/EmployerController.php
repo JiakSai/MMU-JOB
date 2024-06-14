@@ -89,6 +89,24 @@ class EmployerController extends Controller
             'application' => $application
         ], 200);
     }
+
+    public function showOwnCompany(Request $request)
+    {
+        $employerId = auth()->guard('employer')->id();
+        $company = Employer::find($employerId)->company;
+
+        if (!$company) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Company not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'company' => $company
+        ], 200);
+    }
     
     public function createEmployer(Request $request)
     {
