@@ -6,11 +6,19 @@ import search from './photo/searchBar.svg';
 import { useEffect, useState} from 'react';
 import axios from 'axios';
 import { FaStar } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
+
 
 const SearchCompany = () => {
     const [showCompany, setShowCompany] = useState([]);
+    const navigate = useNavigate();
+
+    const handleCompanyClick = (company) => {
+        navigate('/companyProfile', {state: {company}});
+    };
+
     useEffect(() => {
-        axios.get('http://localhost:8000/api/ShowPost')
+        axios.get('http://localhost:8000/api/ShowCompany')
           .then(response => {
             setShowCompany(response.data);
             console.log(response.data);
@@ -46,11 +54,13 @@ const SearchCompany = () => {
                     </div>
                 </div>
                 {showCompany.map((company, index) => ( 
-                    <div key={index}>
-                            <div className='flex items-center py-4 border-b border-black'>
-                                <img src={company.company.logo} alt="company logo" className='h-[75px] w-[75px] rounded-md' />
-                                <p className='font-medium text-2xl ml-8'>{company.company.name}</p>
-                                <div className='flex items-center ml-[760px]'>
+                    <div key={index} onClick={() => handleCompanyClick(company)}>
+                            <div className='flex items-center py-4 border-b border-black justify-between'>
+                                <div className='flex items-center'>
+                                    <img src={company.company.logo} alt="company logo" className='h-[75px] w-[75px] rounded-md' />
+                                    <p className='font-medium text-2xl ml-8'>{company.company.name}</p>
+                                </div>
+                                <div className='flex items-center mr-8'>
                                     <FaStar color='yellow' size={35}/>
                                     <div className='ml-6'>
                                         <span className='font-extralight text-2xl'>4.5</span><span className='text-2xl font-bold'>·</span><span className='font-extralight text-2xl'>300 reviews</span>

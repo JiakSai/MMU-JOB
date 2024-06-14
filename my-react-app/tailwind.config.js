@@ -9,6 +9,7 @@ export default {
       colors: {
         'customBlue': '#2471A3',
         'customPink': '#EC407A',
+        'customyellow': '#FFEA00',
       },
     },
   },

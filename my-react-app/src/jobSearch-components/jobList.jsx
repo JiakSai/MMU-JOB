@@ -38,15 +38,15 @@ export default function JobList() {
             <div className="jobListTop">
                <img src={job.company.logo} alt="company logo" className="jobLogo" />
               <div>
-                <h4>{job.job_title}</h4>
+                <h4>{job.jobTitle}</h4>
                 <p>{job.company.name}</p>
               </div>
               <IoBookmarkOutline className="icon" />
             </div>
             <div>
-              <p>{job.job_type} | on-site | {job.job_location}</p>
+              <p>{job.jobType} | {job.locationType} | {job.jobLocation}</p>
               <div className="jobListBottom">
-                <p>{job.created_at}</p>
+                <p>{job.time_ago}</p>
                 <p>RM{job.salary}</p>
               </div>
             </div>

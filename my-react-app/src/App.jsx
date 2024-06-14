@@ -17,6 +17,7 @@ import EmployerFooter from './employerFooter.jsx';
 import EmployerHeader from './employerHeader.jsx';
 import EmployerLogin from './employerLogin.jsx';
 import EmployerFinishSign from './employerFinishSign.jsx';
+import ReviewBar from './companySearch-Components/reviewBar.jsx';
 
 function App() {
     return (
@@ -31,12 +32,13 @@ function App() {
             {/* <AddSkill /> */}
             {/* <AddProfileImage /> */}
             {/* <SearchCompany /> */}
-            <CompanyProfile />
+            {/* <CompanyProfile /> */}
             {/* <AddReview /> */}
             {/* <EmployerFooter/>
             <EmployerHeader/> */}
             {/* <EmployerLogin/> */}
-            {/* <EmployerFinishSign/> */}
+            <EmployerFinishSign/>
+            {/* <ReviewBar/> */}
         </>
     );
 }

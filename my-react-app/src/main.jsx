@@ -21,6 +21,7 @@ import { ViewJobDetails } from "./popUp-Components/viewJobDetails.jsx";
 import EmployerRegister from "./employerRegister.jsx";
 import EmployerLogin from "./employerLogin.jsx";
 import SearchCompany from "./searchCompany.jsx";
+import CompanyProfile from "./companyProfile.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
   {
     path: "searchCompany",
     element: <SearchCompany />,
+  },
+  {
+    path: "companyProfile",
+    element: <CompanyProfile />,
   }
 ]);
 

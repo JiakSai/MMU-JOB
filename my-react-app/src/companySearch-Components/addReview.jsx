@@ -1,34 +1,60 @@
 import React from 'react';
-import { useState } from 'react';
-import img from '/src/photo/easyParcel.jpeg';
+import { useState, useEffect } from 'react';
 import { FaStar } from "react-icons/fa6";
 import { IoEarth } from "react-icons/io5";
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
-export function AddReview(){
+export function AddReview({onClose, company, justClose}){
     const [selectedValue, setSelectedValue] = useState('');
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
 
-    const handleChange = (event) => {
-        setSelectedValue(event.target.value);
+    const [post, setPost] = useState({
+        rating: '',
+        employeeType: '',
+        jobTitle: '',
+        headline: '',
+        review: '',
+    });
+
+    const handleInput = (event) => {
+        const { name, value } = event.target;
+        setPost({ ...post, [name]: value });
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const token = Cookies.get('token');
+        try {
+            const response = await axios.post(`http://localhost:8000/api/AddRating/${company.id}`, post, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            onClose();
+            console.log(response.data);
+        } catch (error) {
+            console.error('AxiosError', error);
+        }
     };
 
     return(
-        <div className="className='addrole fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'">
+        <div className="addrole fixed inset-0 flex items-center justify-end bg-black bg-opacity-50">
             <div className='bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full overflow-y-auto z-2001'>
-                <button className='absolute top-2 right-2 text-xl font-bold'>
+                <button onClick={justClose} className='absolute top-2 right-2 text-xl font-bold'>
                     &times;
                 </button>
                 <div className="py-4 px-6 bg-white">
-                    <form className="flex flex-col">
+                    <form className="flex flex-col" onSubmit={handleSubmit}>
                         <h1>Rate a Company</h1>
-                        <p>It only takes a minute! And your anonymous review will help other 
-                        job seekers.</p>
+                        <p>It only takes a minute! And your anonymous review will help other job seekers.</p>
                         <div className="flex">
-                            <img className='w-20 h-20' src={img} alt="Company Logo" />
+                            <img className='w-20 h-30' src={company.logo} alt="Company Logo" />
                             <div className='mt-[10px]'>
                                 <p>*company</p>
-                                <p>Company Name</p>
+                                <p>{company.name}</p>
                             </div>
                         </div>
                         <p>Overall Rating*</p>
@@ -36,13 +62,14 @@ export function AddReview(){
                             {[...Array(5)].map((star, index) =>{
                                 const ratingValue = index + 1;
                                 return(
-                                    <label>
+                                    <label key={index}>
                                         <input 
                                             type="radio" 
                                             name='rating'
                                             value={ratingValue}
                                             onClick={() => setRating(ratingValue)}
                                             className='hidden'
+                                            onChange={handleInput}
                                         />
                                         <FaStar 
                                             size={30}
@@ -56,22 +83,32 @@ export function AddReview(){
                         </div>
                         <p>Are you a current or former employee?</p>
                         <div>
-                            <input type="radio" name="choice" value="Current Employer" onChange={handleChange}/>Current Employer 
-                            <input type="radio" name="choice" value="Former Employer"  onChange={handleChange}/>Former Employer
+                            <label>
+                                <input type="radio" name="employeeType" value="Current Employee" onChange={handleInput}/> Current Employee 
+                            </label>
+                            <label>
+                                <input type="radio" name="employeeType" value="Former Employee" onChange={handleInput}/> Former Employee
+                            </label>
                         </div>
                         <label>Employment Status *</label>
-                        <label>Your Job Tittle *</label>
-                        <input type="text" 
-                             className='border border-black p-2'
+                        <label>Your Job Title *</label>
+                        <input type="text"
+                            name='jobTitle'  
+                            className='border border-black p-2'
+                            onChange={handleInput}
                         />
                         <label>Review Headline *</label>
                         <input type="text" 
+                            name='headline'
                              className='border border-black p-2'
+                             onChange={handleInput}
                         />
                         <label>Review  *</label>
                         <textarea
+                            name='review'
                             className='border border-black p-2'
                             rows={5}
+                            onChange={handleInput}
                         />
                         <div className='border border-black p-2 flex gap-5 items-center'>
                         <IoEarth size={30}/>
