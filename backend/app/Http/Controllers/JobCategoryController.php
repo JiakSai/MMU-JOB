@@ -37,4 +37,23 @@ class JobCategoryController extends Controller
         ], 201);
     }
 
+    public function destroy(Request $request, JobCategory $jobcategory)
+    {
+        $admin = auth()->guard('admin')->user();
+
+        if (!$admin) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        $jobcategory->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Job Category deleted successfully',
+        ], 200);
+    }
+
 }

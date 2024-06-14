@@ -19,6 +19,17 @@ class PostController extends Controller
         return response()->json($posts, 200);
     }
 
+    public function showAdmin()
+    {
+        $posts = Post::with('employer')->get();
+
+        foreach ($posts as $post) {
+            $post->created_at_formatted = $post->created_at->format('d/m/y');
+        }
+
+        return response()->json($posts, 200);
+    }
+
     public function store(Request $request)
     {
         $employer = $request->user(); // Get the authenticated user
@@ -130,5 +141,24 @@ class PostController extends Controller
                 'message' => 'Posts not found or not owned by the user',
             ], 404);
         }
+    }
+
+    public function adminDestroy(Request $request, Post $post)
+    {
+        $admin = auth()->guard('admin')->user();
+
+        if (!$admin) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        $post->delete();
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Post deleted successfully',
+        ], 200);
     }
 }

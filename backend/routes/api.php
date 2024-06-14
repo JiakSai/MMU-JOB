@@ -36,6 +36,7 @@ Route::middleware(['auth:sanctum', 'user'])->group(function(){
     Route::post('/ApplyJob/{postId}', [ApplicationController::class, 'store']);
     Route::get('/ShowUserApplications', [UserController::class, 'showApplications']);
     Route::post('/AddRating/{companyId}', [RatingController::class, 'store']);
+    //Edit Rating
     Route::get('/UserLogout', [UserController::class, 'logoutUser']);
 });
 
@@ -58,6 +59,15 @@ Route::middleware(['auth:sanctum', 'employer'])->group(function(){
 //Admin
 Route::post('/AdminLogin', [AdminController::class, 'login']);
 Route::middleware(['auth:sanctum', 'admin'])->group(function(){
-    Route::get('/ShowUserAndCompany',[EmployerController::class, 'showUserAndCompany']);
-    Route::post('/AddJobCategory', [JobCategoryController::class, 'store']);
+    Route::get('/Admin/ShowUsers', [UserController::class, 'index']);
+    Route::delete('/Admin/DeleteUser/{user}', [UserController::class, 'destroy']);
+    Route::get('/Admin/ShowEmployerAndCompany',[EmployerController::class, 'showEmployerAndCompany']);
+    Route::delete('/Admin/DeleteEmployer/{employer}', [EmployerController::class, 'destroy']);
+    Route::get('/Admin/ShowPosts', [PostController::class, 'showAdmin']);
+    Route::delete('/Admin/DeletePost/{post}', [PostController::class, 'adminDestroy']);
+    Route::get('/Admin/ShowJobCategory', [JobCategoryController::class, 'index']);
+    Route::post('/Admin/AddJobCategory', [JobCategoryController::class, 'store']);
+    Route::delete('/Admin/DeleteJobCategory/{jobcategory}', [JobCategoryController::class, 'destroy']);
+    Route::get('/Admin/ShowRating', [RatingController::class, 'index']);
+    Route::delete('/Admin/DeleteRating/{rating}', [RatingController::class, 'destroy']);
 });

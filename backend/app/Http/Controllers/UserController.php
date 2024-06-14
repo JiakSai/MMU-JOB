@@ -12,7 +12,13 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
-{
+{   
+    public function index()
+    {
+        $users = User::all();
+        return response()->json($users, 200);
+    }
+
     public function show()
     {
         $user = Auth::user()->load('education', 'experience');
@@ -210,7 +216,8 @@ class UserController extends Controller
            
     }
 
-    public function showApplications(){
+    public function showApplications()
+    {
 
         $user = Auth::user();
 
@@ -223,4 +230,23 @@ class UserController extends Controller
         ], 200);
        
     }    
+
+    public function destroy(Request $request, User $user)
+    {
+        $admin = auth()->guard('admin')->user();
+
+        if (!$admin) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User deleted successfully',
+        ], 200);
+    }
 }

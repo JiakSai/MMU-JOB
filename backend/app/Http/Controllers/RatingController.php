@@ -8,7 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class RatingController extends Controller
-{
+{   
+    public function index()
+    {
+        $ratings = Rating::all();
+        return response()->json($ratings, 200);
+    }
+
     public function store(Request $request, $companyId)
     {
         $user = $request->user();
@@ -58,6 +64,25 @@ class RatingController extends Controller
             'status' => 'true',
             'message' => 'Rating submitted successfully',
             'data' => $rating
+        ], 200);
+    }
+
+    public function destroy(Request $request, Rating $rating)
+    {
+        $admin = auth()->guard('admin')->user();
+
+        if (!$admin) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        $rating->delete();
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Rating deleted successfully',
         ], 200);
     }
 }

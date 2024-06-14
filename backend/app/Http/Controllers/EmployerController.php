@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class EmployerController extends Controller
 {
-    public function showUserAndCompany()
+    public function showEmployerAndCompany()
     {
         $employer = Employer::with('company')->get();
 
@@ -184,6 +184,29 @@ class EmployerController extends Controller
                 'message' => 'No authenticated user'
             ], 401);
         }
+    }
+
+    public function destroy(Request $request, Employer $employer)
+    {
+        $admin = auth()->guard('admin')->user();
+
+        if (!$admin) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+        
+        if($employer->company){
+            $employer->company->delete();
+        }
+
+        $employer->delete();
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Employer deleted successfully',
+        ], 200);
     }
 
 }
