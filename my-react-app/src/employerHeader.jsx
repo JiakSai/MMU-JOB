@@ -77,10 +77,10 @@ function EmployerHeader() {
                 </ul>
                 <ul>
                     <li className="empLogo"><a href="#">" MMUJOB "</a></li>
-                    <li className="hideOnMobile"><Link to={"/SearchJob"}>job search</Link></li>
+                    <li className="hideOnMobile"><Link to={"/SearchJob"}>Listen job</Link></li>
                     <li className="hideOnMobile">
                         <Link to={token ? "/UserProfile" : "#"} onClick={handleProfileClick}>
-                            Profile
+                            Add job
                         </Link>
                     </li>
                     <li className="hideOnMobile"><a href="#">Company profiles</a></li>
@@ -100,7 +100,7 @@ function EmployerHeader() {
                                     </ul>
                                 )}
                             </li>
-                            <li className='site'><a href="#">Employer site</a></li>
+                            <li className='site'><a href="#">Jobseeker site</a></li>
                         </ul>
                     </li>
                     <li className="menu-button" onClick={showSidebar}><FontAwesomeIcon icon={faBars} className="menuIcon" /></li>

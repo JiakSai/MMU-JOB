@@ -24,6 +24,7 @@ import SearchCompany from "./searchCompany.jsx";
 import CompanyProfile from "./companyProfile.jsx";
 import EmployerFinishSign from "./employerFinishSign.jsx";
 import EditComProfile from "./editCompanyProfile.jsx";
+import AdminTable from "./popUp-Components/adminTable.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -96,6 +97,10 @@ const router = createBrowserRouter([
   {
     path: "editComProfile",
     element: <EditComProfile />,
+  },
+  {
+    path: "adminTable",
+    element: <AdminTable />,
   }
 ]);
 

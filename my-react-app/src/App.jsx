@@ -19,6 +19,8 @@ import EmployerLogin from './employerLogin.jsx';
 import EmployerFinishSign from './employerFinishSign.jsx';
 import ReviewBar from './companySearch-Components/reviewBar.jsx';
 import EditProfile from './editCompanyProfile.jsx';
+import { AdminLogin } from './adminLogin.jsx';
+import AdminTable from './popUp-Components/adminTable.jsx';
 
 function App() {
     return (
@@ -37,10 +39,12 @@ function App() {
             {/* <AddReview /> */}
             {/* <EmployerFooter/>
             <EmployerHeader/> */}
-            <EmployerLogin/>
+            {/* <EmployerLogin/> */}
             {/* <EmployerFinishSign/> */}
             {/* <ReviewBar/> */}
             {/* <EditProfile/> */}
+            <AdminLogin/>
+            {/* <AdminTable/> */}
         </>
     );
 }
