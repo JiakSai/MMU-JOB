@@ -218,10 +218,20 @@ class UserController extends Controller
 
     public function showApplications()
     {
-
         $user = Auth::user();
 
-        $applications = Application::where('user_id', $user->id)->with('post')->get();
+        $applications = Application::where('user_id', $user->id)
+        ->with('post.company')
+        ->get()
+        ->map(function($application){
+            return [
+                'id' => $application->id,
+                'post_title' => $application->post->jobTitle,
+                'company_name' => $application->post->company->name,
+                'status' => $application->status,
+                'created_at' => $application->created_at->format('d/m/Y'),
+            ];
+        });
 
         return response()->json([
             'status' => true,

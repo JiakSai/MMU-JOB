@@ -42,11 +42,30 @@ class CompanyController extends Controller
 
         $company->totalRatings = $company->ratings->count();
 
+        $ratingCounts = [
+            1 => 0,
+            2 => 0,
+            3 => 0,
+            4 => 0,
+            5 => 0,
+        ];
+
         foreach ($company->ratings as $rating) {
+            if (isset($ratingCounts[$rating->rating])) {
+                $ratingCounts[$rating->rating]++;
+            }
             $rating->userProfilePic = $rating->user->profilePic;
             unset($rating->user);
-    }
-    
+        }
+
+        $ratingPercentages = [];
+        foreach ($ratingCounts as $score => $count) {
+            $percentage = $company->totalRatings > 0 ? ($count / $company->totalRatings) * 100 : 0;
+            $ratingPercentages[$score] = number_format($percentage, 2) . '%';
+        }
+        
+        $company->ratingPercentages = $ratingPercentages;
+        
         return response()->json($company, 200);
     
     }
