@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('jobTitle');
             $table->string('jobType');
             $table->string('jobCategory');
-            $table->string('salary');
+            $table->integer('minSalary');
+            $table->integer('maxSalary');
             $table->string('jobLocation');
             $table->string('locationType');
             $table->string('experience');

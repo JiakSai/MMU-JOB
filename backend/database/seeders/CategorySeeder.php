@@ -14,14 +14,26 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $categories = [
-            'IT & Telecommunication',
-            'Marketing / Advertising',
-            'General Mgmt', 'Banking / Insurance /Financial Services',
-            'Construction / Engineering / Architects ',
-            'Creative / Graphics / Designing',
-            'Social work', 'hospitality', 'journalism-editor-media', 'Agriculture + Livestock',
-            'Teaching profession', 'Engineer', 'Sales', 'Leadership', 'Web development',
-            'Mobile App', 'Sales', 'E-Commerce', 'Others'
+            'Accounting / Finance',
+            'Admin / Human Resources',
+            'Building / Construction',
+            'Creative',
+            'Customer Service',
+            'Education / Training',
+            'Engineering',
+            'Financial Services & Banking',
+            'Healthcare',
+            'Information Technology',
+            'Legal',
+            'Manufacturing',
+            'Marketing & Communications',
+            'Product Management',
+            'Project Management',
+            'Sales',
+            'Sciences',
+            'Supply Chain & Logistics',
+            'Others'
+           
         ];
 
         foreach ($categories as $category) {

@@ -67,6 +67,51 @@ class RatingController extends Controller
         ], 200);
     }
 
+    public function update(Request $request, $ratingId)
+    {
+        $user = auth()->guard('user')->user();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        $rating = Rating::find($ratingId);
+
+        if (!$rating || $rating->user_id !== $user->id) {
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Unauthorized or rating not found'
+            ], 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'rating' => 'sometimes|numeric|min:1|max:5',
+            'review' => 'sometimes',
+            'employeeType' => 'sometimes',
+            'jobTitle' => 'sometimes',
+            'headline' => 'sometimes',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()
+            ], 400);
+        }
+
+        $rating->update($request->all());
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Rating updated successfully',
+            'data' => $rating
+        ], 200);
+
+    }
+
     public function destroy(Request $request, Rating $rating)
     {
         $admin = auth()->guard('admin')->user();

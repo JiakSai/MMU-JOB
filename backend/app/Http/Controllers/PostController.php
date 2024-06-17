@@ -30,6 +30,69 @@ class PostController extends Controller
         return response()->json($posts, 200);
     }
 
+    public function SearchAndFilter(Request $request)
+    {   
+        $query = Post::query();
+
+        if($request->has('search'))
+        {
+            $search = $request->input('search');
+            $query->where('jobTitle', 'LIKE', "%$search%");
+        }
+
+        // Job Location filter
+        if($request->has('jobLocation')) {
+            $jobLocation = $request->input('jobLocation');
+            $query->where('jobLocation', 'LIKE', "%$jobLocation%");
+        }
+    
+        // Location type filter
+        if($request->has('locationType')) {
+            $locationType = $request->input('locationType');
+            $query->where('locationType', $locationType);
+        }
+    
+        // Job category filter
+        if($request->has('jobCategory')) {
+            $jobCategory = $request->input('jobCategory');
+            $query->where('jobCategory', $jobCategory);
+        }
+
+        // Salary filter
+        $minSalary = $request->input('minSalary');
+        $maxSalary = $request->input('maxSalary');
+
+        if ($minSalary !== null && $maxSalary !== null) {
+            $query->where(function($query) use ($minSalary, $maxSalary) {
+                $query->where(function($q) use ($minSalary) {
+                    $q->where('minSalary', '<=', $minSalary)
+                      ->where('maxSalary', '>=', $minSalary);
+                })->orWhere(function($q) use ($maxSalary) {
+                    $q->where('minSalary', '<=', $maxSalary)
+                      ->where('maxSalary', '>=', $maxSalary);
+                });
+            });
+        } elseif ($minSalary !== null) {
+            $query->where('maxSalary', '>=', $minSalary);
+        } elseif ($maxSalary !== null) {
+            $query->where('minSalary', '<=', $maxSalary);
+        }
+        
+        // Execute the query and get the results
+        $posts = $query->get();
+    
+        // Check if we have any posts
+        if ($posts->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No posts found matching the criteria.',
+            ], 404);
+        }
+    
+        // Return the filtered posts
+        return response()->json($posts, 200);
+    }
+
     public function store(Request $request)
     {
         $employer = $request->user(); // Get the authenticated user
@@ -47,7 +110,8 @@ class PostController extends Controller
             'jobTitle' => 'required|min:3',
             'jobType' => 'required',
             'jobCategory' => 'required',
-            'salary' => 'required',
+            'minSalary' => 'required|numeric|lt:maxSalary',
+            'maxSalary' => 'required|numeric|gte:minSalary',
             'jobLocation' => 'required',
             'locationType' => 'required',
             'experience' => 'required',

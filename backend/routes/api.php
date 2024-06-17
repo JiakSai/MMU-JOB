@@ -19,6 +19,7 @@ Route::get('/ShowCompany', [CompanyController::class, 'index']);
 Route::get('/ShowCompanyDetails/{company}', [CompanyController::class, 'show']);
 Route::get('/ShowCompanyPosts/{company}', [CompanyController::class, 'showCompanyPosts']);
 Route::get('/ShowPost', [PostController::class, 'index']);
+Route::get('/SearchAndFilter', [PostController::class, 'SearchAndFilter']);
 
 //User
 Route::post('/UserRegister', [UserController::class, 'createUser']);
@@ -36,7 +37,7 @@ Route::middleware(['auth:sanctum', 'user'])->group(function(){
     Route::post('/ApplyJob/{postId}', [ApplicationController::class, 'store']);
     Route::get('/ShowUserApplications', [UserController::class, 'showApplications']);
     Route::post('/AddRating/{companyId}', [RatingController::class, 'store']);
-    //Edit Rating
+    Route::patch('/UpdateRating/{ratingId}', [RatingController::class, 'update']);
     Route::get('/UserLogout', [UserController::class, 'logoutUser']);
 });
 
@@ -53,7 +54,7 @@ Route::middleware(['auth:sanctum', 'employer'])->group(function(){
     Route::patch('/UpdateCompany', [CompanyController::class, 'update']);
     Route::get('/ShowPostsEmployer', [EmployerController::class, 'showForEmployer']);
     Route::get('/ShowApplications', [EmployerController::class, 'showApplications']);
-    Route::put('/UpdateApplicationStatus/{applicationsId}', [EmployerController::class, 'updateApplicationStatus']);
+    Route::patch('/UpdateApplicationStatus/{applicationsId}', [EmployerController::class, 'updateApplicationStatus']);
 });
 
 //Admin
