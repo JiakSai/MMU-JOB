@@ -36,7 +36,7 @@ const EditComProfile = () => {
         const fetchData = async () => {
             const token = Cookies.get('token');
             try {
-                const response = await axios.get('http://localhost:8000/api//Admin/ShowUsers', {
+                const response = await axios.get('http://localhost:8000/api/ShowCompanyProfile', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     }
@@ -54,7 +54,7 @@ const EditComProfile = () => {
     return (
         <>
             <EmployerHeader />
-            <section className='mt-[105px] mb-[20px] mx-[120px] flex flex-col items-center bg-white pb-8 rounded-sm'>
+            <section className='mt-[100px] mb-[30px] mx-[120px] flex flex-col items-center bg-white pb-8 rounded-sm'>
                 <div className='companyCover relative'>
                     {company.company.cover && 
                     <img src={company.company.cover} alt='Company Cover' className='w-full h-[200px] rounded-t-sm' />

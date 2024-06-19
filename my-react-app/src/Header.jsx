@@ -54,7 +54,7 @@ function Header() {
                     <li className="logo"><a href="#">" MMUJOB "</a></li>
                     <li><a href="#">Job search</a></li>
                     <li>
-                        <Link to={token ? "/UserProfile" : "#"} onClick={handleProfileClick}>
+                        <Link to={token ? "/UserProfile" : "/userLogin"} onClick={handleProfileClick}>
                             Profile
                         </Link>
                     </li>
@@ -66,7 +66,9 @@ function Header() {
                                 <li><a href="#">Profile</a></li>
                                 <li><a href="#">Saved search</a></li>
                                 <li><a href="#">Saved Job</a></li>
-                                <li><a href="#">Job application</a></li>
+                                <li><Link to={token ? "/userApplicationStatus" : "/userLogin"} onClick={handleProfileClick}>
+                                    Job Application
+                                </Link></li>
                                 <li><a href="#">Recommended Job</a></li>
                                 <li><a href="#">Setting</a></li>
                                 <li style={{ color: 'red' }}><a href="#" onClick={handleLogout}>Logout</a></li>
@@ -79,7 +81,7 @@ function Header() {
                     <li className="logo"><a href="#">" MMUJOB "</a></li>
                     <li className="hideOnMobile"><Link to={"/SearchJob"}>job search</Link></li>
                     <li className="hideOnMobile">
-                        <Link to={token ? "/UserProfile" : "#"} onClick={handleProfileClick}>
+                        <Link to={token ? "/UserProfile" : "/userLogin"} onClick={handleProfileClick}>
                             Profile
                         </Link>
                     </li>
@@ -90,10 +92,14 @@ function Header() {
                                 <a href="#" onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
                                 {token && (
                                     <ul className="Dropdown">
-                                        <li><a href="#">Profile</a></li>
+                                        <li><Link to={token ? "/UserProfile" : "/userLogin"} onClick={handleProfileClick}>
+                                            Profile
+                                        </Link></li>
                                         <li><a href="#">Saved search</a></li>
                                         <li><a href="#">Saved Job</a></li>
-                                        <li><a href="#">Job application</a></li>
+                                        <li><Link to={token ? "/userApplicationStatus" : "/userLogin"} onClick={handleProfileClick}>
+                                            Job Application
+                                        </Link></li>
                                         <li><a href="#">Recommended Job</a></li>
                                         <li><a href="#">Setting</a></li>
                                         <li style={{ color: 'red' }}><a href="#" onClick={handleLogout}>Logout</a></li>

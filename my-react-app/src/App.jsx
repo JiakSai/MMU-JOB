@@ -21,6 +21,8 @@ import ReviewBar from './companySearch-Components/reviewBar.jsx';
 import EditProfile from './editCompanyProfile.jsx';
 import { AdminLogin } from './adminLogin.jsx';
 import AdminTable from './popUp-Components/adminTable.jsx';
+import ApplicationStatus from './applicationStatus.jsx';
+import AddPost from './addPost.jsx';
 
 function App() {
     return (
@@ -43,8 +45,10 @@ function App() {
             {/* <EmployerFinishSign/> */}
             {/* <ReviewBar/> */}
             {/* <EditProfile/> */}
-            <AdminLogin/>
+            {/* <AdminLogin/> */}
+            {/* <ApplicationStatus/> */}
             {/* <AdminTable/> */}
+            <AddPost/>
         </>
     );
 }
