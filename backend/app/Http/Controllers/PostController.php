@@ -114,6 +114,7 @@ class PostController extends Controller
             'maxSalary' => 'required|numeric|gte:minSalary',
             'jobLocation' => 'required',
             'locationType' => 'required',
+            'educationLevel' => 'required',
             'experience' => 'required',
             'requirement' => 'required',
             'description' => 'sometimes|min:5',

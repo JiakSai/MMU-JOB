@@ -19,6 +19,7 @@ class Post extends Model
         'jobLocation', 
         'locationType',
         'experience',
+        'educationLevel',
         'requirement', 
         'description'
     ];

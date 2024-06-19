@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('jobLocation');
             $table->string('locationType');
             $table->string('experience');
-            $table->string('requirement');
+            $table->string('educationLevel');
+            $table->text('requirement');
             $table->text('description');
             $table->timestamps();
         });
