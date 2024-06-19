@@ -38,6 +38,8 @@ Route::middleware(['auth:sanctum', 'user'])->group(function(){
     Route::get('/ShowUserApplications', [UserController::class, 'showApplications']);
     Route::post('/AddRating/{companyId}', [RatingController::class, 'store']);
     Route::patch('/UpdateRating/{ratingId}', [RatingController::class, 'update']);
+    Route::post('/send-otp-email', [UserController::class, 'forgotPassword']);
+    Route::post('/reset-password', [UserController::class, 'resetPassword']);
     Route::get('/UserLogout', [UserController::class, 'logoutUser']);
 });
 
