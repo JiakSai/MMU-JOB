@@ -15,9 +15,11 @@ import { FaFileAlt } from "react-icons/fa";
 import { AddProfileImage } from './popUp-Components/addProfileImage.jsx';
 import { MdOutlineMail } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const UserProfile = () => {
+    const navigate = useNavigate();
     const [showAddRole, setShowAddRole] = useState(false);
     const [showAddEducation, setShowAddEducation] = useState(false);
     const [selectedRole, setSelectedRole] = useState(null);
@@ -34,6 +36,12 @@ const UserProfile = () => {
     const [selectedProfile, setSelectedProfile] = useState(null);
     const [showAddProfileImage, setShowAddProfileImage] = useState(false);
     const [userProfilePic, setUserProfilePic] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 1100);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleEditClick = (role) => {
         setSelectedRole(role);
@@ -86,6 +94,7 @@ const UserProfile = () => {
     useEffect(() => {
         const token = Cookies.get('token');
         if (!token) {
+            navigate('/userLogin');
             console.error('No token found');
             return;
         }
@@ -114,7 +123,7 @@ const UserProfile = () => {
             setSkillsValues(data.skills);
         })
         .catch(error => console.error('Error:', error));
-    }, []);
+    }, [navigate]);
 
     const handleRoleDeleteClick = async (experienceId) => {
         const token = Cookies.get('token');
@@ -219,7 +228,16 @@ const UserProfile = () => {
             )
         },
     ];
-    
+    if (loading) { 
+        return ( 
+            <> 
+                <div className="loader"></div> 
+                <div className='flex justify-center mt-[630px]'> <p className='text-3xl font-bold text-customBlue'>
+                    " MMUJOB "</p> 
+                </div> 
+            </> 
+        ); }
+
     return (
         <>
             <Header />

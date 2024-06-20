@@ -81,7 +81,7 @@ function EmployerHeader() {
                             </ul>
                         )}
                     </li>
-                    <li><a href="#">Employer site</a></li>
+                    <li><Link to={"/SearchJob"}>Employer site</Link></li>
                 </ul>
                 <ul>
                     <li className="empLogo"><a href="#">" MMUJOB "</a></li>
@@ -116,7 +116,7 @@ function EmployerHeader() {
                                     </ul>
                                 )}
                             </li>
-                            <li className='site'><a href="#">Jobseeker site</a></li>
+                            <li className='site'><Link to={"/SearchJob"}>Jobseeker site</Link></li>
                         </ul>
                     </li>
                     <li className="menu-button" onClick={showSidebar}><FontAwesomeIcon icon={faBars} className="menuIcon" /></li>

@@ -4,25 +4,26 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
 import { BsBuildings } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
-import { FiMessageSquare, FiFolder, FiLogOut } from "react-icons/fi";
+import {FiLogOut } from "react-icons/fi";
+import { MdOutlineMessage } from "react-icons/md";
 import { MdStorage } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Home = () => {
   const menus = [
-    { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "Job Seekers", link: "/", icon: AiOutlineUser },
-    { name: "Employer", link: "/", icon: BsBuildings },
-    { name: "Posted Job", link: "/", icon: TbReportAnalytics, margin: true },
-    { name: "Job Categories", link: "/", icon: MdStorage },
-    { name: "Review", link: "/", icon: FiMessageSquare },
+    { name: "Dashboard", link: "/dashboard", icon: MdOutlineDashboard },
+    { name: "Job Seekers", link: "/jobSeekerTable", icon: AiOutlineUser },
+    { name: "Employer", link: "/employerTable", icon: BsBuildings },
+    { name: "Posted Job", link: "/adminTable", icon: TbReportAnalytics, margin: true },
+    { name: "Job Categories", link: "/categoryTable", icon: MdStorage },
+    { name: "Review", link: "/reviewTable", icon: MdOutlineMessage },
   ];
   const [open, setOpen] = useState(true);
 
   return (
     <section className="flex gap-6">
       <div
-        className={`bg-[#0e0e0e] min-h-screen flex flex-col justify-between ${
+        className={`bg-[#212F3C] min-h-screen flex flex-col justify-between ${
           open ? "w-72" : "w-16"
         } duration-500 text-gray-100 px-4`}
       >

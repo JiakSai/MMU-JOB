@@ -9,30 +9,29 @@ import Cookies from 'js-cookie';
 export default function UserLogin() {
     const navigate = useNavigate();
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const [loginPost, setLoginPost] = useState({
-        email: '',
-        password: ''
-    });
-    const [formError, setFormError] = useState({
-        email: '',
-        password: ''
-    });
+    const [loginPost, setLoginPost] = useState({ email: '', password: '' });
+    const [resetPost, setResetPost] = useState({ email: '', otp: '', newPassword: '', confirmNewPassword: '' });
+    const [formError, setFormError] = useState({ email: '', password: '' });
+    const [message, setMessage] = useState('');
+    const [currentForm, setCurrentForm] = useState('login'); // 'login', 'resetRequest', 'resetPassword'
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
 
     const handleInput = (event) => {
-        setLoginPost({ ...loginPost, [event.target.name]: event.target.value });
+        const { name, value } = event.target;
+        if (currentForm === 'login') {
+            setLoginPost({ ...loginPost, [name]: value });
+        } else {
+            setResetPost({ ...resetPost, [name]: value });
+        }
     };
 
-    const handleSubmit = (event) => {
+    const handleLoginSubmit = (event) => {
         event.preventDefault();
 
-        let inputError = {
-            email: '',
-            password: ''
-        };
+        let inputError = { email: '', password: '' };
 
         // Form validation
         if (!loginPost.email) {
@@ -57,10 +56,10 @@ export default function UserLogin() {
         axios.post('http://localhost:8000/api/UserLogin', loginPost)
             .then(response => {
                 console.log(response);
-                const token = response.data.token; 
-                    Cookies.set('token', token); 
-                    console.log(token);
-                    navigate('/SearchJob');
+                const token = response.data.token;
+                Cookies.set('token', token);
+                console.log(token);
+                navigate('/SearchJob');
             })
             .catch(error => {
                 console.log(error);
@@ -70,50 +69,161 @@ export default function UserLogin() {
             });
     };
 
+    const handleResetRequestSubmit = (event) => {
+        event.preventDefault();
+
+        if (!resetPost.email) {
+            setMessage('* Email is required');
+            return;
+        }
+
+        axios.post('http://localhost:8000/api/send-otp-email', resetPost.email)
+        .then(response => {
+            console.log('Response:', response.data);
+            setMessage('OTP sent to your email.');
+            setCurrentForm('resetPassword');
+        })
+        .catch(error => {
+            console.error('Error sending OTP:', error);
+            setMessage('Error sending OTP.');
+        });
+
+    };
+
+    const handleResetPasswordSubmit = (event) => {
+        event.preventDefault();
+
+        const { otp, newPassword, confirmNewPassword } = resetPost;
+
+        if (!otp || !newPassword || !confirmNewPassword) {
+            setMessage('* All fields are required');
+            return;
+        }
+
+        if (newPassword !== confirmNewPassword) {
+            setMessage('* New password and confirm password must match');
+            return;
+        }
+
+        axios.post('http://localhost:8000/api/reset-password', {
+            email: resetPost.email,
+            otp,
+            newPassword
+        })
+            .then(response => {
+                console.log('Password reset successful:', response.data);
+                setMessage('Password reset successful.');
+                setCurrentForm('login');
+            })
+            .catch(error => {
+                console.error('Error resetting password:', error);
+                setMessage('Invalid OTP or error resetting password.');
+            });
+        
+    };
+
     return (
         <>
         <section>
-            <div className='LoginRegisterTop'><h1 className='logoUser'>" MMUJOB "</h1> </div>
+            <div className='LoginRegisterTop'><h1 className='logoUser'>" MMUJOB "</h1></div>
             <div className="userLoginContainer">
                 <img src={loginphoto} alt="Login" className='w-[720px] h-[480px] ml-[-25px] mt-[-8px]'/>
                 <div>
                     <p className='changeSite'><Link to="/employerLogin">Are you an employer?</Link></p>
                     <div className='userLoginFormContainer'>
-                        <h1 className='text-[28px] font-bold text-customBlue'>Welcome Back!</h1>
-                        <p>Please login to your account</p>
-                        <form className="userLoginForm" onSubmit={handleSubmit}>
-                            <label htmlFor="email">Email Address</label>
-                            <input
-                                type="email"
-                                name="email"
-                                onChange={handleInput}
-                                value={loginPost.email}
-                                style={{ border: formError.password ? '1px solid red' : '' }}
-                            />
-                            <p className="error-message">{formError.email}</p>
-                            <label htmlFor="password">Password</label>
-                            <div className="password-container">
-                                <input 
-                                    type={passwordVisible ? "text" : "password"} 
-                                    name="password" 
-                                    value={loginPost.password} 
-                                    onChange={handleInput} 
-                                    style={{ border: formError.password? '1px solid red' : '' }}
+                        <h1 className='text-[28px] font-bold text-customBlue'>
+                            {currentForm === 'login' ? 'Welcome Back!' : currentForm === 'resetRequest' ? 'Reset Password' : 'Enter OTP and New Password'}
+                        </h1>
+                        {currentForm === 'login' && (
+                            <p>Please login to your account</p>
+                        )}
+                        {currentForm === 'resetRequest' && (
+                            <p>Please enter your email to receive an OTP</p>
+                        )}
+                        {currentForm === 'resetPassword' && (
+                            <p>Please enter the OTP sent to your email and your new password</p>
+                        )}
+                        
+                        {currentForm === 'login' && (
+                            <form className="userLoginForm" onSubmit={handleLoginSubmit}>
+                                <label htmlFor="email">Email Address</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    onChange={handleInput}
+                                    value={loginPost.email}
+                                    style={{ border: formError.email ? '1px solid red' : '' }}
                                 />
-                                <span onClick={togglePasswordVisibility} className="userpassword-toggle-icon">
-                                    {passwordVisible ? <FaRegEye /> : <FaRegEyeSlash />}
-                                </span>
-                            </div>
-                            <p className="error-message">{formError.password}</p>
-                            <div className="rememberForgot">
-                                <label>
-                                    <input type="checkbox" /> Remember me
-                                </label>
-                                <a href="#">Forgot password?</a>
-                            </div>
-                            <button type="submit">Login</button>
-                            <p className='toRegister'>Do you have an account? <Link to="/userRegister">Register</Link></p>
-                        </form>
+                                <p className="error-message">{formError.email}</p>
+                                <label htmlFor="password">Password</label>
+                                <div className="password-container">
+                                    <input 
+                                        type={passwordVisible ? "text" : "password"} 
+                                        name="password" 
+                                        value={loginPost.password} 
+                                        onChange={handleInput} 
+                                        style={{ border: formError.password ? '1px solid red' : '' }}
+                                    />
+                                    <span onClick={togglePasswordVisibility} className="userpassword-toggle-icon">
+                                        {passwordVisible ? <FaRegEye /> : <FaRegEyeSlash />}
+                                    </span>
+                                </div>
+                                <p className="error-message">{formError.password}</p>
+                                <div className="rememberForgot">
+                                    <a href="#" onClick={() => setCurrentForm('resetRequest')}>Forgot password?</a>
+                                </div>
+                                <button type="submit">Login</button>
+                                <p className='toRegister'>Do you have an account? <Link to="/userRegister">Register</Link></p>
+                            </form>
+                        )}
+                        
+                        {currentForm === 'resetRequest' && (
+                            <form className="userLoginForm" onSubmit={handleResetRequestSubmit}>
+                                <label htmlFor="email">Email Address</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    onChange={handleInput}
+                                    value={resetPost.email}
+                                />
+                                <button type="submit">Send OTP</button>
+                                <p className="error-message">{message}</p>
+                                <div className="rememberForgot">
+                                    <a href="#" onClick={() => setCurrentForm('login')}>Back to Login</a>
+                                </div>
+                            </form>
+                        )}
+                        
+                        {currentForm === 'resetPassword' && (
+                            <form className="userLoginForm" onSubmit={handleResetPasswordSubmit}>
+                                <label htmlFor="otp">OTP</label>
+                                <input
+                                    type="text"
+                                    name="otp"
+                                    onChange={handleInput}
+                                    value={resetPost.otp}
+                                />
+                                <label htmlFor="newPassword">New Password</label>
+                                <input
+                                    type="password"
+                                    name="newPassword"
+                                    onChange={handleInput}
+                                    value={resetPost.newPassword}
+                                />
+                                <label htmlFor="confirmNewPassword">Confirm New Password</label>
+                                <input
+                                    type="password"
+                                    name="confirmNewPassword"
+                                    onChange={handleInput}
+                                    value={resetPost.confirmNewPassword}
+                                />
+                                <button type="submit">Reset Password</button>
+                                <p className="error-message">{message}</p>
+                                <div className="rememberForgot">
+                                    <a href="#" onClick={() => setCurrentForm('login')}>Back to Login</a>
+                                </div>
+                            </form>
+                        )}
                     </div>
                 </div>
             </div>

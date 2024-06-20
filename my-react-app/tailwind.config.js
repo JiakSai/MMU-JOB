@@ -10,6 +10,7 @@ export default {
         'customBlue': '#2471A3',
         'customPink': '#EC407A',
         'customyellow': '#FFEA00',
+        'customGrey': '#34495E',
       },
     },
   },

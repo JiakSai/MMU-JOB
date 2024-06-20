@@ -784,7 +784,7 @@ input[type="checkbox"] {
 .rememberForgot{
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
   margin-top: 5px;
 }
 .rememberForgot input{
@@ -1047,7 +1047,7 @@ tr:hover {
 th {
   padding-top: 12px;
   padding-bottom: 12px;
-  background-color: #4CAF50;
+  background-color: #34495E   ;
   color: white;
 }
 

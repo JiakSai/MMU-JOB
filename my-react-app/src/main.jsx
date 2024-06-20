@@ -19,10 +19,16 @@ import SearchCompany from "./searchCompany.jsx";
 import CompanyProfile from "./companyProfile.jsx";
 import EmployerFinishSign from "./employerFinishSign.jsx";
 import EditComProfile from "./editCompanyProfile.jsx";
-import AdminTable from "./popUp-Components/adminTable.jsx";
+import AdminTable from "./admin/postedJobTable.jsx";
 import ApplicationStatus from "./applicationStatus.jsx";
 import AddPost from "./addPost.jsx";
 import ListenJob from "./listenJob.jsx";
+import { AdminLogin } from "./admin/adminLogin.jsx";
+import EmployerTable from "./admin/employerTable.jsx";
+import JobSeekerTable from "./admin/jobSeekerTable.jsx";
+import CatergoryTable from "./admin/jobCategoryTable.jsx";
+import ReviewTable from "./admin/reviewTable.jsx";
+import Dashboard from "./admin/dashboard.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -111,6 +117,28 @@ const router = createBrowserRouter([
   {
     path: "listenJob",
     element: <ListenJob />,
+  },{
+    path: "adminLogin",
+    element: <AdminLogin />,
+  },
+  {
+    path: "employerTable",
+    element: <EmployerTable />,
+  },{
+    path: "jobSeekerTable",
+    element: <JobSeekerTable />,
+  },
+  {
+    path: "categoryTable",
+    element: <CatergoryTable />,
+  },
+  {
+    path: "reviewTable",
+    element: <ReviewTable />,
+  },
+  {
+    path: "dashboard",
+    element: <Dashboard />,
   }
 ]);
 
