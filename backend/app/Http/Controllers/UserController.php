@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 
+
 class UserController extends Controller
 {   
     public function index()
@@ -24,6 +25,7 @@ class UserController extends Controller
         $user = Auth::user()->load('education', 'experience');
         return response()->json($user, 200);
     }
+    
     public function createUser(Request $request)
     {
         try {

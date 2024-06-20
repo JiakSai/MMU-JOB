@@ -12,6 +12,7 @@ use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ResetPasswordController;
 
 //Public
 Route::get('/JobCategories', [JobCategoryController::class, 'index']);
@@ -20,6 +21,8 @@ Route::get('/ShowCompanyDetails/{company}', [CompanyController::class, 'show']);
 Route::get('/ShowCompanyPosts/{company}', [CompanyController::class, 'showCompanyPosts']);
 Route::get('/ShowPost', [PostController::class, 'index']);
 Route::get('/SearchAndFilter', [PostController::class, 'SearchAndFilter']);
+Route::post('/SendOTPEmail', [ResetPasswordController::class, 'sendOTP']);
+Route::post('/ResetPassword', [ResetPasswordController::class, 'resetPassword']);
 
 //User
 Route::post('/UserRegister', [UserController::class, 'createUser']);
@@ -38,8 +41,6 @@ Route::middleware(['auth:sanctum', 'user'])->group(function(){
     Route::get('/ShowUserApplications', [UserController::class, 'showApplications']);
     Route::post('/AddRating/{companyId}', [RatingController::class, 'store']);
     Route::patch('/UpdateRating/{ratingId}', [RatingController::class, 'update']);
-    Route::post('/send-otp-email', [UserController::class, 'forgotPassword']);
-    Route::post('/reset-password', [UserController::class, 'resetPassword']);
     Route::get('/UserLogout', [UserController::class, 'logoutUser']);
 });
 

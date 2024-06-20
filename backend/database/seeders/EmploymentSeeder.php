@@ -32,7 +32,7 @@ class EmploymentSeeder extends Seeder
             'cover'=>'http://127.0.0.1:8000/images/company/intel_cover.jpg',
             'category'=>'IT & Telecommunication',
             'companySize'=>'More than 10,000 employees',
-            'location'=>'Penang, Malaysia',
+            'location'=>'Penang',
             'benefits'=> 'Medical, Miscellaneous allowance, Education support, Dental, Sports (e.g. Gym), Parking, Vision, Meal subsidy, Daily free fruits, Mother room and more!',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
