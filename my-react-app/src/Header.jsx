@@ -1,20 +1,12 @@
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
 function Header() {
-    const hideSidebar = () => {
-        const sidebar = document.querySelector('.sidebar');
-        sidebar.style.display = 'none';
-    };
-
-    const showSidebar = () => {
-        const sidebar = document.querySelector('.sidebar');
-        sidebar.style.display = 'flex';
-    };
-
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const token = Cookies.get('token');
 
@@ -29,22 +21,48 @@ function Header() {
             navigate('/userLogin');
         }
     };
+
     const handleLogout = () => {
-        const token = Cookies.get('token'); // get the token from cookies
-    
+        const token = Cookies.get('token');
+        setLoading(true);
         axios.get('http://localhost:8000/api/UserLogout', {
             headers: {
-                'Authorization': `Bearer ${token}` // include the token in the Authorization header
+                'Authorization': `Bearer ${token}`
             }
         })
         .then(response => {
             console.log(response.data);
             Cookies.remove('token');
+            sessionStorage.setItem('logoutInitiated', 'true');
+            window.location.reload();
+            setLoading(false);
         })
         .catch(error => {
             console.error('There was an error!', error);
+            setLoading(false);
         });
     };
+
+    const hideSidebar = () => {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.style.display = 'none';
+    };
+
+    const showSidebar = () => {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.style.display = 'flex';
+    };
+
+    if (loading) {
+        return (
+            <>
+                <div className="loader"></div>
+                <div className='flex justify-center mt-[630px]'>
+                    <p className='text-3xl font-bold text-customBlue'>" MMUJOB "</p>
+                </div>
+            </>
+        );
+    }
 
     return (
         <header>
@@ -60,7 +78,7 @@ function Header() {
                     </li>
                     <li><a href="#">Company profiles</a></li>
                     <li id="user" className="User">
-                        <a href="#" onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
+                        <a onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
                         {token && (
                             <ul className="Dropdown">
                                 <li><a href="#">Profile</a></li>
@@ -89,7 +107,7 @@ function Header() {
                     <li className="hideOnMobile">
                         <ul>
                             <li id="user" className="User">
-                                <a href="#" onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <a onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
                                 {token && (
                                     <ul className="Dropdown">
                                         <li><Link to={token ? "/UserProfile" : "/userLogin"} onClick={handleProfileClick}>

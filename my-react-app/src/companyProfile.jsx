@@ -15,12 +15,27 @@ const CompanyProfile = () => {
     const [showCompany, setShowCompany] = useState([]); 
     const [activeTab, setActiveTab] = useState(localStorage.getItem('activeTab') || 'About');
     const [showReview, setShowReview] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 1300);
+        return () => clearTimeout(timer);
+    }, []);
+
+    useEffect(() => {
+        if (showReview) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+    }, [showReview]);
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ShowCompanyDetails/${company.company.id}`)
             .then(response => {
                 setShowCompany(response.data);
                 console.log(response.data);
+                setLoading(false);
             })
             .catch(error => {
                 console.error('There was an error!', error);
@@ -32,6 +47,16 @@ const CompanyProfile = () => {
     }, [activeTab]);
 
     const { cover, logo, name, rating, totalRatings } = showCompany;
+
+    if (loading) { 
+        return ( 
+            <> 
+                <div className="loader"></div> 
+                <div className='flex justify-center mt-[630px]'> <p className='text-3xl font-bold text-customBlue'>
+                    " MMUJOB "</p> 
+                </div> 
+            </> 
+        ); }
 
     return (
         <>

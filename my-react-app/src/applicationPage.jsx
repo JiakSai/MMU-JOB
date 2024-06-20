@@ -15,8 +15,10 @@ import { ViewJobDetails } from './popUp-Components/viewJobDetails';
 import { FiPhone } from "react-icons/fi";
 import { MdOutlineMail } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 
 function Application() {
+    const navigate = useNavigate();
     const location = useLocation();
     const job = location.state?.job;
     const [showJobDetail, setShowJobDetail] = useState(false);
@@ -37,6 +39,7 @@ function Application() {
     const [selectedProfile, setSelectedProfile] = useState(null);
     const [loading, setLoading] = useState(true);
 
+
     useEffect(() => {
         document.body.classList.add('page-enter');
         return () => {
@@ -45,7 +48,7 @@ function Application() {
     }, []);
 
     useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 1300);  // Simulate loading delay
+        const timer = setTimeout(() => setLoading(false), 1300);  
         return () => clearTimeout(timer);
     }, []);
 
@@ -120,6 +123,7 @@ function Application() {
     useEffect(() => {
         const token = Cookies.get('token');
         if (!token) {
+            navigate('/userLogin');
             console.error('No token found');
             return;
         }
