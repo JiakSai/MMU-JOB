@@ -32,7 +32,7 @@ function EmployerHeader() {
     const handleLogout = () => {
         const token = Cookies.get('token'); // get the token from cookies
     
-        axios.get('http://localhost:8000/api/UserLogout', {
+        axios.get('http://localhost:8000/api/EmployerLogout', {
             headers: {
                 'Authorization': `Bearer ${token}` // include the token in the Authorization header
             }
@@ -52,24 +52,32 @@ function EmployerHeader() {
                 <ul className="sidebar">
                     <li onClick={hideSidebar}><FontAwesomeIcon icon={faTimes} className="closeIcon" /></li>
                     <li className="empLogo"><a href="#">" MMUJOB "</a></li>
-                    <li><a href="#">Job search</a></li>
                     <li>
-                        <Link to={token ? "/UserProfile" : "#"} onClick={handleProfileClick}>
-                            Profile
+                        <Link to={token ? "/listenJob" : "/employerLogin"} onClick={handleProfileClick}>
+                            Listen Job
                         </Link>
                     </li>
-                    <li><a href="#">Company profiles</a></li>
+                    <li>
+                        <Link to={token ? "/addPost" : "/employerLogin"} onClick={handleProfileClick}>
+                            Add Job
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={token ? "/editComProfile" : "/employerLogin"} onClick={handleProfileClick}>
+                            Company profile
+                        </Link>
+                    </li>
                     <li id="user" className="User">
                         <a href="#" onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
                         {token && (
                             <ul className="Dropdown">
-                                <li><a href="#">Profile</a></li>
-                                <li><a href="#">Saved search</a></li>
-                                <li><a href="#">Saved Job</a></li>
+                                <li>
+                                    <Link to={token ? "/editComProfile" : "/employerLogin"} onClick={handleProfileClick}>
+                                        Company profile
+                                    </Link>
+                                </li>
                                 <li><a href="#">Job application</a></li>
-                                <li><a href="#">Recommended Job</a></li>
-                                <li><a href="#">Setting</a></li>
-                                <li style={{ color: 'red' }}><a href="#" onClick={handleLogout}>Logout</a></li>
+                                <li style={{ color: 'red' }}><Link to={"/employerLogin"} onClick={handleLogout}>Logout</Link></li>
                             </ul>
                         )}
                     </li>
@@ -77,26 +85,34 @@ function EmployerHeader() {
                 </ul>
                 <ul>
                     <li className="empLogo"><a href="#">" MMUJOB "</a></li>
-                    <li className="hideOnMobile"><Link to={"/SearchJob"}>Listen job</Link></li>
                     <li className="hideOnMobile">
-                        <Link to={token ? "/UserProfile" : "#"} onClick={handleProfileClick}>
-                            Add job
+                        <Link to={token ? "/listenJob" : "/employerLogin"} onClick={handleProfileClick}>
+                            Listen Job
                         </Link>
                     </li>
-                    <li className="hideOnMobile"><a href="#">Company profiles</a></li>
+                    <li className="hideOnMobile">
+                        <Link to={token ? "/addPost" : "/employerLogin"} onClick={handleProfileClick}>
+                            Add JOb
+                        </Link>
+                    </li>
+                    <li className="hideOnMobile">
+                        <Link to={token ? "/editComProfile" : "/employerLogin"} onClick={handleProfileClick}>
+                            Company profile
+                        </Link>
+                    </li>
                     <li className="hideOnMobile">
                         <ul>
                             <li id="user" className="User">
                                 <a href="#" onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
                                 {token && (
                                     <ul className="Dropdown">
-                                        <li><a href="#">Profile</a></li>
-                                        <li><a href="#">Saved search</a></li>
-                                        <li><a href="#">Saved Job</a></li>
+                                        <li>
+                                            <Link to={token ? "/editComProfile" : "/employerLogin"} onClick={handleProfileClick}>
+                                            Company profile
+                                            </Link>
+                                        </li>
                                         <li><a href="#">Job application</a></li>
-                                        <li><a href="#">Recommended Job</a></li>
-                                        <li><a href="#">Setting</a></li>
-                                        <li style={{ color: 'red' }}><a href="#" onClick={handleLogout}>Logout</a></li>
+                                        <li style={{ color: 'red' }}><Link to={"/employerLogin"} onClick={handleLogout}>Logout</Link></li>
                                     </ul>
                                 )}
                             </li>

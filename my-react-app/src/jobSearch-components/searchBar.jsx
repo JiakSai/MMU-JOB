@@ -96,11 +96,13 @@ const SearchBar = () => {
           <li onClick={hideMajor}>Specialization <TfiAngleDown /></li>
           <div className="SpecializationList">
             <li><div className='select'></div>Select All</li>
+            <div className='stateContent'>
             {api.map((jobcategories, index) => (
               <div key={index}>
                 <div className='Specialization'><input type="checkbox" /><span>{jobcategories.name}</span></div>
               </div>
             ))}
+            </div>
             <li className='apply'><div className='apply'> <button>Cancel</button> <button>Apply</button></div></li>
           </div>
           <li onClick={hideState}>State / Region  <TfiAngleDown /></li>
