@@ -43,16 +43,62 @@ class EmployerController extends Controller
         return response()->json($employer->posts, 200);
     }
 
-    public function showApplications()
+    public function showPendingApplications()
     {
         $employer = Auth::guard('employer')->user();
-        $applications = $employer->applications()->with('user', 'user.experience', 'user.education' ,'post')->get();
+        $applications = $employer->applications()
+                                    ->where('status', 'Pending')
+                                    ->with('user', 'user.experience', 'user.education' ,'post')
+                                    ->get();
+        
+        $applications->transform(function ($application) {
+            $application->created_at_formatted = $application->created_at->format('d/m/Y');
+            return $application;
+        });
 
         return response()->json([
             'status' => 'success',
             'data' => $applications
         ], 200);
-    }
+    } 
+
+    public function showAcceptedApplications()
+    {
+        $employer = Auth::guard('employer')->user();
+        $applications = $employer->applications()
+                                    ->where('status', 'Accepted')
+                                    ->with('user', 'user.experience', 'user.education' ,'post')
+                                    ->get();
+        
+        $applications->transform(function ($application) {
+            $application->created_at_formatted = $application->created_at->format('d/m/Y');
+            return $application;
+        });
+        
+        return response()->json([
+            'status' => 'success',
+            'data' => $applications
+        ], 200);
+    } 
+
+    public function showRejectedApplications()
+    {
+        $employer = Auth::guard('employer')->user();
+        $applications = $employer->applications()
+                                    ->where('status', 'Rejected')
+                                    ->with('user', 'user.experience', 'user.education' ,'post')
+                                    ->get();
+        
+        $applications->transform(function ($application) {
+            $application->created_at_formatted = $application->created_at->format('d/m/Y');
+            return $application;
+        });
+        
+        return response()->json([
+            'status' => 'success',
+            'data' => $applications
+        ], 200);
+    } 
 
     public function updateApplicationStatus(Request $request, $id)
     {

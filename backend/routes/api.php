@@ -58,7 +58,9 @@ Route::middleware(['auth:sanctum', 'employer'])->group(function(){
     Route::get('/ShowCompanyProfile', [EmployerController::class, 'showOwnCompany']);
     Route::patch('/UpdateCompany', [CompanyController::class, 'update']);
     Route::get('/ShowPostsEmployer', [EmployerController::class, 'showForEmployer']);
-    Route::get('/ShowApplications', [EmployerController::class, 'showApplications']);
+    Route::get('/ShowPendingApplications', [EmployerController::class, 'showPendingApplications']);
+    Route::get('/ShowAcceptedApplications', [EmployerController::class, 'showAcceptedApplications']);
+    Route::get('/ShowRejectedApplications', [EmployerController::class, 'showRejectedApplications']);
     Route::patch('/UpdateApplicationStatus/{applicationsId}', [EmployerController::class, 'updateApplicationStatus']);
 });
 
