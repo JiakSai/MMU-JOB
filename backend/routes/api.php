@@ -21,8 +21,10 @@ Route::get('/ShowCompanyDetails/{company}', [CompanyController::class, 'show']);
 Route::get('/ShowCompanyPosts/{company}', [CompanyController::class, 'showCompanyPosts']);
 Route::get('/ShowPost', [PostController::class, 'index']);
 Route::get('/SearchAndFilter', [PostController::class, 'SearchAndFilter']);
-Route::post('/SendOTPEmail', [ResetPasswordController::class, 'sendOTP']);
-Route::post('/ResetPassword', [ResetPasswordController::class, 'resetPassword']);
+Route::post('/User/SendOTPEmail', [ResetPasswordController::class, 'sendOTPUser']);
+Route::post('/User/ResetPassword', [ResetPasswordController::class, 'resetPasswordUser']);
+Route::post('/Employer/SendOTPEmail', [ResetPasswordController::class, 'sendOTPEmployer']);
+Route::post('/Employer/ResetPassword', [ResetPasswordController::class, 'resetPasswordEmployer']);
 
 //User
 Route::post('/UserRegister', [UserController::class, 'createUser']);
@@ -56,7 +58,9 @@ Route::middleware(['auth:sanctum', 'employer'])->group(function(){
     Route::get('/ShowCompanyProfile', [EmployerController::class, 'showOwnCompany']);
     Route::patch('/UpdateCompany', [CompanyController::class, 'update']);
     Route::get('/ShowPostsEmployer', [EmployerController::class, 'showForEmployer']);
-    Route::get('/ShowApplications', [EmployerController::class, 'showApplications']);
+    Route::get('/ShowPendingApplications', [EmployerController::class, 'showPendingApplications']);
+    Route::get('/ShowAcceptedApplications', [EmployerController::class, 'showAcceptedApplications']);
+    Route::get('/ShowRejectedApplications', [EmployerController::class, 'showRejectedApplications']);
     Route::patch('/UpdateApplicationStatus/{applicationsId}', [EmployerController::class, 'updateApplicationStatus']);
 });
 
@@ -74,4 +78,5 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function(){
     Route::delete('/Admin/DeleteJobCategory/{jobcategory}', [JobCategoryController::class, 'destroy']);
     Route::get('/Admin/ShowRating', [RatingController::class, 'index']);
     Route::delete('/Admin/DeleteRating/{rating}', [RatingController::class, 'destroy']);
+    Route::get('/AdminLogout', [AdminController::class, 'logout']);
 });
