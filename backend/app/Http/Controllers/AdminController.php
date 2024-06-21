@@ -30,4 +30,21 @@ class AdminController extends Controller
             'token' => $token
         ], 200);
     }
+
+    public function logout(Request $request)
+    {
+        if (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->user()->tokens()->delete();
+            return response()->json([
+                'status' => true,
+                'message' => 'Admin Logged Out Successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'No authenticated user'
+            ], 401);
+        }
+        
+    }
 }
