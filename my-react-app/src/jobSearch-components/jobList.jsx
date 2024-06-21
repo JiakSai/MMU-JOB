@@ -47,7 +47,7 @@ export default function JobList() {
               <p>{job.jobType} | {job.locationType} | {job.jobLocation}</p>
               <div className="jobListBottom">
                 <p>{job.time_ago}</p>
-                <p>RM{job.salary}</p>
+                <p>RM{job.minSalary}-RM{job.maxSalary}</p>
               </div>
             </div>
           </div>

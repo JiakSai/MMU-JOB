@@ -16,6 +16,13 @@ const EmployerTable = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const token = Cookies.get('adminToken');
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 1000);
+        return () => clearTimeout(timer);
+    }, []);
+    
     useEffect(() => {
         console.log(token);
         if (!token) {
@@ -184,6 +191,17 @@ const EmployerTable = () => {
 
     const totalPages = Math.ceil(filteredEmployer.length / itemsPerPage);
     const displayedEmployer = filteredEmployer.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+    if (isLoading) {
+        return ( 
+            <> 
+                <div className="Adminloader"></div> 
+                <div className='flex justify-center mt-[630px]'> <p className='text-3xl font-bold text-customGrey'>
+                    " MMUJOB "</p> 
+                </div> 
+            </> 
+        );
+    }
 
     return (
         <div className='flex'>

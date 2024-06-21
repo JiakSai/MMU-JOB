@@ -8,8 +8,10 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import registerPhoto from '/src/photo/Dancing.svg';
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function EmployerFinishSign() {
+  const navigate = useNavigate();
   const [api, setApi] = useState([]);
   const [showLogoFileInput, setShowLogoFileInput] = useState(true);
   const [showCoverFileInput, setShowCoverFileInput] = useState(true);
@@ -86,6 +88,9 @@ function EmployerFinishSign() {
         }
       });
       console.log(response.data);
+      if (response.status === 200) {
+          navigate('/listenJob');
+      }
     } catch (error) {
       console.error('AxiosError', error);
     }

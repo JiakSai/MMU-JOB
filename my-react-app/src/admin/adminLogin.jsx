@@ -58,7 +58,7 @@ export function AdminLogin(){
                 const token = response.data.token; 
                     Cookies.set('adminToken', token); 
                     console.log(token);
-                    navigate('/adminTable');
+                    navigate('/dashboard');
             })
             .catch(error => {
                 console.log(error);
