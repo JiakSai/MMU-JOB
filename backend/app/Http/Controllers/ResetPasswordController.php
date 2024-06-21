@@ -2,98 +2,193 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Employer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
 
 class ResetPasswordController extends Controller
 {
-    public function sendOTP(Request $request)
+    public function sendOTPUser(Request $request)
     {
-         // Validate if the email exists in either job_seekers or employers tables
-        // $exists = DB::table('users')->where('email', $request->email)->exists() ||
-        // DB::table('employers')->where('email', $request->email)->exists();
+        $validate = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users'
+        ]);
 
-        $user = DB::table('users')->where('email', $request->email)->first();
-        $employer = null;
-        if (!$user) {
-            $employer = Employer::with('company')->where('email', $request->email)->first();
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Email not found.'
+            ], 404);
         }
 
-        if ($user || $employer) {
+        $token = rand(100000, 999999);  // Generate a unique token
+        $validUntil = Carbon::now()->addMinutes(10)->format('d/m/Y h:i:s A');
 
-            $token = rand(100000, 999999);  // Generate a unique token
-            $validUntil = Carbon::now()->addMinutes(10)->format('d/m/Y h:i:s A');
+        $recordExists = DB::table('password_reset_tokens')->where('email', $request->email)->exists();
+
+        if ($recordExists) {
+            // Update existing record
+            DB::table('password_reset_tokens')->where('email', $request->email)->update([
+                'token' => $token,
+                'created_at' => Carbon::now()
+            ]);
+        } else {
+            // Insert new record
+            DB::table('password_reset_tokens')->insert([
+                'email' => $request->email,
+                'token' => $token,
+                'created_at' => Carbon::now()
+            ]);
+        }
+
+        $name = User::where('email', $request->email)->first()->name;
+
+        // Send email with the reset link or OTP
+        Mail::send('emails.passwordReset', ['name'=> $name, 'token' => $token, 'validUntil'=> $validUntil], function ($message) use ($request) {
+            $message->to($request->email);
+            $message->subject('Password Reset OTP');
+        });
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Reset password link sent on your email.'
+        ], 200);
         
-            $email = $request->email;
-            $token = $token;
-            $now = Carbon::now();
+    }
 
-            $recordExists = DB::table('password_reset_tokens')->where('email', $email)->exists();
+    public function resetPasswordUser(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'password' => 'required|min:6|confirmed',
+            'token' => 'required'
+        ]);
 
-            if ($recordExists) {
-                // Update existing record
-                DB::table('password_reset_tokens')->where('email', $email)->update([
-                    'token' => $token,
-                    'created_at' => $now
-                ]);
-            } else {
-                // Insert new record
-                DB::table('password_reset_tokens')->insert([
-                    'email' => $email,
-                    'token' => $token,
-                    'created_at' => $now
-                ]);
-            }
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => $validate->errors()->first()
+            ], 400);
+        }
 
-            $name = $user ? $user->name : $employer->company->name;
+        $record = DB::table('password_reset_tokens')
+                    ->where('token', $request->token)
+                    ->where('created_at', '>=', Carbon::now()->subMinutes(10))
+                    ->first();
 
-            // Send email with the reset link or OTP
-            Mail::send('emails.passwordReset', ['name'=> $name, 'token' => $token, 'validUntil'=> $validUntil], function ($message) use ($request) {
-                $message->to($request->email);
-                $message->subject('Password Reset OTP');
-            });
+        if ($record) {
+            // Update the user's password
+            User::where('email', $record->email)->update([
+                'password' => Hash::make($request->password)
+            ]);
+            
+            // Delete the token
+            DB::table('password_reset_tokens')->where('token', $request->token)->delete();
 
             return response()->json([
-                'status' => true,
-                'message' => 'Reset password link sent on your email id.'
-            ], 200);
-
+                'statis' => true,
+                'message' => 'Password has been successfully reset.'
+            ]);
         }
 
         return response()->json([
             'status' => false,
-            'message' => 'Email not found.'
-        ], 404);
+            'message' => 'Invalid token or token has expired.'
+        ], 400);
     }
 
-    public function resetPassword(Request $request)
+    public function sendOTPEmployer(Request $request)
     {
+        $validate = Validator::make($request->all(), [
+            'email' => 'required|email|exists:employers'
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Email not found.'
+            ], 404);
+        }
+
+        $token = rand(100000, 999999);  // Generate a unique token
+        $validUntil = Carbon::now()->addMinutes(10)->format('d/m/Y h:i:s A');
+
+        $recordExists = DB::table('password_reset_tokens')->where('email', $request->email)->exists();
+
+        if ($recordExists) {
+            // Update existing record
+            DB::table('password_reset_tokens')->where('email', $request->email)->update([
+                'token' => $token,
+                'created_at' => Carbon::now()
+            ]);
+        } else {
+            // Insert new record
+            DB::table('password_reset_tokens')->insert([
+                'email' => $request->email,
+                'token' => $token,
+                'created_at' => Carbon::now()
+            ]);
+        }
+
+        $name = Employer::with('company')->where('email', $request->email)->first()->company->name;
+
+        // Send email with the reset link or OTP
+        Mail::send('emails.passwordReset', ['name'=> $name, 'token' => $token, 'validUntil'=> $validUntil], function ($message) use ($request) {
+            $message->to($request->email);
+            $message->subject('Password Reset OTP');
+        });
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Reset password link sent on your email.'
+        ], 200);
+        
+    }
+
+    public function resetPasswordEmployer(Request $request)
+    {
+        $validate = Validator::make($request->all(),[
+            'password' => 'required|min:6|confirmed',
+            'token' => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => $validate->errors()->first()
+            ], 400);
+        }
+
         $record = DB::table('password_reset_tokens')
-        ->where('token', $request->token)
-        ->where('created_at', '>=', Carbon::now()->subMinutes(10))
-        ->first();
+                    ->where('token', $request->token)
+                    ->where('created_at', '>=', Carbon::now()->subMinutes(10))
+                    ->first();
 
         if ($record) {
-            // Determine which table to update
-            $table = DB::table('users')->where('email', $record->email)->exists() ? 'users' : 'employers';
-
-            // Update the user's password
-            DB::table($table)->where('email', $record->email)->update([
-                'password' => Hash::make($request->password)  // Encrypt the new password
+            // Update the employer's password
+            Employer::where('email', $record->email)->update([
+                'password' => Hash::make($request->password)
             ]);
-
+            
             // Delete the token
             DB::table('password_reset_tokens')->where('token', $request->token)->delete();
 
-            return response()->json(['message' => 'Password has been successfully reset.']);
+            return response()->json([
+                'statis' => true,
+                'message' => 'Password has been successfully reset.'
+            ]);
         }
 
-        return response()->json(['message' => 'Invalid token or token has expired.'], 400);
+        return response()->json([
+            'status' => false,
+            'message' => 'Invalid token or token has expired.'
+        ], 400);
     }
+
 }
