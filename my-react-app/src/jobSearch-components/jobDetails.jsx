@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { IoBookmarkOutline } from "react-icons/io5";
 import { GiPayMoney } from "react-icons/gi";
 import { useNavigate } from 'react-router-dom';
@@ -27,131 +27,115 @@ export default function JobDetails(props){
         WebkitLineClamp: 3,
         overflow: 'hidden',
         display: '-webkit-box',
-  };
-  const token = Cookies.get('token');
-  const toggleJobDetails = () => {
-    setIsOpen(!isOpen);
-  };
-  const handleJobClick = (job) => {
-    setSelectedJob(job);
-    if(token){
-        navigate('/application', {state: {job}});
-    }
-    else{
-        navigate('/userLogin');
-    }
-  };
-  useEffect(() => {
-    const handleScroll = () => {
-      const jobScroll = document.querySelector('.jobScroll');
-      const scrollTop = jobScroll.scrollTop;
-      const scrollHeight = jobScroll.scrollHeight;
-      const clientHeight = jobScroll.clientHeight;
-
-      setShowJobDetailBottom(scrollTop + clientHeight >= scrollHeight);
+    };
+    const token = Cookies.get('token');
+    const toggleJobDetails = () => {
+        setIsOpen(!isOpen);
+    };
+    const handleJobClick = (job) => {
+        setSelectedJob(job);
+        if (token) {
+            navigate('/application', { state: { job } });
+        } else {
+            navigate('/userLogin');
+        }
     };
 
-    const jobScroll = document.querySelector('.jobScroll');
-    jobScroll.addEventListener('scroll', handleScroll);
+    useEffect(() => {
+        const handleScroll = () => {
+            const jobScroll = document.querySelector('.jobScroll');
+            const scrollTop = jobScroll.scrollTop;
+            const scrollHeight = jobScroll.scrollHeight;
+            const clientHeight = jobScroll.clientHeight;
 
-    return () => {
-      jobScroll.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+            setShowJobDetailBottom(scrollTop + clientHeight >= scrollHeight - 10);
+        };
 
-  return(
-    <>
-        <div className="jobDetails">
-            <div className='jobScroll'>
-                <div className='jobDetailsTop'>
-                <div className="jobDetailsBox">
-            <img src={job.company.logo} alt="bytes" className="jobLogo"/>
-            <p>{job.company.name}</p>
-            <p className="viewJob">View all jobs</p>
-            </div>
-            <div className="jobDetailTittle">
-            <h1>{job.job_title}</h1>
-            <div className="jobDetailsBox">
-                <button className="btn1"><IoIosMore /></button>
-                <button className="btn2"><IoBookmarkOutline/></button>
-                <button className="btn3" onClick={() => handleJobClick(job)}>Quick apply</button>
-            </div>
-            </div>
-            <div className="minimalistInformation">
-                <div className="jobDetailsBox">
-                <IoLocationOutline />{job.job_location}
+        const jobScroll = document.querySelector('.jobScroll');
+        jobScroll.addEventListener('scroll', handleScroll);
+
+        // Initial check to see if the component is already at the bottom
+        handleScroll();
+
+        return () => {
+            jobScroll.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    return (
+        <>
+            <div className="jobDetails">
+                <div className='jobScroll'>
+                    <div className='jobDetailsTop'>
+                        <div className="jobDetailsBox">
+                            <img src={job.company.logo} alt="bytes" className="h-[50px] rounded" />
+                            <p className='text-3xl ml-4 mr-1'>{job.company.name}</p>
+                            <p className="viewJob">View all jobs</p>
+                        </div>
+                        <div className="jobDetailTittle">
+                            <h1 className='text-xl font-semibold'>{job.jobTitle}</h1>
+                            <div className="jobDetailsBox">
+                                <button className="btn1"><IoIosMore /></button>
+                                <button className="btn2"><IoBookmarkOutline /></button>
+                                <button className="btn3" onClick={() => handleJobClick(job)}>Quick apply</button>
+                            </div>
+                        </div>
+                        <div className="minimalistInformation">
+                            <div className="jobDetailsBox">
+                                <IoLocationOutline />{job.jobLocation}
+                            </div>
+                            <div className="jobDetailsBox">
+                                <FaRegBuilding /> {job.company.companySize}
+                            </div>
+                            <div className="jobDetailsBox">
+                                <GoClock /> On-site | {job.jobType}
+                            </div>
+                            <div className="jobDetailsBox">
+                                <GiPayMoney /> RM{job.minSalary} - RM{job.maxSalary} per month
+                            </div>
+                        </div>
+                        <h3>Responsibilities</h3>
+                          <p className='ml-[25px] leading-7'>{job.description}</p>
+                        <h3>Qualifications</h3>
+                          <p className='ml-[25px] leading-7'>Education Level: {job.educationLevel}</p>
+                          <p className='ml-[25px] leading-7'>Working Experience : {job.experience}</p>
+                          <p className='ml-[25px] leading-7'>{job.requirement}</p>
+                        <h3>Company profile</h3>
+                        <div className="companyInfoBox">
+                            <img src={job.company.logo} alt="easyParcel" />
+                            <p className='text-2xl font-bold mt-4'>{job.company.name}</p>
+                            <div className="jobDetailsBox">
+                                <FaStar /> 4.4 · 27 reviews
+                            </div>
+                            <div className="jobDetailsBox">
+                                <HiOutlineBuildingOffice /> <p>{job.company.category}</p>
+                            </div>
+                            <div className="jobDetailsBox">
+                                <GoPeople /> <p>{job.company.companySize}</p>
+                            </div>
+                            <span style={isOpen ? null : paragraphStyles}>
+                                <p className='leading-6'>{job.company.description}</p>
+                            </span>
+                            <p className="show mt-1" onClick={toggleJobDetails}>
+                                {isOpen ? 'Show less' : 'Show more'}
+                                &nbsp;&nbsp;
+                                {isOpen ? <TfiAngleUp /> : <TfiAngleDown />}
+                            </p>
+                            <h4 className='font-semibold'>Perks and benefits</h4>
+                            <div className="benefitsBox">
+                                {job.company.benefits?.split(',').filter(Boolean).map((benefit, index) => (
+                                    <p className='flex items-center gap-2' key={index}><ImPointRight />{benefit.trim()}</p>
+                                ))}
+                            </div>
+                            <button className="btn4">More about this company&nbsp;&nbsp;&nbsp; <FaArrowRightLong /></button>
+                        </div>
+                    </div>
                 </div>
-                <div className="jobDetailsBox">
-                <FaRegBuilding /> Developers/Programmers (Information & Communication Technology)
-                </div>
-                <div className="jobDetailsBox">
-                <GoClock /> On-site | {job.job_type}
-                </div>
-                <div className="jobDetailsBox">
-                <GiPayMoney /> RM {job.salary} per month
-                </div>
-            </div>
-            <h3>Responsibilities</h3>
-            <ul >
-                <li>Setting up and installing new hardware and software systems.</li>
-                <li>Diagnosing and troubleshooting computer issues.</li>
-                <li>Maintaining hardware and software by conducting regular maintenance and updates.</li>
-                <li>Upgrading firmware, software, and outdated hardware systems.</li>
-                <li>Monitoring and maintaining security systems and installing updates.</li>
-                <li>Packing computers for sale.</li>
-                <li>Assist walk-in customers.</li>
-            </ul>
-            <h3>Qualifications</h3>
-            <ul>
-                <li>Associate degree in Technology-related field preferred</li>
-                <li>Minimum of 2 years of work experience is preferred</li>
-            </ul>
-            <h3>Company profile</h3>
-            <div className="companyInfoBox">
-                <img src={job.company.logo} alt="easyParcel" />
-                <h4>{job.company.name}</h4>
-                <div className="jobDetailsBox">
-                <FaStar /> 4.4 · 27 reviews
-                </div>
-                <div className="jobDetailsBox">
-                <HiOutlineBuildingOffice /> Computer Software & Networking
-                </div>
-                <div className="jobDetailsBox">
-                <GoPeople /> 51-100 employees
-                </div>
-                <span style={isOpen ? null: paragraphStyles}>
-                    EasyParcel as a whole is a web-based parcel consolidator and E-commerce shipping solutions provider, 
-                    or to put it into simple words, we provide easy-access solution for delivery service bookings.
-                    <br />
-                    EasyParcel Sdn Bhd established in June 2014, this company was formed with a mission in mind;
-                    that is to provide a simplified shipping platform where businesses could book any manner of 
-                    consignment for delivery at prices they couldn't achieve themselves, backed up with the knowledge 
-                    and expertise of an industry veteran (the Managing Director).
-                    <br />
-                    Even though we have now developed an efficient and user-friendly online booking system, 
-                    our ethos is to keep the small business mentality and treat each customer with the time and care they deserve.
-                    <br />
-                    More than 50,000 people and businesses in Malaysia are using EasyParcel. Our platform allows you to book for 
-                    delivery from multiple established courier companies in Malaysia and of course, at an affordable rate.
-                </span>
-                <p className="show" onClick={toggleJobDetails}>
-                    {isOpen ? 'Show less' : 'Show more'}
-                    &nbsp;&nbsp;
-                    {isOpen ? <TfiAngleUp /> : <TfiAngleDown />}
-                </p>
-                <h4>Perks and benefits</h4>
-                <div className="jobDetailsBox">
-                <p><ImPointRight />&nbsp;&nbsp;Medical</p> <p><ImPointRight />&nbsp;&nbsp;Miscellaneous </p> <p><ImPointRight />&nbsp;&nbsp;allowance Sports (e.g. Gym)</p>
-                </div>
-                <button className="btn4">More about this company&nbsp;&nbsp;&nbsp; <FaArrowRightLong /></button>
-                </div>
+                <div className='jobDetailBottom' style={{ display: showJobDetailBottom ? 'flex' : 'none' }}>
+                    <button className="btn2"><IoBookmarkOutline /></button>
+                    <button className="btn3" onClick={() => handleJobClick(job)}>Quick apply</button>
                 </div>
             </div>
-            <div className='jobDetailBottom'style={{ display: showJobDetailBottom ? 'flex' : 'none' }} >
-                <button className="btn2"><IoBookmarkOutline/></button>
-                <button className="btn3" onClick={() => handleJobClick(job)}>Quick apply</button>
-            </div>
-            </div>
-    </>
-  )
+        </>
+    );
 }
