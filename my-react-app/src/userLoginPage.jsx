@@ -10,7 +10,7 @@ export default function UserLogin() {
     const navigate = useNavigate();
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [loginPost, setLoginPost] = useState({ email: '', password: '' });
-    const [resetPost, setResetPost] = useState({ email: '', otp: '', newPassword: '', confirmNewPassword: '' });
+    const [resetPost, setResetPost] = useState({ email: '', token: '', password: '', password_confirmation: '' });
     const [formError, setFormError] = useState({ email: '', password: '' });
     const [message, setMessage] = useState('');
     const [currentForm, setCurrentForm] = useState('login'); // 'login', 'resetRequest', 'resetPassword'
@@ -77,7 +77,7 @@ export default function UserLogin() {
             return;
         }
 
-        axios.post('http://localhost:8000/api/send-otp-email', resetPost.email)
+        axios.post('http://localhost:8000/api/SendOTPEmail', {email:resetPost.email})
         .then(response => {
             console.log('Response:', response.data);
             setMessage('OTP sent to your email.');
@@ -92,23 +92,23 @@ export default function UserLogin() {
 
     const handleResetPasswordSubmit = (event) => {
         event.preventDefault();
-
-        const { otp, newPassword, confirmNewPassword } = resetPost;
-
-        if (!otp || !newPassword || !confirmNewPassword) {
+    
+        const { token, newPassword, confirmNewPassword } = resetPost;
+    
+        if (!token || !newPassword || !confirmNewPassword) {
             setMessage('* All fields are required');
             return;
         }
-
+    
         if (newPassword !== confirmNewPassword) {
             setMessage('* New password and confirm password must match');
             return;
         }
-
-        axios.post('http://localhost:8000/api/reset-password', {
-            email: resetPost.email,
-            otp,
-            newPassword
+    
+        axios.post('http://localhost:8000/api/ResetPassword', {
+            token,
+            password: newPassword,
+            password_confirmation: confirmNewPassword
         })
             .then(response => {
                 console.log('Password reset successful:', response.data);
@@ -119,8 +119,8 @@ export default function UserLogin() {
                 console.error('Error resetting password:', error);
                 setMessage('Invalid OTP or error resetting password.');
             });
-        
     };
+    
 
     return (
         <>
@@ -199,23 +199,23 @@ export default function UserLogin() {
                                 <label htmlFor="otp">OTP</label>
                                 <input
                                     type="text"
-                                    name="otp"
+                                    name="token"
                                     onChange={handleInput}
-                                    value={resetPost.otp}
+                                    value={resetPost.token}
                                 />
                                 <label htmlFor="newPassword">New Password</label>
                                 <input
                                     type="password"
-                                    name="newPassword"
+                                    name="password"
                                     onChange={handleInput}
-                                    value={resetPost.newPassword}
+                                    value={resetPost.password}
                                 />
                                 <label htmlFor="confirmNewPassword">Confirm New Password</label>
                                 <input
                                     type="password"
-                                    name="confirmNewPassword"
+                                    name="password_confirmation"
                                     onChange={handleInput}
-                                    value={resetPost.confirmNewPassword}
+                                    value={resetPost.password_confirmation}
                                 />
                                 <button type="submit">Reset Password</button>
                                 <p className="error-message">{message}</p>

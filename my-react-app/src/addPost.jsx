@@ -1,11 +1,11 @@
 import React from 'react';
-import EmployerFooter from './employerFooter';
-import EmployerHeader from './employerHeader';
+import EmployerFooter from './employer/employerFooter';
+import EmployerHeader from './employer/employerHeader';
 import { FaAngleDown } from "react-icons/fa6";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import AddEditPost from './Add&EditPost';
+import AddEditPost from './employer/Add&EditPost';
 
 export default function AddPost() {
 

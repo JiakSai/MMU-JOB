@@ -16,13 +16,7 @@ function EmployerHeader() {
     };
 
     const navigate = useNavigate();
-    const token = Cookies.get('token');
-
-    const handleProfileClick = () => {
-        if (!token) {
-            navigate('/userLogin');
-        }
-    };
+    const token = Cookies.get('empToken');
 
     const handleUserClick = () => {
         if (!token) {
@@ -30,21 +24,26 @@ function EmployerHeader() {
         }
     };
     const handleLogout = () => {
-        const token = Cookies.get('token'); // get the token from cookies
+        const token = Cookies.get('empToken');
+        if (!token) {
+            console.log('No token found, unable to log out.');
+            return;
+        }
     
         axios.get('http://localhost:8000/api/EmployerLogout', {
             headers: {
-                'Authorization': `Bearer ${token}` // include the token in the Authorization header
+                'Authorization': `Bearer ${token}`
             }
         })
         .then(response => {
             console.log(response.data);
-            Cookies.remove('token');
+            Cookies.remove('empToken');
         })
         .catch(error => {
             console.error('There was an error!', error);
         });
     };
+    
 
     return (
         <header>
@@ -53,17 +52,17 @@ function EmployerHeader() {
                     <li onClick={hideSidebar}><FontAwesomeIcon icon={faTimes} className="closeIcon" /></li>
                     <li className="empLogo"><a href="#">" MMUJOB "</a></li>
                     <li>
-                        <Link to={token ? "/listenJob" : "/employerLogin"} onClick={handleProfileClick}>
+                        <Link to={token ? "/listenJob" : "/employerLogin"}>
                             Listen Job
                         </Link>
                     </li>
                     <li>
-                        <Link to={token ? "/addPost" : "/employerLogin"} onClick={handleProfileClick}>
+                        <Link to={token ? "/addPost" : "/employerLogin"}>
                             Add Job
                         </Link>
                     </li>
                     <li>
-                        <Link to={token ? "/editComProfile" : "/employerLogin"} onClick={handleProfileClick}>
+                        <Link to={token ? "/editComProfile" : "/employerLogin"}>
                             Company profile
                         </Link>
                     </li>
@@ -72,11 +71,11 @@ function EmployerHeader() {
                         {token && (
                             <ul className="Dropdown">
                                 <li>
-                                    <Link to={token ? "/editComProfile" : "/employerLogin"} onClick={handleProfileClick}>
+                                    <Link to={token ? "/editComProfile" : "/employerLogin"}>
                                         Company profile
                                     </Link>
                                 </li>
-                                <li><a href="#">Job application</a></li>
+                                <li><Link to={token ? "/employerApplication" : "/employerLogin"}>Job application</Link></li>
                                 <li style={{ color: 'red' }}><Link to={"/employerLogin"} onClick={handleLogout}>Logout</Link></li>
                             </ul>
                         )}
@@ -86,17 +85,17 @@ function EmployerHeader() {
                 <ul>
                     <li className="empLogo"><a href="#">" MMUJOB "</a></li>
                     <li className="hideOnMobile">
-                        <Link to={token ? "/listenJob" : "/employerLogin"} onClick={handleProfileClick}>
+                        <Link to={token ? "/listenJob" : "/employerLogin"}>
                             Listen Job
                         </Link>
                     </li>
                     <li className="hideOnMobile">
-                        <Link to={token ? "/addPost" : "/employerLogin"} onClick={handleProfileClick}>
+                        <Link to={token ? "/addPost" : "/employerLogin"}>
                             Add JOb
                         </Link>
                     </li>
                     <li className="hideOnMobile">
-                        <Link to={token ? "/editComProfile" : "/employerLogin"} onClick={handleProfileClick}>
+                        <Link to={token ? "/editComProfile" : "/employerLogin"}>
                             Company profile
                         </Link>
                     </li>
@@ -107,11 +106,11 @@ function EmployerHeader() {
                                 {token && (
                                     <ul className="Dropdown">
                                         <li>
-                                            <Link to={token ? "/editComProfile" : "/employerLogin"} onClick={handleProfileClick}>
+                                            <Link to={token ? "/editComProfile" : "/employerLogin"}>
                                             Company profile
                                             </Link>
                                         </li>
-                                        <li><a href="#">Job application</a></li>
+                                        <li><Link to={token ? "/employerApplication" : "/employerLogin"}>Job application</Link></li>
                                         <li style={{ color: 'red' }}><Link to={"/employerLogin"} onClick={handleLogout}>Logout</Link></li>
                                     </ul>
                                 )}

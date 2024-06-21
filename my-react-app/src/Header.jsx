@@ -10,17 +10,12 @@ function Header() {
     const navigate = useNavigate();
     const token = Cookies.get('token');
 
-    const handleProfileClick = () => {
-        if (!token) {
-            navigate('/userLogin');
-        }
-    };
-
     const handleUserClick = () => {
         if (!token) {
             navigate('/userLogin');
         }
     };
+    
 
     const handleLogout = () => {
         const token = Cookies.get('token');
@@ -72,7 +67,7 @@ function Header() {
                     <li className="logo"><a href="#">" MMUJOB "</a></li>
                     <li><a href="#">Job search</a></li>
                     <li>
-                        <Link to={token ? "/UserProfile" : "/userLogin"} onClick={handleProfileClick}>
+                        <Link to={token ? "/UserProfile" : "/userLogin"}>
                             Profile
                         </Link>
                     </li>
@@ -84,7 +79,7 @@ function Header() {
                                 <li><a href="#">Profile</a></li>
                                 <li><a href="#">Saved search</a></li>
                                 <li><a href="#">Saved Job</a></li>
-                                <li><Link to={token ? "/userApplicationStatus" : "/userLogin"} onClick={handleProfileClick}>
+                                <li><Link to={token ? "/userApplicationStatus" : "/userLogin"}>
                                     Job Application
                                 </Link></li>
                                 <li><a href="#">Recommended Job</a></li>
@@ -93,13 +88,13 @@ function Header() {
                             </ul>
                         )}
                     </li>
-                    <li><a href="#">Employer site</a></li>
+                    <li><a href="/listenJob">Employer site</a></li>
                 </ul>
                 <ul>
                     <li className="logo"><a href="#">" MMUJOB "</a></li>
                     <li className="hideOnMobile"><Link to={"/SearchJob"}>job search</Link></li>
                     <li className="hideOnMobile">
-                        <Link to={token ? "/UserProfile" : "/userLogin"} onClick={handleProfileClick}>
+                        <Link to={token ? "/UserProfile" : "/userLogin"}>
                             Profile
                         </Link>
                     </li>
@@ -110,12 +105,12 @@ function Header() {
                                 <a onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
                                 {token && (
                                     <ul className="Dropdown">
-                                        <li><Link to={token ? "/UserProfile" : "/userLogin"} onClick={handleProfileClick}>
+                                        <li><Link to={token ? "/UserProfile" : "/userLogin"}>
                                             Profile
                                         </Link></li>
                                         <li><a href="#">Saved search</a></li>
                                         <li><a href="#">Saved Job</a></li>
-                                        <li><Link to={token ? "/userApplicationStatus" : "/userLogin"} onClick={handleProfileClick}>
+                                        <li><Link to={token ? "/userApplicationStatus" : "/userLogin"}>
                                             Job Application
                                         </Link></li>
                                         <li><a href="#">Recommended Job</a></li>
@@ -124,7 +119,7 @@ function Header() {
                                     </ul>
                                 )}
                             </li>
-                            <li className='site'><a href="#">Employer site</a></li>
+                            <li className='site'><a href="/listenJob">Employer site</a></li>
                         </ul>
                     </li>
                     <li className="menu-button" onClick={showSidebar}><FontAwesomeIcon icon={faBars} className="menuIcon" /></li>

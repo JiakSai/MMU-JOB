@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { BiSortAlt2 } from "react-icons/bi";
 import { CiShare1 } from "react-icons/ci";
 import ShowReviewss from './showReview';
+import { useNavigate } from 'react-router-dom';
 
 const ReviewTable = () => {
     const [review, setReview] = useState([]);
@@ -16,7 +17,14 @@ const ReviewTable = () => {
     const [filterValue, setFilterValue] = useState('');
     const [sortCriteria, setSortCriteria] = useState({ key: '', order: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);
-    const token = Cookies.get('token');
+    const token = Cookies.get('adminToken');
+    const navigate = useNavigate();
+    useEffect(() => {
+        console.log(token);
+        if (!token) {
+            navigate('/403');
+        }
+    }, []);
 
     const itemsPerPage = 11;
 

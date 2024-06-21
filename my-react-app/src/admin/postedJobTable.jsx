@@ -4,6 +4,7 @@ import Home from './adminSidebar';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { BiSortAlt2 } from "react-icons/bi";
+import { useNavigate } from 'react-router-dom';
 
 const AdminTable = () => {
     const [postedJob, setPostedJob] = useState([]);
@@ -13,7 +14,14 @@ const AdminTable = () => {
     const [filterValue, setFilterValue] = useState('');
     const [sortCriteria, setSortCriteria] = useState({ key: '', order: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);
-    const token = Cookies.get('token');
+    const token = Cookies.get('adminToken');
+    const navigate = useNavigate();
+    useEffect(() => {
+        console.log(token);
+        if (!token) {
+            navigate('/403');
+        }
+    }, []);
 
     const itemsPerPage = 11;
 

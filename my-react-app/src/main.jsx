@@ -12,17 +12,18 @@ import UserProfile from "./userProfile.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Application from "./applicationPage.jsx";
-import { ViewJobDetails } from "./popUp-Components/viewJobDetails.jsx";
-import EmployerRegister from "./employerRegister.jsx";
-import EmployerLogin from "./employerLogin.jsx";
+import { ViewJobDetails } from "./user-popUp-Components/viewJobDetails.jsx";
+import EmployerRegister from "./employer/employerRegister.jsx";
+import EmployerLogin from "./employer/employerLogin.jsx";
 import SearchCompany from "./searchCompany.jsx";
 import CompanyProfile from "./companyProfile.jsx";
-import EmployerFinishSign from "./employerFinishSign.jsx";
-import EditComProfile from "./editCompanyProfile.jsx";
+import EmployerFinishSign from "./employer/employerFinishSign.jsx";
+import EditComProfile from "./employer/editCompanyProfile.jsx";
+import EmployerApplication from "./employer/employerApplication.jsx";
 import AdminTable from "./admin/postedJobTable.jsx";
 import ApplicationStatus from "./applicationStatus.jsx";
 import AddPost from "./addPost.jsx";
-import ListenJob from "./listenJob.jsx";
+import ListenJob from "./employer/listenJob.jsx";
 import { AdminLogin } from "./admin/adminLogin.jsx";
 import EmployerTable from "./admin/employerTable.jsx";
 import JobSeekerTable from "./admin/jobSeekerTable.jsx";
@@ -68,7 +69,9 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <h1>404 Not Found</h1>,
+    element: <div className="flex justify-center items-center h-[100vh]">
+      <h1 className="text-2xl">404 Not Found</h1>
+    </div>,
   },
   {
     path: "application",
@@ -107,6 +110,10 @@ const router = createBrowserRouter([
     element: <AddPost />,
   },
   {
+    path: "employerApplication",
+    element: <EmployerApplication />,
+  },
+  {
     path: "adminTable",
     element: <AdminTable />,
   },
@@ -139,6 +146,12 @@ const router = createBrowserRouter([
   {
     path: "dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "403",
+    element: <div className="flex justify-center items-center h-[100vh]">
+      <h1 className="text-2xl">403 Forbidden</h1>
+    </div>,
   }
 ]);
 

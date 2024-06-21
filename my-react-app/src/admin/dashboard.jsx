@@ -6,16 +6,25 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { BsBuildings } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdOutlineMessage } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
     const [jobs, setJobs] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [jobSeekers, setJobSeekers] = useState([]);
     const [employers, setEmployers] = useState({ employer: [] });
+    const token = Cookies.get('adminToken');
+    const navigate = useNavigate();
+    useEffect(() => {
+        console.log(token);
+        if (!token) {
+            navigate('/403');
+        }
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = Cookies.get('token');
+            const token = Cookies.get('adminToken');
             try {
                 const [jobResponse, employerResponse, jobSeekerResponse, reviewResponse] = await Promise.all([
                     axios.get('http://localhost:8000/api/Admin/ShowPosts', {

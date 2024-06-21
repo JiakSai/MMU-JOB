@@ -4,6 +4,7 @@ import Home from './adminSidebar';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { BiSortAlt2 } from "react-icons/bi";
+import { useNavigate } from 'react-router-dom';
 
 const EmployerTable = () => {
     const [employer, setEmployer] = useState([]);
@@ -13,7 +14,14 @@ const EmployerTable = () => {
     const [filterValue, setFilterValue] = useState('');
     const [sortCriteria, setSortCriteria] = useState({ key: '', order: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);
-    const token = Cookies.get('token');
+    const token = Cookies.get('adminToken');
+    const navigate = useNavigate();
+    useEffect(() => {
+        console.log(token);
+        if (!token) {
+            navigate('/403');
+        }
+    }, []);
 
     const itemsPerPage = 11;
 
@@ -240,11 +248,11 @@ const EmployerTable = () => {
                                         checked={selectEmployer.includes(emp.id)}
                                     />
                                 </td>
-                                <td className="border border-gray-300 p-2">{emp.company.id}</td>
+                                <td className="border border-gray-300 p-2">{emp.id}</td>
                                 <td className="border border-gray-300 p-2">{emp.email}</td>
-                                <td className="border border-gray-300 p-2">{emp.company.name}</td>
-                                <td className="border border-gray-300 p-2">{emp.company.location}</td>
-                                <td className="border border-gray-300 p-2">{emp.company.category}</td>
+                                <td className="border border-gray-300 p-2">{emp.company?.name}</td>
+                                <td className="border border-gray-300 p-2">{emp.company?.location}</td>
+                                <td className="border border-gray-300 p-2">{emp.company?.category}</td>
                                 <td className="border border-gray-300 p-2">
                                     <button 
                                         onClick={() => handleDelete(emp.id)}

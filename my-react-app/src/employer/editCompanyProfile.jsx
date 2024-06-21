@@ -5,8 +5,10 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { MdModeEdit } from "react-icons/md";
 import { EditCp } from './editCp';
+import { useNavigate } from 'react-router-dom';
 
 const EditComProfile = () => {
+    const navigate = useNavigate();
     const [showEcp, setShowEcp] = useState(false);
     const [company, setCompany] = useState({
         company: {
@@ -21,6 +23,15 @@ const EditComProfile = () => {
             description: ''
         }
     });
+    const token = Cookies.get('empToken');
+
+    useEffect(() => {
+        console.log(token);
+        if (!token) {
+            navigate('/employerLogin');
+        }
+    }, []);
+    
     useEffect(() => {
       if (showEcp) {
           document.body.style.overflow = 'hidden';
@@ -34,7 +45,7 @@ const EditComProfile = () => {
     }
     useEffect(() => {
         const fetchData = async () => {
-            const token = Cookies.get('token');
+            const token = Cookies.get('empToken');
             try {
                 const response = await axios.get('http://localhost:8000/api/ShowCompanyProfile', {
                     headers: {

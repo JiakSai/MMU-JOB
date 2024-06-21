@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import "react-phone-input-2/lib/style.css";
 import axios from "axios";
 import EmployerFooter from "./employerFooter";
-import uploadCloud from './photo/uploadCloud.png';
+import uploadCloud from '/src/photo/uploadCloud.png';
 import { FaFileAlt } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import registerPhoto from './photo/Dancing.svg';
+import registerPhoto from '/src/photo/Dancing.svg';
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import Cookies from "js-cookie";
 
@@ -76,7 +76,7 @@ function EmployerFinishSign() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const token = Cookies.get('token');
+    const token = Cookies.get('empToken');
 
     try {
       const response = await axios.post('http://localhost:8000/api/AddCompany', post, {

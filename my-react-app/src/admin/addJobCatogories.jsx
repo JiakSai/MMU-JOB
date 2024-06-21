@@ -2,14 +2,23 @@ import React from 'react';
 import { useEffect,useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddJobCatorgories({onClose, justClose}){
+    const token = Cookies.get('adminToken');
+    const navigate = useNavigate();
+    useEffect(() => {
+        console.log(token);
+        if (!token) {
+            navigate('/403');
+        }
+    }, []);
     const [jobCategories, setJobCategories] = useState({
         name: '',
     });
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = Cookies.get('token');
+        const token = Cookies.get('adminToken');
         if (!token) {
             console.error('No token found');
             return;

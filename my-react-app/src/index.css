@@ -986,6 +986,9 @@ input[type="checkbox"] {
   align-items: center; /* Center vertically */
   position: relative;
 }
+.userInformation{
+  background-image: linear-gradient(111.5deg, rgb(252, 228, 236) 11.1%, rgb(236, 64, 122) 107.5%);
+}
 
 .companyCover .content {
   position: absolute;
@@ -1085,4 +1088,18 @@ th {
 
 .application td {
   vertical-align: middle;
+}
+.scroll::-webkit-scrollbar{
+  width: 8px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: #C0C0C0;;
+  border-radius: 4px;
+}
+.appScroll::-webkit-scrollbar{
+  width: 10px;
+}
+.appScroll::-webkit-scrollbar-thumb {
+  background: #C0C0C0;;
+  border-radius: 4px;
 }

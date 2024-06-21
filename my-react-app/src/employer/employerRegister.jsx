@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import registerPhoto from './photo/Dancing.svg';
+import registerPhoto from '/src/photo/Dancing.svg';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import EmployerFooter from './employerFooter';
@@ -72,7 +72,7 @@ function EmployerRegister() {
             .then(response => {
                 if (response.status === 200) {
                     const token = response.data.token; 
-                    Cookies.set('token', token); 
+                    Cookies.set('empToken', token); 
                     navigate('/employerFinishSign');
                     console.log(token);
                 }
