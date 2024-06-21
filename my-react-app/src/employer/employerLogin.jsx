@@ -88,7 +88,7 @@ export default function EmployerLogin() {
             return;
         }
 
-        axios.post('http://localhost:8000/api/SendOTPEmail', { email: resetPost.email })
+        axios.post('http://localhost:8000/api/Employer/SendOTPEmail', { email: resetPost.email })
             .then(response => {
                 console.log('Response:', response.data);
                 setMessage('OTP sent to your email.');
@@ -115,7 +115,7 @@ export default function EmployerLogin() {
             return;
         }
     
-        axios.post('http://localhost:8000/api/ResetPassword', {
+        axios.post('http://localhost:8000/api/Employer/ResetPassword', {
             token,
             password,
             password_confirmation

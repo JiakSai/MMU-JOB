@@ -23,6 +23,13 @@ const EditComProfile = () => {
             description: ''
         }
     });
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 1300);
+        return () => clearTimeout(timer);
+    }, []);
+    
     const token = Cookies.get('empToken');
 
     useEffect(() => {
@@ -61,6 +68,17 @@ const EditComProfile = () => {
 
         fetchData();
     }, []);
+
+    if (isLoading) {
+        return ( 
+            <> 
+                <div className="Emploader"></div> 
+                <div className='flex justify-center mt-[630px]'> <p className='text-3xl font-bold text-customPink'>
+                    " MMUJOB "</p> 
+                </div> 
+            </> 
+        );
+    }
 
     return (
         <>

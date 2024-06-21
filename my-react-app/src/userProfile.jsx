@@ -206,20 +206,20 @@ const UserProfile = () => {
             renderFunction: (value) => (
                 <div className='border border-black px-4 py-2 w-[460px] flex justify-between rounded'>
                     <div>
-                        <p className='font-semibold text-lg text-gray-900'>{value.school}</p>
-                        <div className='text-sm text-gray-900 font-light'>
-                            <span>{value.degree}</span>
-                        </div>
-                        <div className='text-sm text-gray-500 font-light'>
-                            <span>{value.startDate}</span>
-                            <span className=' mx-[5px]'>-</span>
-                            <span>{value.endDate}</span>
-                        </div>
-                        <div className='text-sm text-gray-500 font-light'>
-                            <span>{value.grade}</span>
-                        </div>
-                        <p className='text-base text-gray-900 font-light mt-[5px]'>{value.description}</p>
+                    <p className='font-semibold text-lg text-gray-900'>{value.school}</p>
+                    <div className='text-sm text-gray-900 font-light'>
+                        <span>{value.degree}</span>
                     </div>
+                    <div className='text-sm text-gray-500 font-light'>
+                        <span>{value.startDate}</span>
+                        <span className=' mx-[5px]'>-</span>
+                        <span>{value.endDate}</span>
+                    </div>
+                    <div className='text-sm text-gray-500 font-light'>
+                        <span>{value.grade}</span>
+                    </div>
+                    <p className='text-base text-gray-900 font-light mt-[5px]'>{value.description}</p>
+                </div>
                     <div className='flex item-center gap-1'>
                         <MdOutlineEdit onClick={() => handleEditEducationClick(value)} />
                         <MdDeleteOutline onClick={() => handleEduDeleteClick(value.id)} />

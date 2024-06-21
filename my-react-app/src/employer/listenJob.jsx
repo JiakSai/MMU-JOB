@@ -11,11 +11,11 @@ import { FaFileSignature } from "react-icons/fa";
 export default function ListenJob() {
     const [company, setCompany] = useState({});
     const [jobs, setJobs] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [showEditPost, setShowEditPost] = useState(null);
-    
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 1300);
+        const timer = setTimeout(() => setIsLoading(false), 1300);
         return () => clearTimeout(timer);
     }, []);
 

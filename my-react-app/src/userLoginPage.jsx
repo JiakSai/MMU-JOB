@@ -77,7 +77,7 @@ export default function UserLogin() {
             return;
         }
 
-        axios.post('http://localhost:8000/api/SendOTPEmail', {email:resetPost.email})
+        axios.post('http://localhost:8000/api/User/SendOTPEmail', {email:resetPost.email})
         .then(response => {
             console.log('Response:', response.data);
             setMessage('OTP sent to your email.');
@@ -93,22 +93,22 @@ export default function UserLogin() {
     const handleResetPasswordSubmit = (event) => {
         event.preventDefault();
     
-        const { token, newPassword, confirmNewPassword } = resetPost;
+        const { token, password, password_confirmation } = resetPost;  
     
-        if (!token || !newPassword || !confirmNewPassword) {
+        if (!token || !password || !password_confirmation) {  
             setMessage('* All fields are required');
             return;
         }
     
-        if (newPassword !== confirmNewPassword) {
+        if (password !== password_confirmation) {  
             setMessage('* New password and confirm password must match');
             return;
         }
     
-        axios.post('http://localhost:8000/api/ResetPassword', {
+        axios.post('http://localhost:8000/api/User/ResetPassword', {
             token,
-            password: newPassword,
-            password_confirmation: confirmNewPassword
+            password,
+            password_confirmation  
         })
             .then(response => {
                 console.log('Password reset successful:', response.data);
@@ -120,7 +120,6 @@ export default function UserLogin() {
                 setMessage('Invalid OTP or error resetting password.');
             });
     };
-    
 
     return (
         <>

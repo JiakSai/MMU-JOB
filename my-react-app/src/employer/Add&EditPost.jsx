@@ -22,6 +22,12 @@ export default function AddEditPost({ job,onClose }) {
     });
     const [post, setPost] = useState(initialPost);
     const token = Cookies.get('empToken');
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 1300);
+        return () => clearTimeout(timer);
+    }, []);
 
     useEffect(() => {
         console.log(token);
@@ -129,6 +135,19 @@ export default function AddEditPost({ job,onClose }) {
         "Over 10 Years of Experience"];
     const locationTypes = ["On-site", "Remote", "Hybrid"];
     const educationLevel = ["High school", "Diploma", "Bachelor's degree", "Master's degree", "Doctorate degree", "Professional qualification"];
+    
+    if(!job){
+        if (isLoading) {
+            return ( 
+                <> 
+                    <div className="Emploader"></div> 
+                    <div className='flex justify-center mt-[630px]'> <p className='text-3xl font-bold text-customPink'>
+                        " MMUJOB "</p> 
+                    </div> 
+                </> 
+            );
+        }
+    }
 
     return (
         <div className='w-full bg-white p-8'>

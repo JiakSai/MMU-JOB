@@ -21,6 +21,7 @@ import ReviewBar from './companySearch-Components/reviewBar.jsx';
 import EditProfile from './employer/editCompanyProfile.jsx';
 import ApplicationStatus from './applicationStatus.jsx';
 import AddPost from './addPost.jsx';
+import acceptApplication from './employer/acceptApplication.jsx';
 
 function App() {
     return (
@@ -39,14 +40,18 @@ function App() {
             {/* <AddReview /> */}
             {/* <EmployerFooter/>
             <EmployerHeader/> */}
-            {/* <EmployerLogin/> */}
+            <EmployerLogin/>
             {/* <EmployerFinishSign/> */}
             {/* <ReviewBar/> */}
             {/* <EditProfile/> */}
             {/* <AdminLogin/> */}
             {/* <ApplicationStatus/> */}
             {/* <AdminTable/> */}
-            <AddPost/>
+            {/* <AddPost/> */}
+            {/* {
+
+                <acceptApplication/>
+            } */}
         </>
     );
 }
