@@ -55,6 +55,7 @@ class CompanyController extends Controller
                 $ratingCounts[$rating->rating]++;
             }
             $rating->userProfilePic = $rating->user->profilePic;
+            $rating->time_ago = $rating->created_at->diffForHumans();
             unset($rating->user);
         }
 
