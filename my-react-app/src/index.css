@@ -702,11 +702,27 @@ form button {
   justify-content: center;
   gap: 36px;
 }
-.searchBar .apply button{
+.searchBarButton{
   height: 36px;
   width: 120px;
   font-size: 16px;
   border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2471A3;
+  color: white;
+}
+.searchBarCancelButton{
+  height: 36px;
+  width: 120px;
+  font-size: 16px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #CCD1D1;
+  color: white;
 }
 .select{
   margin-left: auto;
@@ -725,6 +741,7 @@ input[type="checkbox"] {
 }
 .salary{
   margin: 15px 0;
+  padding: 0 20px;
 }
 .salaryInput{
   width: 100px;

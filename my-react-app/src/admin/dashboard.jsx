@@ -77,7 +77,7 @@ export default function Dashboard() {
         fetchData();
     }, [token]);
 
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July',"Ogos","September","October","November","December"];
     const data = {
         labels: labels,
         datasets: [{
