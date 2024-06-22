@@ -4,6 +4,7 @@ import Home from './adminSidebar';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { BiSortAlt2 } from "react-icons/bi";
+import { useNavigate } from 'react-router-dom';
 
 const AdminTable = () => {
     const [postedJob, setPostedJob] = useState([]);
@@ -13,7 +14,21 @@ const AdminTable = () => {
     const [filterValue, setFilterValue] = useState('');
     const [sortCriteria, setSortCriteria] = useState({ key: '', order: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);
-    const token = Cookies.get('token');
+    const token = Cookies.get('adminToken');
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 1000);
+        return () => clearTimeout(timer);
+    }, []);
+
+    useEffect(() => {
+        console.log(token);
+        if (!token) {
+            navigate('/403');
+        }
+    }, []);
 
     const itemsPerPage = 11;
 
@@ -149,6 +164,17 @@ const AdminTable = () => {
 
     const totalPages = Math.ceil(filteredpostedJob.length / itemsPerPage);
     const displayedpostedJob = filteredpostedJob.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+    if (isLoading) {
+        return ( 
+            <> 
+                <div className="Adminloader"></div> 
+                <div className='flex justify-center mt-[630px]'> <p className='text-3xl font-bold text-customGrey'>
+                    " MMUJOB "</p> 
+                </div> 
+            </> 
+        );
+    }
 
     return (
         <div className='flex'>

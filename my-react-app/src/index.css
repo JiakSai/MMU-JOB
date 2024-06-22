@@ -549,6 +549,11 @@ form button {
   gap: 10px;
   align-items: center;
 }
+.benefitsBox{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
 .viewJob{
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -557,12 +562,7 @@ form button {
   display: flex;
   justify-content: space-between;
   align-items: end;
-}
-.jobDetails ul{
-  margin-left: 25px;
-}
-.jobDetails li{
-  padding: 3px;
+  margin-top: 20px;
 }
 .btn1{
   width: 32px;
@@ -596,6 +596,9 @@ form button {
   border: none;
   border-radius: 3px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .minimalistInformation{
   display: flex;
@@ -610,7 +613,7 @@ form button {
 .btn4{
   width: auto;
   height: 40px;
-  padding: 12px 16px;
+  padding: 12px 0px;
   font-size: 15px;
   border-radius: 4px;
   cursor: pointer;
@@ -621,8 +624,7 @@ form button {
   margin-top: 10px;
 }
 .companyInfoBox img{
-  width: 50px;
-  height: 50px;
+  height: 40px;
 }
 .companyInfoBox h4{
   font-size: 16px;
@@ -936,6 +938,19 @@ input[type="checkbox"] {
   transform: translate(-50%, -50%);
   z-index: 1000;
 }
+.Adminloader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #34495E;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 740px;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
 
 .page-enter {
   opacity: 0;
@@ -985,6 +1000,9 @@ input[type="checkbox"] {
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   position: relative;
+}
+.userInformation{
+  background-image: linear-gradient(111.5deg, rgb(252, 228, 236) 11.1%, rgb(236, 64, 122) 107.5%);
 }
 
 .companyCover .content {
@@ -1085,4 +1103,18 @@ th {
 
 .application td {
   vertical-align: middle;
+}
+.scroll::-webkit-scrollbar{
+  width: 8px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: #C0C0C0;;
+  border-radius: 4px;
+}
+.appScroll::-webkit-scrollbar{
+  width: 10px;
+}
+.appScroll::-webkit-scrollbar-thumb {
+  background: #C0C0C0;;
+  border-radius: 4px;
 }

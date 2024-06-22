@@ -4,15 +4,15 @@ import Footer from './Footer.jsx';
 import profilePic from './photo/profilePic1.svg';
 import addInfo from './photo/addInfo.svg';
 import Cookies from 'js-cookie';
-import { AddRole } from './popUp-Components/addRole.jsx';
-import { AddEducation } from './popUp-Components/addEducation.jsx';
-import { AddResume } from './popUp-Components/addResume.jsx';
-import { AddSkill } from './popUp-Components/addSkill.jsx';
-import { EditProfile } from './popUp-Components/editProfile.jsx';
+import { AddRole } from './user-popUp-Components/addRole.jsx';
+import { AddEducation } from './user-popUp-Components/addEducation.jsx';
+import { AddResume } from './user-popUp-Components/addResume.jsx';
+import { AddSkill } from './user-popUp-Components/addSkill.jsx';
+import { EditProfile } from './user-popUp-Components/editProfile.jsx';
 import { MdOutlineEdit } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaFileAlt } from "react-icons/fa";
-import { AddProfileImage } from './popUp-Components/addProfileImage.jsx';
+import { AddProfileImage } from './user-popUp-Components/addProfileImage.jsx';
 import { MdOutlineMail } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
@@ -206,20 +206,20 @@ const UserProfile = () => {
             renderFunction: (value) => (
                 <div className='border border-black px-4 py-2 w-[460px] flex justify-between rounded'>
                     <div>
-                        <p className='font-semibold text-lg text-gray-900'>{value.school}</p>
-                        <div className='text-sm text-gray-900 font-light'>
-                            <span>{value.degree}</span>
-                        </div>
-                        <div className='text-sm text-gray-500 font-light'>
-                            <span>{value.startDate}</span>
-                            <span className=' mx-[5px]'>-</span>
-                            <span>{value.endDate}</span>
-                        </div>
-                        <div className='text-sm text-gray-500 font-light'>
-                            <span>{value.grade}</span>
-                        </div>
-                        <p className='text-base text-gray-900 font-light mt-[5px]'>{value.description}</p>
+                    <p className='font-semibold text-lg text-gray-900'>{value.school}</p>
+                    <div className='text-sm text-gray-900 font-light'>
+                        <span>{value.degree}</span>
                     </div>
+                    <div className='text-sm text-gray-500 font-light'>
+                        <span>{value.startDate}</span>
+                        <span className=' mx-[5px]'>-</span>
+                        <span>{value.endDate}</span>
+                    </div>
+                    <div className='text-sm text-gray-500 font-light'>
+                        <span>{value.grade}</span>
+                    </div>
+                    <p className='text-base text-gray-900 font-light mt-[5px]'>{value.description}</p>
+                </div>
                     <div className='flex item-center gap-1'>
                         <MdOutlineEdit onClick={() => handleEditEducationClick(value)} />
                         <MdDeleteOutline onClick={() => handleEduDeleteClick(value.id)} />

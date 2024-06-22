@@ -59,28 +59,38 @@ export default function ApplicationStatus() {
             <Header />
             <div className='mt-[100px] mb-[30px] mx-[120px]'>
                 <h1 className='text-xl font-semibold'>Application Status</h1>
-                <table className='application'>
-                    <thead>
-                        <tr>
-                            <th className='bg-customBlue text-left'>Job Title</th>
-                            <th className='bg-customBlue text-left'>Company Name</th>
-                            <th className='bg-customBlue text-left'>Job Req</th>
-                            <th className='bg-customBlue text-left'>My Application Status</th>
-                            <th className='bg-customBlue text-left'>Date Submitted</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {applicationStatus.map((application, index) => (
-                            <tr key={index}>
-                                <td>{application.post.jobTitle}</td>
-                                <td>{application.post.company_id}</td> {/* Adjust this if there's a specific field for company name */}
-                                <td>{application.id}</td>
-                                <td>{application.status}</td>
-                                <td>{new Date(application.created_at).toLocaleDateString()}</td>
+                {applicationStatus.length > 0 ? (
+                    <table className='application'>
+                        <thead>
+                            <tr>
+                                <th className='bg-customBlue text-left'>Job Title</th>
+                                <th className='bg-customBlue text-left'>Company Name</th>
+                                <th className='bg-customBlue text-left'>Job Req</th>
+                                <th className='bg-customBlue text-left'>My Application Status</th>
+                                <th className='bg-customBlue text-left'>Date Submitted</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {applicationStatus.map((application, index) => (
+                                <tr key={index}>
+                                    <td>{application.post_title}</td>
+                                    <td>{application.company_name}</td> {/* Adjust this if there's a specific field for company name */}
+                                    <td>{application.id}</td>
+                                    <td>{application.status}</td>
+                                    <td>{application.created_at}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <div className='flex flex-col items-center justify-center mt-16 text-gray-500'>
+                        <svg className="w-16 h-16 mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-1a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p className="text-xl font-semibold">No Applications Found</p>
+                        <p className="text-md text-gray-600">You have not applied to any jobs yet.</p>
+                    </div>
+                )}
             </div>
             <Footer />
         </>

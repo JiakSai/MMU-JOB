@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import uploadCloud from './photo/uploadCloud.png';
+import uploadCloud from '/src/photo/uploadCloud.png';
 import { FaFileAlt } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Cookies from 'js-cookie';
@@ -83,7 +83,7 @@ export function EditCp({ justClose, company, onClose }) {
     
         const handleSubmit = async (event) =>{
             event.preventDefault();
-            const token = Cookies.get('token');
+            const token = Cookies.get('empToken');
             try{
                 let response;
                 response = await axios.post('http://localhost:8000/api/UpdateCompany', post, {

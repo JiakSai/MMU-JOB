@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { FaAngleDown } from "react-icons/fa6";
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddEditPost({ job,onClose }) {
+    const navigate = useNavigate();
     const [api, setApi] = useState([]);
     const [initialPost, setInitialPost] = useState({
         jobTitle: '',
@@ -19,6 +21,20 @@ export default function AddEditPost({ job,onClose }) {
         experience: ''
     });
     const [post, setPost] = useState(initialPost);
+    const token = Cookies.get('empToken');
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 1300);
+        return () => clearTimeout(timer);
+    }, []);
+
+    useEffect(() => {
+        console.log(token);
+        if (!token) {
+            navigate('/employerLogin');
+        }
+    }, []);
 
     useEffect(() => {
         if (job) {
@@ -81,7 +97,7 @@ export default function AddEditPost({ job,onClose }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const token = Cookies.get('token');
+        const token = Cookies.get('empToken');
         try {
             let response;
             if (job) {
@@ -119,6 +135,19 @@ export default function AddEditPost({ job,onClose }) {
         "Over 10 Years of Experience"];
     const locationTypes = ["On-site", "Remote", "Hybrid"];
     const educationLevel = ["High school", "Diploma", "Bachelor's degree", "Master's degree", "Doctorate degree", "Professional qualification"];
+    
+    if(!job){
+        if (isLoading) {
+            return ( 
+                <> 
+                    <div className="Emploader"></div> 
+                    <div className='flex justify-center mt-[630px]'> <p className='text-3xl font-bold text-customPink'>
+                        " MMUJOB "</p> 
+                    </div> 
+                </> 
+            );
+        }
+    }
 
     return (
         <div className='w-full bg-white p-8'>

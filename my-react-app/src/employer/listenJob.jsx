@@ -11,12 +11,17 @@ import { FaFileSignature } from "react-icons/fa";
 export default function ListenJob() {
     const [company, setCompany] = useState({});
     const [jobs, setJobs] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [showEditPost, setShowEditPost] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 1300);
+        return () => clearTimeout(timer);
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = Cookies.get('token');
+            const token = Cookies.get('empToken');
             try {
                 const [jobResponse, companyResponse] = await Promise.all([
                     axios.get('http://localhost:8000/api/ShowPostsEmployer', {
@@ -41,7 +46,7 @@ export default function ListenJob() {
     }, []);
 
     const handleDeleteClick = async (jobID) => {
-        const token = Cookies.get('token');
+        const token = Cookies.get('empToken');
         if (!token) {
             console.error('No token found');
             return;
@@ -77,11 +82,11 @@ export default function ListenJob() {
     return (
         <>
             <EmployerHeader />
-            <main className="mt-[100px] mb-[30px] mx-[120px] flex space-x-10">
-                <div className="h-[739.2px] flex flex-col space-y-2">
+            <main className="mt-[100px] mb-[30px] mx-[120px] flex space-x-10 ">
+                <div className="scroll h-[739.2px] flex flex-col space-y-2 overflow-y-auto overflow-x-hidden">
                     {jobs.length > 0 ? (
                         jobs.map(job => (
-                            <div className="w-[280px] border border-zinc-700 p-4 rounded-sm shadow-md" key={job.id} onClick={() => handleJobClick(job)}>
+                            <div className="w-[275px] border border-zinc-700 p-4 rounded-sm shadow-md" key={job.id} onClick={() => handleJobClick(job)}>
                                 <div className='flex w-full justify-between'>
                                     <img src={company.company?.logo || 'https://via.placeholder.com/180/E5E4E2'} alt='Company Logo' className='rounded-sm h-[70px] w-[70px] border-black' />
                                     <MdDeleteOutline size={23} onClick={() => handleDeleteClick(job.id)}/>
@@ -103,7 +108,7 @@ export default function ListenJob() {
                         </div>
                     )}
                 </div>
-                <div className="w-[950px] h-[739.2px]">
+                <div className="w-[956px] h-[739.2px]">
                     {showEditPost ? 
                         <AddEditPost 
                             job={showEditPost}

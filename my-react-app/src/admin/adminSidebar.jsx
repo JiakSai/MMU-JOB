@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
 import { BsBuildings } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
-import {FiLogOut } from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";
 import { MdOutlineMessage } from "react-icons/md";
 import { MdStorage } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const Home = () => {
+  const navigate = useNavigate();
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: MdOutlineDashboard },
     { name: "Job Seekers", link: "/jobSeekerTable", icon: AiOutlineUser },
@@ -18,7 +21,31 @@ const Home = () => {
     { name: "Job Categories", link: "/categoryTable", icon: MdStorage },
     { name: "Review", link: "/reviewTable", icon: MdOutlineMessage },
   ];
+
   const [open, setOpen] = useState(true);
+  const [loading, setLoading] = useState(false); // Added loading state
+
+  const handleLogout = () => {
+    const token = Cookies.get('adminToken');
+    setLoading(true);
+
+    axios.get('http://localhost:8000/api/AdminLogout', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        console.log(response.data);
+        Cookies.remove('adminToken');
+        sessionStorage.setItem('logoutInitiated', 'true');
+        setLoading(false);
+        navigate('/adminLogin'); // Navigate after logout
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+        setLoading(false);
+    });
+  };
 
   return (
     <section className="flex gap-6">
@@ -29,7 +56,7 @@ const Home = () => {
       >
         <div>
           <div className="py-3 flex justify-between">
-          {open && (
+            {open && (
               <div className="text-2xl text-gray-100 font-semibold ml-1">
                 "MMUJOB"
               </div>
@@ -71,7 +98,8 @@ const Home = () => {
         </div>
         <div className="mb-4">
           <Link
-            to="/logout"
+            onClick={handleLogout}
+            to="/adminLogin"
             className="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md"
           >
             <div><FiLogOut size={20} /></div>

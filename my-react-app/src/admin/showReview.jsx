@@ -1,7 +1,18 @@
 import React from 'react';
 import { FaStar } from "react-icons/fa";
+import { useEffect } from 'react';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export default function ShowReviewss({justClose, review}){
+    const token = Cookies.get('adminToken');
+    const navigate = useNavigate();
+    useEffect(() => {
+        console.log(token);
+        if (!token) {
+            navigate('/403');
+        }
+    }, []);
     return(
         <div className='addrole fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
             <div className="bg-white shadow-lg relative max-w-2xl max-h-full z-2001 w-[500px]">
