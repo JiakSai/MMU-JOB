@@ -15,7 +15,7 @@ export default function JobList() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/ShowPost')
+    axios.get('http://localhost:8000/api/SearchAndFilter')
       .then(response => {
         setShowJob(response.data);
         console.log(response.data);

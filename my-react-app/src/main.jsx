@@ -30,6 +30,12 @@ import JobSeekerTable from "./admin/jobSeekerTable.jsx";
 import CatergoryTable from "./admin/jobCategoryTable.jsx";
 import ReviewTable from "./admin/reviewTable.jsx";
 import Dashboard from "./admin/dashboard.jsx";
+import Policy from "./footerContent/policy.jsx";
+import ContactUs from "./footerContent/contactUs.jsx";
+import AboutUs from "./footerContent/aboutUs.jsx";
+import CommunityGuideLine from "./footerContent/communityGuidelines.jsx";
+import TermAndCondition from "./footerContent/termsAndConditions.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -152,6 +158,26 @@ const router = createBrowserRouter([
     element: <div className="flex justify-center items-center h-[100vh]">
       <h1 className="text-2xl">403 Forbidden</h1>
     </div>,
+  },
+  {
+    path: "policy",
+    element: <Policy />,
+  },
+  {
+    path: "contactUs",
+    element: <ContactUs />,
+  },
+  {
+    path: "aboutUs",
+    element: <AboutUs />,
+  },
+  {
+    path: "communityGuidelines",
+    element: <CommunityGuideLine />,
+  },
+  {
+    path: "termsAndConditions",
+    element: <TermAndCondition />,
   }
 ]);
 

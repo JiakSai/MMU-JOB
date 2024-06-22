@@ -61,19 +61,8 @@ function Footer(){
             <div className="footer-col">
               <h4>About MMUJOB</h4>
               <ul className="links">
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Work for Jobstreet</a></li>
-                <li><a href="#">International partners</a></li>
-                <li><a href="#">Partner services</a></li>
-              </ul>
-            </div>
-      
-            <div className="footer-col">
-              <h4>Contact</h4>
-              <ul className="links">
-                <li><a href="#">Help centre</a></li>
-                <li><a href="#">Contact us</a></li>
-                <li><a href="#">Product & tech blog</a></li>
+                <li><a href="/aboutUs">About us</a></li>
+                <li><a href="/contactUs">Contact us</a></li>
                 <li onClick={viewSocial}>
                   <div className='flex snap-center'><p>Social &#160;</p><FaAngleDown /></div>
                   <ul className="social">
@@ -82,7 +71,16 @@ function Footer(){
                       <li><a href="#" className="social-link"><FaXTwitter />&nbsp;Twitter</a></li>
                       <li><a href="#" className="social-link"><FaYoutube />&nbsp;Youtube</a></li>
                   </ul>
-              </li>              
+              </li> 
+              </ul>
+            </div>
+      
+            <div className="footer-col">
+              <h4>Terms of Use</h4>
+              <ul className="links">
+                <li><a href="/communityGuidelines">Community Guidelines</a></li>
+                <li><a href="/policy">Privacy Policy</a></li>
+                <li><a href="/termsAndConditions">Terms and Conditions</a></li>         
               </ul>
             </div>
           </div>
