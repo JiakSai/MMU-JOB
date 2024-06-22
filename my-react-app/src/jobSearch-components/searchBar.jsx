@@ -11,6 +11,14 @@ import axios from 'axios';
 const SearchBar = () => {
   const [api, setApi] = useState([]);
   const [value, setValue] = useState([100, 600]);
+  const [selectedJobTypes, setSelectedJobTypes] = useState([]);
+  const [selectedSpecializations, setSelectedSpecializations] = useState([]);
+  const [selectedStates, setSelectedStates] = useState([]);
+  const [selectedExperiences, setSelectedExperiences] = useState([]);
+  const [selectAllJobTypes, setSelectAllJobTypes] = useState(false);
+  const [selectAllSpecializations, setSelectAllSpecializations] = useState(false);
+  const [selectAllStates, setSelectAllStates] = useState(false);
+  const [selectAllExperiences, setSelectAllExperiences] = useState(false);
   var numF = 0, numS = 0, numSt = 0, numJ = 0, numE = 0, numSly = 0;
 
   useEffect(() => {
@@ -81,6 +89,122 @@ const SearchBar = () => {
     }
   };
 
+  const handleJobTypeSelection = (jobType) => {
+    if (selectedJobTypes.includes(jobType)) {
+      setSelectedJobTypes(selectedJobTypes.filter(j => j !== jobType));
+    } else {
+      setSelectedJobTypes([...selectedJobTypes, jobType]);
+    }
+  };
+
+  const handleSpecializationSelection = (specialization) => {
+    if (selectedSpecializations.includes(specialization)) {
+      setSelectedSpecializations(selectedSpecializations.filter(s => s !== specialization));
+    } else {
+      setSelectedSpecializations([...selectedSpecializations, specialization]);
+    }
+  };
+
+  const handleStateSelection = (state) => {
+    if (selectedStates.includes(state)) {
+      setSelectedStates(selectedStates.filter(s => s !== state));
+    } else {
+      setSelectedStates([...selectedStates, state]);
+    }
+  };
+
+  const handleExperienceSelection = (experience) => {
+    if (selectedExperiences.includes(experience)) {
+      setSelectedExperiences(selectedExperiences.filter(e => e !== experience));
+    } else {
+      setSelectedExperiences([...selectedExperiences, experience]);
+    }
+  };
+
+  const handleSelectAllJobTypes = () => {
+    if (!selectAllJobTypes) {
+      setSelectedJobTypes(jobTypes);
+      setSelectAllJobTypes(true);
+    } else {
+      setSelectedJobTypes([]);
+      setSelectAllJobTypes(false);
+    }
+  };
+
+  const handleSelectAllSpecializations = () => {
+    if (!selectAllSpecializations) {
+      setSelectedSpecializations(api.map(jobcategory => jobcategory.name));
+      setSelectAllSpecializations(true);
+    } else {
+      setSelectedSpecializations([]);
+      setSelectAllSpecializations(false);
+    }
+  };
+
+  const handleSelectAllStates = () => {
+    if (!selectAllStates) {
+      setSelectedStates(States);
+      setSelectAllStates(true);
+    } else {
+      setSelectedStates([]);
+      setSelectAllStates(false);
+    }
+  };
+
+  const handleSelectAllExperiences = () => {
+    if (!selectAllExperiences) {
+      setSelectedExperiences(experiences);
+      setSelectAllExperiences(true);
+    } else {
+      setSelectedExperiences([]);
+      setSelectAllExperiences(false);
+    }
+  };
+
+  const handleCancelJobTypes = () => {
+    setSelectedJobTypes([]);
+    setSelectAllJobTypes(false);
+  };
+
+  const handleCancelSpecializations = () => {
+    setSelectedSpecializations([]);
+    setSelectAllSpecializations(false);
+  };
+
+  const handleCancelStates = () => {
+    setSelectedStates([]);
+    setSelectAllStates(false);
+  };
+
+  const handleCancelExperiences = () => {
+    setSelectedExperiences([]);
+    setSelectAllExperiences(false);
+  };
+
+  const handleSelectAllJobTypesClick = () => {
+    handleSelectAllJobTypes();
+  };
+
+  const handleSelectAllSpecializationsClick = () => {
+    handleSelectAllSpecializations();
+  };
+
+  const handleSelectAllStatesClick = () => {
+    handleSelectAllStates();
+  };
+
+  const handleSelectAllExperiencesClick = () => {
+    handleSelectAllExperiences();
+  };
+
+  const handleApplySalary = () => {
+    console.log('Salary range applied:', value);
+  };
+
+  const handleCancelSalary = () => {
+    setValue([100, 600]);
+  };
+
   return (
     <form className="searchBar">
       <div className="searchInput">
@@ -93,53 +217,101 @@ const SearchBar = () => {
           <GoMultiSelect className="searchIcon ml-[50px]" />
         </div>
         <ul className='DropdownJob'>
-          <li onClick={hideMajor}>Specialization <TfiAngleDown /></li>
+          <li onClick={hideMajor}>Specialization {selectedSpecializations.length > 0 && `(${selectedSpecializations.length})`}  <TfiAngleDown /></li>
           <div className="SpecializationList">
-            <li><div className='select'></div>Select All</li>
+            <li onClick={handleSelectAllSpecializationsClick}><div className='select'></div>Select All</li>
             <div className='stateContent'>
-            {api.map((jobcategories, index) => (
-              <div key={index}>
-                <div className='Specialization'><input type="checkbox" /><span>{jobcategories.name}</span></div>
-              </div>
-            ))}
-            </div>
-            <li className='apply'><div className='apply'> <button>Cancel</button> <button>Apply</button></div></li>
-          </div>
-          <li onClick={hideState}>State / Region  <TfiAngleDown /></li>
-          <div className='stateList'>
-            <li><div className='select'></div>Select All</li>
-            <div className='stateContent'>
-              {States.map((State, index) => (
+              {api.map((jobcategory, index) => (
                 <div key={index}>
-                  <div className='State'><input type="checkbox" /><span>{State}</span></div>
+                  <div className='Specialization'>
+                    <input 
+                      type="checkbox" 
+                      onChange={() => handleSpecializationSelection(jobcategory.name)} 
+                      checked={selectedSpecializations.includes(jobcategory.name)} 
+                    />
+                    <span>{jobcategory.name}</span>
+                  </div>
                 </div>
               ))}
             </div>
-            <li className='apply'><div className='apply'> <button>Cancel</button> <button>Apply</button></div></li>
+            <li className='apply'>
+              <div className='apply'> 
+                <p className="searchBarCancelButton" onClick={handleCancelSpecializations}>Cancel</p> 
+                <p className="searchBarButton">Apply</p>
+              </div>
+            </li>
           </div>
-          <li onClick={hideJobType}>Job type <TfiAngleDown /></li>
+          <li onClick={hideState}>State / Region {selectedStates.length > 0 && `(${selectedStates.length})`}  <TfiAngleDown /></li>
+          <div className='stateList'>
+            <li onClick={handleSelectAllStatesClick}><div className='select'></div>Select All</li>
+            <div className='stateContent'>
+              {States.map((state, index) => (
+                <div key={index}>
+                  <div className='State'>
+                    <input 
+                      type="checkbox" 
+                      onChange={() => handleStateSelection(state)} 
+                      checked={selectedStates.includes(state)} 
+                    />
+                    <span>{state}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <li className='apply'>
+              <div className='apply'> 
+                <p className="searchBarCancelButton" onClick={handleCancelStates}>Cancel</p> 
+                <p className="searchBarButton">Apply</p>
+              </div>
+            </li>
+          </div>
+          <li onClick={hideJobType}>Job type {selectedJobTypes.length > 0 && `(${selectedJobTypes.length})`} <TfiAngleDown /></li>
           <div className='jobTList'>
-            <li><div className='select'></div>Select All</li>
+            <li onClick={handleSelectAllJobTypesClick}><div className='select'></div >Select All</li>
             {jobTypes.map((jobType, index) => (
               <div key={index}>
-                <div className='jobT'><input type="checkbox" /><span>{jobType}</span></div>
+                <div className='jobT'>
+                  <input 
+                    type="checkbox" 
+                    onChange={() => handleJobTypeSelection(jobType)} 
+                    checked={selectedJobTypes.includes(jobType)} 
+                  />
+                  <span>{jobType}</span>
+                </div>
               </div>
             ))}
-            <li className='apply'><div className='apply'> <button>Cancel</button> <button>Apply</button></div></li>
+            <li className='apply'>
+              <div className='apply'> 
+                <p className="searchBarCancelButton" onClick={handleCancelJobTypes}>Cancel</p> 
+                <p className="searchBarButton">Apply</p>
+              </div>
+            </li>
           </div>
-          <li onClick={hideExperience}>Experience <TfiAngleDown /></li>
+          <li onClick={hideExperience}>Experience {selectedExperiences.length > 0 && `(${selectedExperiences.length})`} <TfiAngleDown /></li>
           <div className='experienceList'>
-            <li><div className='select'></div>Select All</li>
+            <li onClick={handleSelectAllExperiencesClick}><div className='select'></div>Select All</li>
             {experiences.map((experience, index) => (
               <div key={index}>
-                <div className='experience'><input type="checkbox" /><span>{experience}</span></div>
+                <div className='experience'>
+                  <input 
+                    type="checkbox" 
+                    onChange={() => handleExperienceSelection(experience)} 
+                    checked={selectedExperiences.includes(experience)} 
+                  />
+                  <span>{experience}</span>
+                </div>
               </div>
             ))}
-            <li className='apply'><div className='apply'> <button>Cancel</button> <button>Apply</button></div></li>
+            <li className='apply'>
+              <div className='apply'> 
+                <p className="searchBarCancelButton" onClick={handleCancelExperiences}>Cancel</p> 
+                <p className="searchBarButton">Apply</p>
+              </div>
+            </li>
           </div>
           <li onClick={hideSalary}> Salary <TfiAngleDown /></li>
           <div className='salary'>
-            <Box width={300} mx="auto" my={4}>
+            <Box mx="auto" my={4}>
               <Typography id="range-slider" gutterBottom>
                 Price Range
               </Typography>
@@ -152,11 +324,11 @@ const SearchBar = () => {
                 step={50}
                 aria-labelledby="range-slider"
               />
-              <Box display="flex" justifyContent="space-between" mt={2}>
+              <Box display="flex" justifyContent="space-between" mt={1}>
                 <div>
                   <Typography>Min: </Typography>
                   <input 
-                    style={{ width: '100px', border: 'solid 1px #9b9b9b' }} 
+                    style={{ width: '120px', border: 'solid 1px #9b9b9b' }} 
                     type="number" 
                     value={value[0]} 
                     onChange={handleMinChange} 
@@ -166,7 +338,7 @@ const SearchBar = () => {
                 <div>
                   <Typography>Max: </Typography>
                   <input 
-                    style={{ width: '100px', border: 'solid 1px #9b9b9b' }} 
+                    style={{ width: '120px', border: 'solid 1px #9b9b9b' }} 
                     type="number" 
                     value={value[1]} 
                     onChange={handleMaxChange} 
@@ -174,6 +346,10 @@ const SearchBar = () => {
                   />
                 </div>
               </Box>
+              <div className='apply mt-6'>
+                <button className="searchBarCancelButton" onClick={handleCancelSalary}>Cancel</button>
+                <button className="searchBarButton" onClick={handleApplySalary}>Apply</button>
+              </div>
             </Box>
           </div>
         </ul>

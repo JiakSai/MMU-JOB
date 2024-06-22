@@ -41,6 +41,10 @@ export default function JobDetails(props){
         }
     };
 
+    const handleCompanyClick = (company) => {
+        navigate('/companyProfile', {state: {company}});
+    };
+
     useEffect(() => {
         const handleScroll = () => {
             const jobScroll = document.querySelector('.jobScroll');
@@ -127,7 +131,7 @@ export default function JobDetails(props){
                                     <p className='flex items-center gap-2' key={index}><ImPointRight />{benefit.trim()}</p>
                                 ))}
                             </div>
-                            <button className="btn4">More about this company&nbsp;&nbsp;&nbsp; <FaArrowRightLong /></button>
+                            <button onClick={() => handleCompanyClick(job)} className="btn4">More about this company&nbsp;&nbsp;&nbsp; <FaArrowRightLong /></button>
                         </div>
                     </div>
                 </div>
