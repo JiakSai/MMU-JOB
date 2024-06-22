@@ -72,6 +72,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function(){
     Route::get('/Admin/ShowEmployerAndCompany',[EmployerController::class, 'showEmployerAndCompany']);
     Route::delete('/Admin/DeleteEmployer/{employer}', [EmployerController::class, 'destroy']);
     Route::get('/Admin/ShowPosts', [PostController::class, 'showAdmin']);
+    Route::get('/Admin/ShowTotalPosts', [PostController::class, 'adminShowTotalPosts']);
     Route::delete('/Admin/DeletePost/{post}', [PostController::class, 'adminDestroy']);
     Route::get('/Admin/ShowJobCategory', [JobCategoryController::class, 'index']);
     Route::post('/Admin/AddJobCategory', [JobCategoryController::class, 'store']);

@@ -38,6 +38,27 @@ class PostController extends Controller
         return response()->json($posts, 200);
     }
 
+    public function adminShowTotalPosts()
+    {
+        $postsByMonth = Post::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+                            ->groupBy('month')
+                            ->orderBy('month', 'asc')
+                            ->get();
+
+        $months = [
+            1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
+            5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
+            9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
+        ];
+
+        $postsCountByMonth = $postsByMonth->map(function ($item) use ($months) {
+            $monthName = $months[$item->month];
+            return "{$monthName}: {$item->total}";
+        });
+
+        return response()->json($postsCountByMonth, 200);
+    }
+
     public function SearchAndFilter(Request $request)
     {   
         $query = Post::with(['company' => function($query) {
