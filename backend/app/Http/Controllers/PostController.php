@@ -10,10 +10,18 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('company')->get();
+        $posts = Post::with(['company' => function($query) {
+            $query->withCount('ratings as totalRatings')
+                  ->with(['ratings' => function($query) {    
+                }]);
+        }])->get();
 
         foreach ($posts as $post) {
             $post->time_ago = $post->created_at->diffForHumans();
+            $averageRating = $post->company->ratings->avg('rating');
+            $post->company->averageRating =  number_format((float)$averageRating, 1, '.', '');
+            $post->company->totalRatings = $post->company->totalRatings ?: 0;
+            unset($post->company->ratings);
         }
         
         return response()->json($posts, 200);
@@ -32,7 +40,10 @@ class PostController extends Controller
 
     public function SearchAndFilter(Request $request)
     {   
-        $query = Post::query();
+        $query = Post::with(['company' => function($query) {
+            $query->with('ratings')
+                  ->withCount('ratings as totalRatings');
+        }]);
 
         if($request->has('search'))
         {
@@ -43,7 +54,7 @@ class PostController extends Controller
         // Job Location filter
         if($request->has('jobLocation')) {
             $jobLocation = $request->input('jobLocation');
-            $query->where('jobLocation', 'LIKE', "%$jobLocation%");
+            $query->where('jobLocation', "$jobLocation");
         }
     
         // Location type filter
@@ -56,6 +67,24 @@ class PostController extends Controller
         if($request->has('jobCategory')) {
             $jobCategory = $request->input('jobCategory');
             $query->where('jobCategory', $jobCategory);
+        }
+
+        //Job type filter
+        if($request->has('jobType')) {
+            $jobType = $request->input('jobType');
+            $query->where('jobType', $jobType);
+        }
+
+        // Education level filter
+        if($request->has('educationLevel')) {
+            $educationLevel = $request->input('educationLevel');
+            $query->where('educationLevel', $educationLevel);
+        }
+
+        // Experience filter
+        if($request->has('experience')) {
+            $experience = $request->input('experience');
+            $query->where('experience', $experience);
         }
 
         // Salary filter
@@ -80,6 +109,14 @@ class PostController extends Controller
         
         // Execute the query and get the results
         $posts = $query->get();
+
+        foreach ($posts as $post) {
+            $post->time_ago = $post->created_at->diffForHumans();
+            $averageRating = $post->company->ratings->avg('rating');
+            $post->company->averageRating = number_format((float)$averageRating, 1, '.', '');
+            $post->company->totalRatings = $post->company->totalRatings ?: 0;
+            unset($post->company->ratings);
+        }
     
         // Check if we have any posts
         if ($posts->isEmpty()) {
@@ -159,6 +196,7 @@ class PostController extends Controller
             'maxSalary' => 'sometimes|required|numeric|gte:minSalary',
             'jobLocation' => 'sometimes|required',
             'locationType' => 'sometimes|required',
+            'educationLevel' => 'sometimes|required',
             'experience' => 'sometimes|required',
             'requirement' => 'sometimes|required',
             'description' => 'sometimes|min:5',
