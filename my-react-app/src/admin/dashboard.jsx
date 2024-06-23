@@ -75,6 +75,7 @@ export default function Dashboard() {
                 setJobSeekers(Array.isArray(jobSeekerResponse.data) ? jobSeekerResponse.data : []);
                 setReviews(Array.isArray(reviewResponse.data) ? reviewResponse.data : []);
                 setPosts(Array.isArray(postResponse.data) ? postResponse.data : []);
+                console.log(postResponse);
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {

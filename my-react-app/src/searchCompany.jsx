@@ -20,7 +20,8 @@ const SearchCompany = () => {
     }, []);
 
     const handleCompanyClick = (company) => {
-        navigate('/companyProfile', {state: {company}});
+        const type = 'About';
+        navigate('/companyProfile', {state: {company, type}});
     };
 
     useEffect(() => {

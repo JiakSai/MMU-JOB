@@ -17,7 +17,7 @@ import Cookies from 'js-cookie';
 import { BiCategory } from "react-icons/bi";
 import axios from 'axios';
 
-export default function JobDetails(props){
+export default function JobDetails(props) {
     const job = props.job;
     const [showJobDetailBottom, setShowJobDetailBottom] = useState(false);
     const [selectedJob, setSelectedJob] = useState(null);
@@ -43,12 +43,18 @@ export default function JobDetails(props){
     };
 
     const handleCompanyClick = (company) => {
-        navigate('/companyProfile', {state: {company}});
+        const type = 'About';
+        navigate('/companyProfile', { state: { company, type } });
+    };
+
+    const handleViewJobClick = (company) => {
+        const type = 'Job';
+        navigate('/companyProfile', { state: { company, type } });
     };
 
     useEffect(() => {
         const handleScroll = () => {
-            const jobScroll = document.querySelector('.jobScroll');
+            const companyScroll = document.querySelector('.jobScroll');
             const scrollTop = jobScroll.scrollTop;
             const scrollHeight = jobScroll.scrollHeight;
             const clientHeight = jobScroll.clientHeight;
@@ -75,7 +81,7 @@ export default function JobDetails(props){
                         <div className="jobDetailsBox">
                             <img src={job.company.logo} alt="bytes" className="h-[50px] rounded" />
                             <p className='text-3xl ml-4 mr-1'>{job.company.name}</p>
-                            <p className="viewJob">View all jobs</p>
+                            <p onClick={() => handleViewJobClick(job)} className="viewJob cursor-pointer">View all jobs</p>
                         </div>
                         <div className="jobDetailTittle">
                             <h1 className='text-xl font-semibold'>{job.jobTitle}</h1>
@@ -103,17 +109,17 @@ export default function JobDetails(props){
                             </div>
                         </div>
                         <h3>Responsibilities</h3>
-                          <p className='ml-[25px] leading-7'>{job.description}</p>
+                        <p className='ml-[25px] leading-7'>{job.description}</p>
                         <h3>Qualifications</h3>
-                          <p className='ml-[25px] leading-7'>Education Level: {job.educationLevel}</p>
-                          <p className='ml-[25px] leading-7'>Working Experience : {job.experience}</p>
-                          <p className='ml-[25px] leading-7'>{job.requirement}</p>
+                        <p className='ml-[25px] leading-7'>Education Level: {job.educationLevel}</p>
+                        <p className='ml-[25px] leading-7'>Working Experience : {job.experience}</p>
+                        <p className='ml-[25px] leading-7'>{job.requirement}</p>
                         <h3>Company profile</h3>
                         <div className="companyInfoBox">
-                            <img src={job.company.logo} alt="company logo" className='rounded'/>
+                            <img src={job.company.logo} alt="company logo" className='rounded' />
                             <p className='text-2xl font-bold mt-4 '>{job.company.name}</p>
                             <div className="jobDetailsBox">
-                                <FaStar color='yellow'/><p> {job.company.averageRating} · {job.company.totalRatings} reviews</p>
+                                <FaStar color='yellow' /><p> {job.company.averageRating} · {job.company.totalRatings} reviews</p>
                             </div>
                             <div className="jobDetailsBox">
                                 <HiOutlineBuildingOffice /> <p>{job.company.category}</p>

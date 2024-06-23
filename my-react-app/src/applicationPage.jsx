@@ -16,7 +16,7 @@ import { FiPhone } from "react-icons/fi";
 import { MdOutlineMail } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
-
+import { LuFileCheck } from "react-icons/lu";
 
 
 function Application() {
@@ -39,6 +39,7 @@ function Application() {
     const [showEditProfile, setShowEditProfile] = useState(false);
     const [profileValues, setProfileValues] = useState([]);
     const [selectedProfile, setSelectedProfile] = useState(null);
+    const [showSuccessApply, setShowSuccessApply] = useState(false);
     const [loading, setLoading] = useState(true);
 
 
@@ -259,6 +260,7 @@ function Application() {
             )
         },
     ];
+    
 
     if (loading) { 
         return ( 
@@ -287,17 +289,27 @@ function Application() {
                     }
                 );
                 console.log('Response:', response);
+                setShowSuccessApply(true);
             } catch (error) {
                 console.error('Error:', error);
             }
         }
-        
-        
 
     return (
         <>
             <Header />
-            <section className='mx-[120px] mt-[100px] mb-[30px]'>
+            {
+                showSuccessApply ? 
+                (
+                    <section className='mx-[120px] mt-[100px] mb-[30px] justify-center flex flex-col items-center h-[600px]'>
+                        <LuFileCheck size={150} color='#2471A3'/>
+                        <p className='mt-8 text-2xl font-semibold'>Nice work {profileValues.name}</p>
+                        <p className='text-xl'>Your application has been sent to {job.company.name}</p>
+                    </section>
+                )
+                :
+                (
+                    <section className='mx-[120px] mt-[100px] mb-[30px]'>
                 <div className='flex gap-8 items-center'>
                     <div className='w-[146px] h-[146px] px-2 py-2 bg-white border-[3px] border-gray-300 rounded-2xl'>
                         <img src={job.company.logo} alt="company logo" className='w-full h-full'/>
@@ -407,6 +419,9 @@ function Application() {
                             />
                         )}
             </section>
+                )
+            }
+            
             <Footer />
         </>
     );

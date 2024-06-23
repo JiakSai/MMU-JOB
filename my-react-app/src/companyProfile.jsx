@@ -12,6 +12,7 @@ import { Review } from './companySearch-Components/review';
 const CompanyProfile = () => {
     const location = useLocation();
     const company = location.state?.company;
+    const type = location.state?.type;
     const [showCompany, setShowCompany] = useState([]); 
     const [activeTab, setActiveTab] = useState(localStorage.getItem('activeTab') || 'About');
     const [showReview, setShowReview] = useState(false);
@@ -31,32 +32,57 @@ const CompanyProfile = () => {
     }, [showReview]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/ShowCompanyDetails/${company.company.id}`)
-            .then(response => {
-                setShowCompany(response.data);
-                console.log(response.data);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
-    }, [company.company.id]);
+        if (type) {
+            setActiveTab(type);
+        }
+    }, [type]);
+
+    useEffect(() => {
+        if (company?.company?.id) {
+            axios.get(`http://localhost:8000/api/ShowCompanyDetails/${company.company.id}`)
+                .then(response => {
+                    setShowCompany(response.data);
+                    console.log(response.data);
+                    setLoading(false);
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                });
+        } else {
+            setLoading(false); // stop loading if no company id is found
+        }
+    }, [company?.company?.id]);
 
     useEffect(() => {
         localStorage.setItem('activeTab', activeTab);
     }, [activeTab]);
 
-    const { cover, logo, name, rating, totalRatings } = showCompany;
+    if (!company) {
+        return (
+            <>
+                <Header />
+                <div className='flex justify-center items-center h-screen'>
+                    <p className='text-3xl font-bold text-customBlue'>
+                        "No Company Data Available"
+                    </p>
+                </div>
+                <Footer />
+            </>
+        );
+    }
 
     if (loading) { 
         return ( 
             <> 
                 <div className="loader"></div> 
-                <div className='flex justify-center mt-[630px]'> <p className='text-3xl font-bold text-customBlue'>
-                    " MMUJOB "</p> 
+                <div className='flex justify-center mt-[630px]'> 
+                    <p className='text-3xl font-bold text-customBlue'>" MMUJOB "</p> 
                 </div> 
             </> 
-        ); }
+        ); 
+    }
+
+    const { cover, logo, name, rating, totalRatings } = showCompany;
 
     return (
         <>
