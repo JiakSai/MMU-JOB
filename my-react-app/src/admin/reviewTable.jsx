@@ -178,7 +178,7 @@ const ReviewTable = () => {
         <div className='flex'>
             <Home />
             <div className="py-3 px-6 w-full">
-                <h1 className="text-2xl text-gray-900 font-semibold uppercase">Manage Job seeker</h1>
+                <h1 className="text-2xl text-gray-900 font-semibold uppercase">Manage Review</h1>
                 {error && <p className="text-red-500">{error}</p>}
                 <div className="flex items-center mt-4 mb-2 justify-between ">
                     <div>

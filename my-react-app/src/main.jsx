@@ -29,6 +29,7 @@ import EmployerTable from "./admin/employerTable.jsx";
 import JobSeekerTable from "./admin/jobSeekerTable.jsx";
 import CatergoryTable from "./admin/jobCategoryTable.jsx";
 import ReviewTable from "./admin/reviewTable.jsx";
+import UserSubscribeTable from "./admin/userSubscribeTable.jsx";
 import Dashboard from "./admin/dashboard.jsx";
 import Policy from "./footerContent/policy.jsx";
 import ContactUs from "./footerContent/contactUs.jsx";
@@ -157,6 +158,10 @@ const router = createBrowserRouter([
   {
     path: "dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "userSubscribeTable",
+    element: <UserSubscribeTable />,
   },
   {
     path: "403",

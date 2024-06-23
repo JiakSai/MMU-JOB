@@ -21,7 +21,7 @@ const Home = () => {
     { name: "Posted Job", link: "/adminTable", icon: TbReportAnalytics, margin: true },
     { name: "Job Categories", link: "/categoryTable", icon: MdStorage },
     { name: "Review", link: "/reviewTable", icon: MdOutlineMessage },
-    { name: "User Subscribe", link: "#", icon: FaRegBell}
+    { name: "User Subscribe", link: "/userSubscribeTable", icon: FaRegBell}
   ];
 
   const [open, setOpen] = useState(true);
