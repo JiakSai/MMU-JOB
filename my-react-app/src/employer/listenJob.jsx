@@ -86,7 +86,7 @@ export default function ListenJob() {
                 <div className="scroll h-[739.2px] flex flex-col space-y-2 overflow-y-auto overflow-x-hidden">
                     {jobs.length > 0 ? (
                         jobs.map(job => (
-                            <div className="w-[275px] border border-zinc-700 p-4 rounded-sm shadow-md" key={job.id} onClick={() => handleJobClick(job)}>
+                            <div className="w-[275px] border border-zinc-700 p-4 rounded shadow-md" key={job.id} onClick={() => handleJobClick(job)}>
                                 <div className='flex w-full justify-between'>
                                     <img src={company.company?.logo || 'https://via.placeholder.com/180/E5E4E2'} alt='Company Logo' className='rounded h-[50px] max-w-[90px] border-black' />
                                     <MdDeleteOutline size={23} onClick={() => handleDeleteClick(job.id)}/>
@@ -115,7 +115,7 @@ export default function ListenJob() {
                             onClose={() => {window.location.reload(); }}
                         />
                         :
-                        <div className="bg-white p-8 h-full">
+                        <div className="bg-white p-8 h-full rounded">
                             <h1 className='flex items-center gap-4 text-2xl font-semibold'><FaArrowLeftLong className='text-2xl'/>Select a job</h1>
                             <p className='ml-[45px] mt-[2px]'>Display job details here and edit!!</p>
                             <div className='grid place-content-center w-full mt-[160px]'>

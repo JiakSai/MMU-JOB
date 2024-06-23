@@ -79,8 +79,8 @@ export default function JobDetails(props) {
                 <div className='jobScroll'>
                     <div className='jobDetailsTop'>
                         <div className="jobDetailsBox">
-                            <img src={job.company.logo} alt="bytes" className="h-[50px] rounded" />
-                            <p className='text-3xl ml-4 mr-1'>{job.company.name}</p>
+                            <img src={job.company.logo} alt="bytes" className="h-[50px] rounded max-w-[150px]" />
+                            <p className='text-2xl mx-4 uppercase'>{job.company.name}</p>
                             <p onClick={() => handleViewJobClick(job)} className="viewJob cursor-pointer">View all jobs</p>
                         </div>
                         <div className="jobDetailTittle">

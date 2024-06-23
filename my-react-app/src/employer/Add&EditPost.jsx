@@ -149,8 +149,8 @@ export default function AddEditPost({ job, onClose }) {
     }
 
     return (
-        <div className='w-full bg-white p-8'>
-            <p className='text-xl text-stone-400 font-semibold'>
+        <div className='w-full bg-[#FDFEFE] p-8 rounded'>
+            <p className='text-2xl text-stone-400 font-semibold'>
                 {job ?
                     'Edit Job'
                     :
@@ -257,13 +257,13 @@ export default function AddEditPost({ job, onClose }) {
                     </div>
                 </div>
                 <p className='px-2 text-neutral-400'>Job description</p>
-                <div className='border border-zinc-500 flex flex-col space-y-4 rounded-sm p-3'>
+                <div className='border border-zinc-500 flex flex-col space-y-4 rounded p-3'>
                     <p className='text-neutral-600 underline underline-offset-4'>Responsibilities</p>
                     <textarea
                         name='description'
                         value={post.description}
                         onChange={handleInputChange}
-                        className='border border-black p-2 w-[693px]'
+                        className='border border-black p-2 w-[693px] rounded'
                         rows={4}
                     />
                     <p className='text-neutral-600 underline underline-offset-4'>Qualifications</p>
@@ -303,7 +303,7 @@ export default function AddEditPost({ job, onClose }) {
                         name='requirement'
                         value={post.requirement}
                         onChange={handleInputChange}
-                        className='border border-black p-2 w-[693px]'
+                        className='border border-black p-2 w-[693px] rounded'
                         rows={4}
                     />
                 </div>
