@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from "js-cookie";
+import { IoClose } from "react-icons/io5";
 
 export function AddRole({ onClose, role, justClose }) {
     const [roleValue, setRoleValue] = useState({
@@ -100,111 +101,129 @@ export function AddRole({ onClose, role, justClose }) {
         <div className="addrole fixed inset-0 flex items-center justify-end bg-black bg-opacity-50">
             <div className="bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full overflow-y-auto z-2001">
                 <button onClick={justClose} className='absolute top-2 right-2 text-xl font-bold'>
-                    &times;
+                <IoClose size={25}/>
                 </button>
                 <div className="py-4 px-6 bg-white">
                     <form onSubmit={handleSubmit} className='flex flex-col gap-6'>
                         <h1 className="text-3xl font-bold mb-4">{role ? "Edit Role" : "Add Role"}</h1>
-                        <label>Job title</label>
-                        <input
-                            type="text"
-                            name='title'
-                            className='border border-black p-2'
-                            value={roleValue.title}
-                            onChange={handleInput}
-                        />
-
-                        <label>Company name</label>
-                        <input
-                            type="text"
-                            name='companyName'
-                            className='border border-black p-2'
-                            value={roleValue.companyName}
-                            onChange={handleInput}
-                        />
-
-                        <label>Company location</label>
-                        <input
-                            type="text"
-                            name='location'
-                            className='border border-black p-2'
-                            value={roleValue.location}
-                            onChange={handleInput}
-                        />
-
-                        <label>Location type</label>
-                        <input
-                            type="text"
-                            name='locationType'
-                            className='border border-black p-2'
-                            value={roleValue.locationType}
-                            onChange={handleInput}
-                        />
-
-                        <label>Job type</label>
-                        <input
-                            type="text"
-                            name='jobType'
-                            className='border border-black p-2'
-                            value={roleValue.jobType}
-                            onChange={handleInput}
-                        />
-
-                        <label>Started date</label>
-                        <div className='flex gap-2 relative z-10'>
-                            <select
-                                name="startDateMonth"
-                                value={roleValue.startDateMonth}
-                                onChange={handleInput}
+                        <div className='flex flex-col gap-2'>
+                            <label >Job title</label>
+                            <input
+                                type="text"
+                                name='title'
                                 className='border border-black p-2'
-                            >
-                                <option value="" disabled>Select Month</option>
-                                {monthNames.map((month, index) => <option key={index} value={month}>{month}</option>)}
-                            </select>
-                            <select
-                                name="startDateYear"
-                                value={roleValue.startDateYear}
+                                value={roleValue.title}
                                 onChange={handleInput}
+                            />
+                        </div>
+                        
+                        <div className='flex flex-col gap-2'>
+                            <label >Company name</label>
+                            <input
+                                type="text"
+                                name='companyName'
                                 className='border border-black p-2'
-                            >
-                                <option value="" disabled>Select Year</option>
-                                {years.map((year, index) => <option key={index} value={year}>{year}</option>)}
-                            </select>
+                                value={roleValue.companyName}
+                                onChange={handleInput}
+                            />
+                        </div>
+                        
+                        <div className='flex flex-col gap-2'>
+                            <label >Company location</label>
+                            <input
+                                type="text"
+                                name='location'
+                                className='border border-black p-2'
+                                value={roleValue.location}
+                                onChange={handleInput}
+                            />
+                        </div>
+                        
+                        <div className='flex flex-col gap-2'>
+                            <label >Location type</label>
+                            <input
+                                type="text"
+                                name='locationType'
+                                className='border border-black p-2'
+                                value={roleValue.locationType}
+                                onChange={handleInput}
+                            />
+                        </div>
+                        
+                        <div className='flex flex-col gap-2'>
+                            <label >Job type</label>
+                            <input
+                                type="text"
+                                name='jobType'
+                                className='border border-black p-2'
+                                value={roleValue.jobType}
+                                onChange={handleInput}
+                            />
                         </div>
 
-                        <label>Ended date</label>
-                        <div className='flex gap-2 relative z-10'>
-                            <select
-                                name="endDateMonth"
-                                value={roleValue.endDateMonth}
-                                onChange={handleInput}
+                        <div className='flex flex-col gap-2'>
+                            <label >Started date</label>
+                            <div className='flex gap-2 relative z-10'>
+                                <select
+                                    name="startDateMonth"
+                                    value={roleValue.startDateMonth}
+                                    onChange={handleInput}
+                                    className='border border-black p-2'
+                                >
+                                    <option value="" disabled>Select Month</option>
+                                    {monthNames.map((month, index) => <option key={index} value={month}>{month}</option>)}
+                                </select>
+                                <select
+                                    name="startDateYear"
+                                    value={roleValue.startDateYear}
+                                    onChange={handleInput}
+                                    className='border border-black p-2'
+                                >
+                                    <option value="" disabled>Select Year</option>
+                                    {years.map((year, index) => <option key={index} value={year}>{year}</option>)}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div className='flex flex-col gap-2'>
+                            <label >Ended date</label>
+                            <div className='flex gap-2 relative z-10'>
+                                <select
+                                    name="endDateMonth"
+                                    value={roleValue.endDateMonth}
+                                    onChange={handleInput}
+                                    className='border border-black p-2'
+                                >
+                                    <option value="" disabled>Select Month</option>
+                                    {monthNames.map((month, index) => <option key={index} value={month}>{month}</option>)}
+                                </select>
+                                <select
+                                    name="endDateYear"
+                                    value={roleValue.endDateYear}
+                                    onChange={handleInput}
+                                    className='border border-black p-2'
+                                >
+                                    <option value="" disabled>Select Year</option>
+                                    {years.map((year, index) => <option key={index} value={year}>{year}</option>)}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div className='flex flex-col gap-2'>
+                            <div className='flex flex-col'>
+                                <label >Description</label>
+                                <p className='text-sm text-gray-600'>*Summarize your responsibilities, skills, and achievements.</p>
+                            </div>
+                            <textarea
+                                name='description'
                                 className='border border-black p-2'
-                            >
-                                <option value="" disabled>Select Month</option>
-                                {monthNames.map((month, index) => <option key={index} value={month}>{month}</option>)}
-                            </select>
-                            <select
-                                name="endDateYear"
-                                value={roleValue.endDateYear}
+                                value={roleValue.description}
                                 onChange={handleInput}
-                                className='border border-black p-2'
-                            >
-                                <option value="" disabled>Select Year</option>
-                                {years.map((year, index) => <option key={index} value={year}>{year}</option>)}
-                            </select>
+                                rows={5}
+                            />
                         </div>
 
-                        <label>Description</label>
-                        <p>Summarize your responsibilities, skills, and achievements.</p>
-                        <textarea
-                            name='description'
-                            className='border border-black p-2'
-                            value={roleValue.description}
-                            onChange={handleInput}
-                            rows={5}
-                        />
-
-                        <button type="submit" className='mt-4 bg-blue-500 text-white p-2 rounded'>Submit</button>
+                        <button type="submit" className=' bg-customBlue font-bold text-white p-2 rounded mt-auto'>Submit</button>
                     </form>
                 </div>
             </div>

@@ -17,6 +17,8 @@ import { MdOutlineMail } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 
+
+
 function Application() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -296,15 +298,15 @@ function Application() {
         <>
             <Header />
             <section className='mx-[120px] mt-[100px] mb-[30px]'>
-                <div className='flex gap-8'>
+                <div className='flex gap-8 items-center'>
                     <div className='w-[146px] h-[146px] px-2 py-2 bg-white border-[3px] border-gray-300 rounded-2xl'>
                         <img src={job.company.logo} alt="company logo" className='w-full h-full'/>
                     </div>
-                    <div className='flex flex-col space-y-2 mt-[7px]'>
-                        <p className='text-sm'>Applying for</p>
-                        <p className='text-3xl font-bold'>{job.job_title}</p>
-                        <p className='text-xl'>{job.company.name}</p>
-                        <p className='text-sm font-semibold underline underline-offset-4' onClick={() => handleOnclick(job)}>view job description</p>
+                    <div className='flex flex-col space-y-2'>
+                        <p className='text-sm text-stone-700'>Applying for</p>
+                        <p className='text-2xl font-bold'>{job.jobTitle}</p>
+                        <p className='text-xl font-semibold'>{job.company.name}</p>
+                        <p className='text-sm font-semibold underline underline-offset-4 text-stone-700' onClick={() => handleOnclick(job)}>view job description</p>
                     </div>
                 </div>
                 <div className='profile flex drop-shadow-x my-10'>
@@ -366,7 +368,7 @@ function Application() {
                     Submit application
                 </button>
                 {showJobDetail && 
-                            <ViewJobDetails
+                        <ViewJobDetails
                                 job={selectedValue}
                                 onClose={() => setShowJobDetail(false)}
                             />

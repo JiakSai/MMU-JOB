@@ -7,10 +7,11 @@ import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
 
 const SearchBar = () => {
   const [api, setApi] = useState([]);
-  const [value, setValue] = useState([100, 600]);
+  const [value, setValue] = useState([0,0]);
   const [selectedJobTypes, setSelectedJobTypes] = useState([]);
   const [selectedSpecializations, setSelectedSpecializations] = useState([]);
   const [selectedStates, setSelectedStates] = useState([]);
@@ -19,6 +20,8 @@ const SearchBar = () => {
   const [selectAllSpecializations, setSelectAllSpecializations] = useState(false);
   const [selectAllStates, setSelectAllStates] = useState(false);
   const [selectAllExperiences, setSelectAllExperiences] = useState(false);
+  const [query, setQuery] = useState([]);
+  let [searchParams, setSearchParams] = useSearchParams();
   var numF = 0, numS = 0, numSt = 0, numJ = 0, numE = 0, numSly = 0;
 
   useEffect(() => {
@@ -202,13 +205,56 @@ const SearchBar = () => {
   };
 
   const handleCancelSalary = () => {
-    setValue([100, 600]);
+    setValue([0,0]);
+  };
+
+  const handleQueryChange = (event) => {
+    setQuery(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  
+    let searchData = {};
+  
+    if (value[0] !== 0 || value[1] !== 0) {
+      searchData.minSalary = value[0];
+      searchData.maxSalary = value[1];
+    }
+    if(query.length > 0){
+      searchData.search = query;
+    }
+    if(selectedJobTypes.length > 0){
+      searchData.jobType = selectedJobTypes;
+    }
+    if(selectedSpecializations.length > 0){
+      searchData.jobCategory = selectedSpecializations;
+    }
+    if(selectedStates.length > 0){
+      searchData.jobLocation = selectedStates;
+    }
+    if(selectedExperiences.length > 0){
+      searchData.experiences = selectedExperiences;
+    }
+  
+    const params = serializeFormQuery(searchData);
+    setSearchParams(params);
+    console.log('Search params:', params);
+  };
+  
+  
+  const serializeFormQuery = (formData) => {
+    const params = new URLSearchParams(formData).toString();
+    return params;
   };
 
   return (
-    <form className="searchBar">
+    <form onSubmit={handleSubmit} className="searchBar">
       <div className="searchInput">
-        <input type="text" placeholder="Search Jobs" />
+        <input type="text" 
+        value={query}
+        onChange={handleQueryChange}
+        placeholder="Search Jobs" />
         <IoIosSearch className="searchIcon" />
       </div>
       <div className="filterBox" >
@@ -358,7 +404,7 @@ const SearchBar = () => {
         <p>Internship</p>
         <GiGraduateCap className="searchIcon" />
       </div>
-      <button className="seekBtn">SEEK</button>
+      <button type='submit' className="seekBtn">SEEK</button>
     </form>
   );
 }

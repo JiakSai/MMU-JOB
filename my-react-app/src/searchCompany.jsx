@@ -46,7 +46,7 @@ const SearchCompany = () => {
     return (
         <>
             <Header />
-            <section className='mt-[70px] mx-[120px] mb-[30px]'>
+            <section className='mt-[70px] mx-[120px] mb-[100px] min-h-[400px]'>
                 <div className='companySearch mx-[-120px]'>
                     <div className='px-[120px] py-8 flex items-center'>
                         <div className='flex flex-col items-center gap-3'>

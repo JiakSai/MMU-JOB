@@ -4,7 +4,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
-export default function AddEditPost({ job,onClose }) {
+export default function AddEditPost({ job, onClose }) {
     const navigate = useNavigate();
     const [api, setApi] = useState([]);
     const [initialPost, setInitialPost] = useState({
@@ -30,11 +30,10 @@ export default function AddEditPost({ job,onClose }) {
     }, []);
 
     useEffect(() => {
-        console.log(token);
         if (!token) {
             navigate('/employerLogin');
         }
-    }, []);
+    }, [token, navigate]);
 
     useEffect(() => {
         if (job) {
@@ -51,7 +50,7 @@ export default function AddEditPost({ job,onClose }) {
                 experience: job.experience,
             };
             setPost(jobData);
-            setInitialPost(jobData); // Update the initial state to the job data
+            setInitialPost(jobData);
         }
     }, [job]);
 
@@ -113,8 +112,8 @@ export default function AddEditPost({ job,onClose }) {
                     },
                 });
             }
-            onClose();
             console.log('Response:', response.data);
+            onClose(); // Call the onClose function to show the success message
         } catch (error) {
             if (error.response) {
                 console.log('Error response:', error.response);

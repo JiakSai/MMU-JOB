@@ -36,8 +36,9 @@ function EmployerHeader() {
             }
         })
         .then(response => {
-            console.log(response.data);
             Cookies.remove('empToken');
+            console.log(response.data);
+            window.location.reload();
         })
         .catch(error => {
             console.error('There was an error!', error);
@@ -67,7 +68,11 @@ function EmployerHeader() {
                         </Link>
                     </li>
                     <li id="user" className="User">
-                        <a href="#" onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
+                        {token ? 
+                            <a href="#" onClick={handleUserClick}>Employer &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
+                            :
+                            <Link to="/employerLogin">Login</Link>
+                        }
                         {token && (
                             <ul className="Dropdown">
                                 <li>
@@ -76,7 +81,7 @@ function EmployerHeader() {
                                     </Link>
                                 </li>
                                 <li><Link to={token ? "/employerApplication" : "/employerLogin"}>Job application</Link></li>
-                                <li style={{ color: 'red' }}><Link to={"/employerLogin"} onClick={handleLogout}>Logout</Link></li>
+                                <li style={{ color: 'red' }}><a href='#' onClick={handleLogout}>Logout</a></li>
                             </ul>
                         )}
                     </li>
@@ -102,7 +107,12 @@ function EmployerHeader() {
                     <li className="hideOnMobile">
                         <ul>
                             <li id="user" className="User">
-                                <a href="#" onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
+                                {
+                                    token ? 
+                                    <a href="#" onClick={handleUserClick}>Employer &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    :
+                                    <Link to="/employerLogin">Login</Link>
+                                }
                                 {token && (
                                     <ul className="Dropdown">
                                         <li>
@@ -111,7 +121,7 @@ function EmployerHeader() {
                                             </Link>
                                         </li>
                                         <li><Link to={token ? "/employerApplication" : "/employerLogin"}>Job application</Link></li>
-                                        <li style={{ color: 'red' }}><Link to={"/employerLogin"} onClick={handleLogout}>Logout</Link></li>
+                                        <li style={{ color: 'red' }}><a href='#' onClick={handleLogout}>Logout</a></li>
                                     </ul>
                                 )}
                             </li>
