@@ -164,7 +164,8 @@ function EmployerRegister() {
                                 </div>
                                 <p className='text-xs'>
                                     By registering, you agree to the Privacy Policy and consent to receive marketing messages from us.
-                                    You can opt out at any time via the unsubscribe links or as detailed in the Privacy Policy
+                                    You can opt out at any time via the unsubscribe links or as detailed in the
+                                    <a className=' underline underline-offset-1 font-semibold ml-[3px]' href="/empPolicy">Privacy Policy</a>
                                 </p>
                             </div>
                             <p className="error-message">{formError.privacyPolicy}</p>

@@ -7,6 +7,7 @@ export default function Policy() {
         <>
         <Header></Header>
         <div className="mt-[100px] mb-[30px] mx-[120px]">
+            <div className="mt-[100px] mb-[30px] mx-[120px]">
             <div className="flex flex-col">
                 <div className="pb-6">
                     <h1 className="text-3xl font-bold pb-6">Privacy Policy</h1>
@@ -229,8 +230,7 @@ export default function Policy() {
                     <p className="pb-8">In accordance with Section 7(3) of the PDPA, this Privacy Policy is issued in both English and Bahasa Malaysia. In the event of any discrepancies or inconsistencies arising between the English and Malay versions, the English version shall apply and prevail.</p>
                 </div>
             </div>
-
-
+            </div>
         </div>
         <Footer></Footer>
         </>
