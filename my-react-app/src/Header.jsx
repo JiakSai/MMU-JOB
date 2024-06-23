@@ -81,13 +81,9 @@ function Header() {
                         {token && (
                             <ul className="Dropdown">
                                 <li><a href="#">Profile</a></li>
-                                <li><a href="#">Saved search</a></li>
-                                <li><a href="#">Saved Job</a></li>
                                 <li><Link to={token ? "/userApplicationStatus" : "/userLogin"}>
                                     Job Application
                                 </Link></li>
-                                <li><a href="#">Recommended Job</a></li>
-                                <li><a href="#">Setting</a></li>
                                 <li style={{ color: 'red' }}><a href="#" onClick={handleLogout}>Logout</a></li>
                             </ul>
                         )}
@@ -117,13 +113,9 @@ function Header() {
                                         <li><Link to={token ? "/UserProfile" : "/userLogin"}>
                                             Profile
                                         </Link></li>
-                                        <li><a href="#">Saved search</a></li>
-                                        <li><a href="#">Saved Job</a></li>
                                         <li><Link to={token ? "/userApplicationStatus" : "/userLogin"}>
                                             Job Application
                                         </Link></li>
-                                        <li><a href="#">Recommended Job</a></li>
-                                        <li><a href="#">Setting</a></li>
                                         <li style={{ color: 'red' }}><a href="#" onClick={handleLogout}>Logout</a></li>
                                     </ul>
                                 )}
