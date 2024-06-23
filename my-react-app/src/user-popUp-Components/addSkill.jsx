@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from "js-cookie";
+import { IoClose } from "react-icons/io5";
 
 export function AddSkill({onClose, justClose}) {
     const [skillValue, setSkillValue] = useState({
@@ -40,20 +41,23 @@ const handleInputChange = (event) => {
         <div className='addrole fixed inset-0 flex items-center justify-end bg-black bg-opacity-50'>
             <div className='bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full overflow-y-auto z-2001 h-[695.2px]'>
                 <button onClick={justClose} className='absolute top-2 right-2 text-xl font-bold'>
-                    &times;
+                    <IoClose size={25}/>
                 </button>
                 <div className="py-4 px-6 bg-white">
                     <form className='flex flex-col gap-6' onSubmit={handleSubmit}>
                         <h1 className="text-3xl font-bold mb-4">Add Skills</h1>
-                        <label>Add your skills here!!!</label>
-                        <textarea
-                            name='skills'
-                            className='border border-black p-2'
-                            rows={5}
-                            value={skillValue.skills}
-                            onChange={handleInputChange}
-                        />
-                        <button type="submit" className='mt-4 bg-blue-500 text-white p-2 rounded'>Submit</button>
+                        <div className='flex flex-col gap-2'>
+                            <label>Add your skills here!!!</label>
+                            <textarea
+                                name='skills'
+                                className='border border-black p-2'
+                                rows={5}
+                                value={skillValue.skills}
+                                onChange={handleInputChange}
+                                placeholder='Enter your skills like css, html...'
+                            />
+                        </div>
+                        <button type="submit" className=' bg-customBlue font-bold text-white p-2 rounded mt-auto'>Submit</button>
                     </form>
                 </div>
             </div>

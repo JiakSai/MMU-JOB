@@ -2,13 +2,13 @@ import React, {useState,useEffect} from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import PhoneInput from "react-phone-input-2";
+import { IoClose } from "react-icons/io5";
 
 export function EditProfile({onClose, justClose, profile}){
     const [phoneNumber, setPhoneNumber] = useState("");
     const [valid, setValid] = useState(true);
     const [profileValue, setProfileValue] = useState({
         name: "",
-        email: "",
         city: "",
         state: "",
         phoneNumber: "",
@@ -33,9 +33,9 @@ export function EditProfile({onClose, justClose, profile}){
         if(profile){
             setProfileValue({
                 name: profile.name,
-                email: profile.email,
                 city: profile.city,
                 state: profile.state,
+                phoneNumber: profile.phoneNumber,
             });
         }
     },[profile]);
@@ -64,42 +64,38 @@ export function EditProfile({onClose, justClose, profile}){
         <div className='addrole fixed inset-0 flex items-center justify-end bg-black bg-opacity-50'>
             <div className="bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full overflow-y-auto z-2001 h-[695.2px]">
                 <button onClick={justClose} className='absolute top-2 right-2 text-xl font-bold'>
-                    &times;
+                <IoClose size={25}/>
                 </button>
                 <div className="py-4 px-6 bg-white">
                     <form className='flex flex-col gap-6' onSubmit={handleSubmit}>
                         <h1 className="text-2xl font-bold mb-4">Edit User Profile</h1>
-                        <label>Name</label>
-                        <input 
-                                type="text"
-                                name='name'
-                                className='border border-black p-2'
-                                value={profileValue.name}
-                                onChange={handleInput}
-                        />
-                        {!valid && (
-                            <p>Please enter a valid phone number.</p>
-                        )}
-                        <label>Email</label>
-                        <input 
-                                type="text"
-                                name='email'
-                                className='border border-black p-2'
-                                value={profileValue.email}
-                                onChange={handleInput}
-                        />
-                        <label>Phone number</label>
-                        <PhoneInput
-                        country={'my'}
-                        value={phoneNumber}
-                        onChange={handleChange}
-                        inputClass="custom-phone-input"
-                        inputProps={{
-                            required: true,
-                        }}
-                        />
+                        <div className='flex flex-col gap-1'>
+                            <label>Name</label>
+                            <input 
+                                    type="text"
+                                    name='name'
+                                    className='border border-black p-2'
+                                    value={profileValue.name}
+                                    onChange={handleInput}
+                            />
+                        </div>
+                        <div className='flex flex-col gap-1'>
+                            <label>Phone number</label>
+                            <PhoneInput
+                            country={'my'}
+                            value={profileValue.phoneNumber}
+                            onChange={handleChange}
+                            inputClass="custom-phone-input"
+                            inputProps={{
+                                required: true,
+                            }}
+                            />
+                             {!valid && (
+                                <p className=' text-red-500'>*Please enter a valid phone number.</p>
+                            )}
+                        </div>
                         <div className='flex gap-5'>
-                            <div className='flex flex-col'>
+                            <div className='flex flex-col gap-1'>
                                 <label>City</label>
                                 <input 
                                     type="text"
@@ -109,7 +105,7 @@ export function EditProfile({onClose, justClose, profile}){
                                     onChange={handleInput}
                                 />
                             </div>
-                            <div className='flex flex-col'>
+                            <div className='flex flex-col gap-1'>
                                 <label>State</label>
                                 <input 
                                     type="text"
@@ -120,7 +116,7 @@ export function EditProfile({onClose, justClose, profile}){
                                 />
                             </div>
                         </div>
-                        <button type="submit" className='mt-4 bg-blue-500 text-white p-2 rounded'>Submit</button>
+                        <button type="submit" className=' bg-customBlue font-bold text-white p-2 rounded mt-auto'>Submit</button>
                     </form>
                 </div>
             </div>

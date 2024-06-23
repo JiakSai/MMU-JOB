@@ -29,7 +29,6 @@ function Header() {
             console.log(response.data);
             Cookies.remove('token');
             sessionStorage.setItem('logoutInitiated', 'true');
-            window.location.reload();
             setLoading(false);
         })
         .catch(error => {
@@ -73,7 +72,12 @@ function Header() {
                     </li>
                     <li><a href="#">Company profiles</a></li>
                     <li id="user" className="User">
-                        <a onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
+                        {
+                            token ? 
+                            <a onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a> 
+                            : 
+                            <Link to="/userLogin">Login</Link>
+                        }
                         {token && (
                             <ul className="Dropdown">
                                 <li><a href="#">Profile</a></li>
@@ -102,7 +106,12 @@ function Header() {
                     <li className="hideOnMobile">
                         <ul>
                             <li id="user" className="User">
-                                <a onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a>
+                            {
+                            token ? 
+                            <a onClick={handleUserClick}>User &#160;<i style={{ fontSize: '20px' }} className="fa fa-angle-down" aria-hidden="true"></i></a> 
+                            : 
+                            <Link to="/userLogin">Login</Link>
+                            }
                                 {token && (
                                     <ul className="Dropdown">
                                         <li><Link to={token ? "/UserProfile" : "/userLogin"}>

@@ -22,7 +22,7 @@ import EditComProfile from "./employer/editCompanyProfile.jsx";
 import EmployerApplication from "./employer/employerApplication.jsx";
 import AdminTable from "./admin/postedJobTable.jsx";
 import ApplicationStatus from "./applicationStatus.jsx";
-import AddPost from "./addPost.jsx";
+import AddPost from "./employer/addPost.jsx";
 import ListenJob from "./employer/listenJob.jsx";
 import { AdminLogin } from "./admin/adminLogin.jsx";
 import EmployerTable from "./admin/employerTable.jsx";

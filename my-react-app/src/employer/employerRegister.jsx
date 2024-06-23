@@ -12,17 +12,23 @@ function EmployerRegister() {
     const [formError, setFormError] = useState({
         email: '',
         password: '',
-        password_confirmation: ''
+        password_confirmation: '',
+        privacyPolicy: ''
     });
     const [post, setPost] = useState({
         email: '',
         password: '',
         password_confirmation: ''
     });
+    const [privacyPolicyChecked, setPrivacyPolicyChecked] = useState(false); 
     const navigate = useNavigate();
 
     const handleInput = (event) => {
         setPost({ ...post, [event.target.name]: event.target.value });
+    };
+
+    const handleCheckboxChange = (event) => {
+        setPrivacyPolicyChecked(event.target.checked);
     };
     
     const togglePasswordVisibility = () => {
@@ -59,7 +65,11 @@ function EmployerRegister() {
             inputError.password_confirmation = '* Password does not match';
         }
 
-        if (inputError.email || inputError.password || inputError.password_confirmation) {
+        if (!privacyPolicyChecked) {
+            inputError.privacyPolicy = '* You must agree to the Privacy Policy';
+        }
+
+        if (inputError.email || inputError.password || inputError.password_confirmation || inputError.privacyPolicy) {
             setFormError(inputError);
             return;
         }
@@ -102,7 +112,7 @@ function EmployerRegister() {
             </div>
             <div className="registerContainer">
                 <div>
-                    <p className='rchangeSite'>Are you a job seeker?</p>
+                    <p className='rchangeSite'><Link to="/userRegister">Are you a job seeker?</Link></p>
                     <div className="userRegisterFormContainer">
                         <h1 className='text-[28px] font-bold text-customPink'>Register as employer</h1>
                         <p>Fill in this form to create an account.</p>
@@ -144,12 +154,20 @@ function EmployerRegister() {
                                 </span>
                             </div>
                             <p className="error-message">{formError.password_confirmation}</p>
-                            <div className="rememberForgot">
-                                <label>
-                                    <input type="checkbox" /> Remember me
-                                </label>
-                                <a href="#">Forgot password?</a>
+                            <div className='flex gap-2'>
+                                <div className='checkPolicy'>
+                                    <input 
+                                        type="checkbox"
+                                        checked={privacyPolicyChecked}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                </div>
+                                <p className='text-xs'>
+                                    By registering, you agree to the Privacy Policy and consent to receive marketing messages from us.
+                                    You can opt out at any time via the unsubscribe links or as detailed in the Privacy Policy
+                                </p>
                             </div>
+                            <p className="error-message">{formError.privacyPolicy}</p>
                             <button type="submit">Register</button>
                             <p>Already have an account? <Link to="/employerLogin">Login</Link></p>
                         </form>

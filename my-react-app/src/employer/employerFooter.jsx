@@ -38,42 +38,30 @@ function EmployerFooter(){
               <p className='employerLogo'>" MMUJOB "</p>
             </div>
             <div className="footer-col">
-              <h4>Job seekers</h4>
+            <h4>Job seekers</h4>
               <ul className="links">
-                <li><a href="#">Job search</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Recommended jobs</a></li>
-                <li><a href="#">Saved jobs</a></li>
-                <li><a href="#">Job applications</a></li>
+                <li><a href="/userRegister">Register for free</a></li>
+                <li><a href="/SearchJob">Job search</a></li>
+                <li><a href="/searchCompany">Company search</a></li>
+                <li><a href="/UserProfile">User rofile</a></li>
               </ul>
             </div>
       
             <div className="footer-col">
-              <h4>Employer</h4>
+            <h4>Employer</h4>
               <ul className="links">
-                <li><a href="#">Register for free</a></li>
-                <li><a href="#">Profile </a></li>
-                <li><a href="#">Employer center</a></li>
-                <li><a href="#">Post a job</a></li>
+                <li><a href="/employerRegister">Register for free</a></li>
+                <li><a href="/listenJob">Listen job</a></li>
+                <li><a href="/addPost">Post a job</a></li>
+                <li><a href="/editComProfile">Company profile </a></li>
               </ul>
             </div>
       
             <div className="footer-col">
-              <h4>About MMUJOB</h4>
+            <h4>About MMUJOB</h4>
               <ul className="links">
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Work for Jobstreet</a></li>
-                <li><a href="#">International partners</a></li>
-                <li><a href="#">Partner services</a></li>
-              </ul>
-            </div>
-      
-            <div className="footer-col">
-              <h4>Contact</h4>
-              <ul className="links">
-                <li><a href="#">Help centre</a></li>
-                <li><a href="#">Contact us</a></li>
-                <li><a href="#">Product & tech blog</a></li>
+                <li><a href="/aboutUs">About us</a></li>
+                <li><a href="/contactUs">Contact us</a></li>
                 <li onClick={viewSocial}>
                   <div className='flex snap-center'><p>Social &#160;</p><FaAngleDown /></div>
                   <ul className="social">
@@ -82,7 +70,16 @@ function EmployerFooter(){
                       <li><a href="#" className="social-link"><FaXTwitter />&nbsp;Twitter</a></li>
                       <li><a href="#" className="social-link"><FaYoutube />&nbsp;Youtube</a></li>
                   </ul>
-              </li>              
+              </li> 
+              </ul>
+            </div>
+      
+            <div className="footer-col">
+            <h4>Terms of Use</h4>
+              <ul className="links">
+                <li><a href="/communityGuidelines">Community Guidelines</a></li>
+                <li><a href="/policy">Privacy Policy</a></li>
+                <li><a href="/termsAndConditions">Terms and Conditions</a></li>         
               </ul>
             </div>
           </div>

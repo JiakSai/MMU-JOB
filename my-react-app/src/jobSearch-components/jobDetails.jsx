@@ -14,6 +14,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { TfiAngleDown } from "react-icons/tfi";
 import { TfiAngleUp } from "react-icons/tfi";
 import Cookies from 'js-cookie';
+import { BiCategory } from "react-icons/bi";
 import axios from 'axios';
 
 export default function JobDetails(props){
@@ -89,6 +90,9 @@ export default function JobDetails(props){
                                 <IoLocationOutline />{job.jobLocation}
                             </div>
                             <div className="jobDetailsBox">
+                                <BiCategory />{job.jobCategory}
+                            </div>
+                            <div className="jobDetailsBox">
                                 <FaRegBuilding /> {job.company.companySize}
                             </div>
                             <div className="jobDetailsBox">
@@ -106,10 +110,10 @@ export default function JobDetails(props){
                           <p className='ml-[25px] leading-7'>{job.requirement}</p>
                         <h3>Company profile</h3>
                         <div className="companyInfoBox">
-                            <img src={job.company.logo} alt="easyParcel" />
-                            <p className='text-2xl font-bold mt-4'>{job.company.name}</p>
+                            <img src={job.company.logo} alt="company logo" className='rounded'/>
+                            <p className='text-2xl font-bold mt-4 '>{job.company.name}</p>
                             <div className="jobDetailsBox">
-                                <FaStar /> 4.4 · 27 reviews
+                                <FaStar color='yellow'/><p> {job.company.averageRating} · {job.company.totalRatings} reviews</p>
                             </div>
                             <div className="jobDetailsBox">
                                 <HiOutlineBuildingOffice /> <p>{job.company.category}</p>

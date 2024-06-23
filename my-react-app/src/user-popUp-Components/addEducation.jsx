@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from "js-cookie";
+import { IoClose } from "react-icons/io5";
 
 export function AddEducation({ onClose, education, justClose }) {
     const [educationValue, setEducationValue] = useState({
@@ -91,69 +92,82 @@ export function AddEducation({ onClose, education, justClose }) {
         <div className='addrole fixed inset-0 flex items-center justify-end bg-black bg-opacity-50'>
             <div className='bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full overflow-y-auto z-2001'>
                 <button onClick={justClose} className='absolute top-2 right-2 text-xl font-bold'>
-                    &times;
+                    <IoClose size={25}/>
                 </button>
                 <div className="py-4 px-6 bg-white">
                     <form className='flex flex-col gap-6' onSubmit={handleSubmit}>
                         <h1 className="text-3xl font-bold mb-4">{education ? "Edit Education" : "Add Education"}</h1>
-                        <label>School name</label>
-                        <input 
-                            type="text"
-                            name='school'
-                            className='border border-black p-2'
-                            value={educationValue.school}
-                            onChange={handleInput}
-                        />
-                        <label>Education level</label>
-                        <input 
-                            type="text"
-                            name='degree'
-                            className='border border-black p-2'
-                            value={educationValue.degree} 
-                            onChange={handleInput}
-                        />
-                        <label>Started date</label>
-                        <div className='flex gap-2 relative z-10'>
-                            <select
-                                name="startDateMonth"
-                                value={educationValue.startDateMonth}
+                        <div className='flex flex-col gap-2'>
+                            <label>School name</label>
+                            <input 
+                                type="text"
+                                name='school'
                                 className='border border-black p-2'
+                                value={educationValue.school}
                                 onChange={handleInput}
-                            >
-                                <option value="" disabled>Select Month</option>
-                                {monthNames.map((month, index) => <option key={index} value={month}>{month}</option>)}
-                            </select>
-                            <select
-                                name="startDateYear"
-                                value={educationValue.startDateYear}
-                                className='border border-black p-2'
-                                onChange={handleInput}
-                            >
-                                <option value="" disabled>Select Year</option>
-                                {years.map((year, index) => <option key={index} value={year}>{year}</option>)}
-                            </select>
+                            />
                         </div>
-                        <label>Ended date</label>
-                        <div className='flex gap-2 relative z-10'>
-                            <select
-                                name="endDateMonth"
-                                value={educationValue.endDateMonth}
-                                onChange={handleInput}
+                        
+                        <div className='flex flex-col gap-2'>
+                            <label>Education level</label>
+                            <input 
+                                type="text"
+                                name='degree'
                                 className='border border-black p-2'
-                            >
-                                <option value="" disabled selected>Select Month</option>
-                                {monthNames.map((month, index) => <option key={index} value={month}>{month}</option>)}
-                            </select>
-                            <select
-                                name="endDateYear"
-                                value={educationValue.endDateYear}
+                                value={educationValue.degree} 
                                 onChange={handleInput}
-                                className='border border-black p-2'
-                            >
-                                <option value="" disabled selected>Select Year</option>
-                                {years.map((year, index) => <option key={index} value={year}>{year}</option>)}
-                            </select>
+                            />
                         </div>
+                        
+                        <div className='flex flex-col gap-2'>
+                            <label>Started date</label>
+                            <div className='flex gap-2 relative z-10'>
+                                <select
+                                    name="startDateMonth"
+                                    value={educationValue.startDateMonth}
+                                    className='border border-black p-2'
+                                    onChange={handleInput}
+                                >
+                                    <option value="" disabled>Select Month</option>
+                                    {monthNames.map((month, index) => <option key={index} value={month}>{month}</option>)}
+                                </select>
+                                <select
+                                    name="startDateYear"
+                                    value={educationValue.startDateYear}
+                                    className='border border-black p-2'
+                                    onChange={handleInput}
+                                >
+                                    <option value="" disabled>Select Year</option>
+                                    {years.map((year, index) => <option key={index} value={year}>{year}</option>)}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div className='flex flex-col gap-2'>
+                            <label>Ended date</label>
+                            <div className='flex gap-2 relative z-10'>
+                                <select
+                                    name="endDateMonth"
+                                    value={educationValue.endDateMonth}
+                                    onChange={handleInput}
+                                    className='border border-black p-2'
+                                >
+                                    <option value="" disabled selected>Select Month</option>
+                                    {monthNames.map((month, index) => <option key={index} value={month}>{month}</option>)}
+                                </select>
+                                <select
+                                    name="endDateYear"
+                                    value={educationValue.endDateYear}
+                                    onChange={handleInput}
+                                    className='border border-black p-2'
+                                >
+                                    <option value="" disabled selected>Select Year</option>
+                                    {years.map((year, index) => <option key={index} value={year}>{year}</option>)}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div className='flex flex-col gap-2'>
                         <label>Grade</label>
                         <input 
                             type='text'
@@ -162,7 +176,8 @@ export function AddEducation({ onClose, education, justClose }) {
                             value={educationValue.grade}
                             onChange={handleInput}
                         />
-                        <button type="submit" className='mt-4 bg-blue-500 text-white p-2 rounded'>Submit</button>
+                        </div>
+                        <button type="submit" className=' bg-customBlue font-bold text-white p-2 rounded mt-auto'>Submit</button>
                     </form>
                 </div>
             </div>

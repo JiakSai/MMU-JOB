@@ -70,7 +70,7 @@ export default function EmployerLogin() {
                 const token = response.data.token; 
                 Cookies.set('empToken', token); 
                 console.log(token);
-                navigate('/editComProfile');
+                navigate('/listenJob');
             })
             .catch(error => {
                 console.log(error);
@@ -138,7 +138,7 @@ export default function EmployerLogin() {
                 <div className="userLoginContainer">
                     <img src={loginphoto} alt="Login" className='w-[720px] h-[480px] ml-[-25px] mt-[-8px]'/>
                     <div>
-                        <p className='changeSite'>Are you a job seeker?</p>
+                        <p className='changeSite'><Link to="/userLogin">Are you a job seeker?</Link></p>
                         <div className='userLoginFormContainer'>
                             <h1 className='text-[28px] font-bold text-customPink'>Employer Sign In</h1>
                             <p>Please login to your account</p>

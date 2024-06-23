@@ -88,7 +88,7 @@ export default function ListenJob() {
                         jobs.map(job => (
                             <div className="w-[275px] border border-zinc-700 p-4 rounded-sm shadow-md" key={job.id} onClick={() => handleJobClick(job)}>
                                 <div className='flex w-full justify-between'>
-                                    <img src={company.company?.logo || 'https://via.placeholder.com/180/E5E4E2'} alt='Company Logo' className='rounded-sm h-[70px] w-[70px] border-black' />
+                                    <img src={company.company?.logo || 'https://via.placeholder.com/180/E5E4E2'} alt='Company Logo' className='rounded h-[50px] max-w-[90px] border-black' />
                                     <MdDeleteOutline size={23} onClick={() => handleDeleteClick(job.id)}/>
                                 </div>
                                 <div>

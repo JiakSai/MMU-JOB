@@ -147,7 +147,7 @@ const EditComProfile = () => {
                     <div>
                         <p className='text-base font-semibold text-neutral-700 mb-1'>Company description</p>
                         <div className='items-center flex gap-4'>
-                              <p className='border p-2 w-96 border-neutral-400 rounded shadow-md text-neutral-600 '>{company.company.description}</p>
+                              <p className='border p-2 w-[905px] border-neutral-400 rounded shadow-md text-neutral-600 '>{company.company.description}</p>
                               <MdModeEdit onClick={handleShowEcp}  size={25}/>
                             </div>
                     </div>

@@ -88,9 +88,7 @@ function EmployerFinishSign() {
         }
       });
       console.log(response.data);
-      if (response.status === 200) {
-          navigate('/listenJob');
-      }
+      navigate('/listenJob');
     } catch (error) {
       console.error('AxiosError', error);
     }
