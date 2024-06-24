@@ -34,6 +34,7 @@ export default function Dashboard() {
     const [reviews, setReviews] = useState([]);
     const [jobSeekers, setJobSeekers] = useState([]);
     const [employers, setEmployers] = useState({ employer: [] });
+    const [Posts, setPosts] = useState([]);
     const token = Cookies.get('adminToken');
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
@@ -52,7 +53,7 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [jobResponse, employerResponse, jobSeekerResponse, reviewResponse] = await Promise.all([
+                const [jobResponse, employerResponse, jobSeekerResponse, reviewResponse, postResponse] = await Promise.all([
                     axios.get('http://localhost:8000/api/Admin/ShowPosts', {
                         headers: { 'Authorization': `Bearer ${token}` }
                     }),
@@ -64,30 +65,48 @@ export default function Dashboard() {
                     }),
                     axios.get('http://localhost:8000/api/Admin/ShowRating', {
                         headers: { 'Authorization': `Bearer ${token}` }
+                    }),
+                    axios.get('http://localhost:8000/api/Admin/ShowTotalPosts', {
+                        headers: { 'Authorization': `Bearer ${token}` }
                     })
                 ]);
                 setJobs(Array.isArray(jobResponse.data) ? jobResponse.data : []);
                 setEmployers(employerResponse.data);
                 setJobSeekers(Array.isArray(jobSeekerResponse.data) ? jobSeekerResponse.data : []);
                 setReviews(Array.isArray(reviewResponse.data) ? reviewResponse.data : []);
+                setPosts(Array.isArray(postResponse.data) ? postResponse.data : []);
+                console.log(postResponse);
             } catch (error) {
                 console.error('Error fetching data:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
-        fetchData();
-    }, [token]);
 
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July',"Ogos","September","October","November","December"];
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: 'Posted Jobs',
-            data: [65, 59, 80, 81, 56, 55, 40],
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-        }]
+        if (token) {
+            fetchData();
+        } else {
+            navigate('/403');
+        }
+    }, [token, navigate]);
+
+    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const getChartData = () => {
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Posted Jobs',
+                data: [20,30,60,40,50,70,80,90,100,10,120,130],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        };
+        return data;
     };
+
+    const chartData = getChartData();
 
     if (isLoading) {
         return (
@@ -128,7 +147,7 @@ export default function Dashboard() {
                 </div>
                 <div className='flex mt-8 justify-between'>
                     <div className='w-[950px]'>
-                        <Line data={data} />
+                        <Line data={chartData} />
                     </div>
                     <div>
                         <p className='mb-2 font-bold text-lg'>Recent Job Seeker</p>

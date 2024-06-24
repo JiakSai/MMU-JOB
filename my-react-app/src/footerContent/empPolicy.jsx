@@ -1,19 +1,19 @@
-import Header from "../Header";
-import Footer from "../Footer";
+import EmployerHeader from "../employer/employerHeader"
+import EmployerFooter from "../employer/employerFooter"
 import { RiInformationLine } from "react-icons/ri";
 
-export default function Policy() {
+export default function EmpPolicy() {
     return(
         <>
-        <Header></Header>
+        <EmployerHeader></EmployerHeader>
         <div className="mt-[100px] mb-[30px] mx-[120px]">
             <div className="mt-[100px] mb-[30px] mx-[120px]">
             <div className="flex flex-col">
                 <div className="pb-6">
                     <h1 className="text-3xl font-bold pb-6">Privacy Policy</h1>
-                    <div className="bg-blue-100 border border-blue-300 rounded-lg p-4 flex items-center space-x-2 ">
-                        < RiInformationLine className="h-5 w-5 text-blue-500" />
-                        <span className="text-blue-700"><i>Last updated on 2nd June 2024</i></span>
+                    <div className="bg-pink-100 border border-pink-300 rounded-lg p-4 flex items-center space-x-2 ">
+                        < RiInformationLine className="h-5 w-5 text-pink-500" />
+                        <span className="text-pink-700"><i>Last updated on 2nd June 2024</i></span>
                     </div>
                 </div>
                 <div className="bg-white shadow-xl py-4 px-14 leading-6">
@@ -229,10 +229,12 @@ export default function Policy() {
                     <p>We reserve the right at any time and from time to time to amend our Privacy Policy. We will post our latest Privacy Policy (as amended) on the Site. Please view our Privacy Policy on the Site from time to time for our current/latest Privacy Policy.</p>
                     <p className="pb-8">In accordance with Section 7(3) of the PDPA, this Privacy Policy is issued in both English and Bahasa Malaysia. In the event of any discrepancies or inconsistencies arising between the English and Malay versions, the English version shall apply and prevail.</p>
                 </div>
+                </div>
             </div>
-            </div>
+
+
         </div>
-        <Footer></Footer>
+        <EmployerFooter></EmployerFooter>
         </>
     );
 }

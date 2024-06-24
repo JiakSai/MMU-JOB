@@ -83,19 +83,19 @@ const EditComProfile = () => {
     return (
         <>
             <EmployerHeader />
-            <section className='mt-[100px] mb-[30px] mx-[120px] flex flex-col items-center bg-white pb-8 rounded-sm'>
+            <section className='mt-[100px] mb-[30px] mx-[120px] flex flex-col items-center bg-white pb-8 rounded'>
                 <div className='companyCover relative'>
                     {company.company.cover && 
-                    <img src={company.company.cover} alt='Company Cover' className='w-full h-[200px] rounded-t-sm' />
+                    <img src={company.company.cover} alt='Company Cover' className='w-full h-[200px] rounded-t' />
                     }
                     <div className='content'>
                         <img  src={company.company.logo || 'https://via.placeholder.com/180/E5E4E2'} alt='Company Logo' className='rounded-full h-[180px] w-[180px] border-black' />
                     </div>
                 </div>
                 <div className='w-[1210px] '>
-                    <p onClick={handleShowEcp} className='mt-[80px] text-xl text-stone-400 font-semibold'>Edit company details</p>
+                    <p onClick={handleShowEcp} className='mt-[80px] text-2xl text-stone-400 font-semibold'>Edit company details</p>
                 </div>
-                <div className='companyContent border border-zinc-500 w-[1210px] p-8 flex flex-col gap-4 rounded-sm'>
+                <div className='companyContent border border-zinc-500 w-[1210px] p-8 flex flex-col gap-4 rounded'>
                     <div className='flex space-x-24'>
                         <div>
                             <p className='text-base font-semibold text-neutral-700 mb-1'>Company Name</p>

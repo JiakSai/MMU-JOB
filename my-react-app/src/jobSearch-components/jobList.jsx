@@ -6,6 +6,8 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import jobsearch from '/src/photo/jobSearch.png';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
+import { IoSearchSharp } from "react-icons/io5";
+import { CiClock2 } from "react-icons/ci";
 
 const JobList = () => {
   const [showJob, setShowJob] = useState([]);
@@ -32,7 +34,7 @@ const JobList = () => {
         }
       })
       .catch(error => {
-        setErrorMessage('Error fetching job data. Please try again later.');
+        setErrorMessage('No matching search results');
         console.error('Error fetching job data:', error);
       });
 
@@ -56,33 +58,45 @@ const JobList = () => {
           <p>{showJob.length} jobs</p>
           <p className="flex items-center">Sorted by relevance <LiaAngleDownSolid /></p>
         </div>
-        {errorMessage ? (
-          <p>{errorMessage}</p>
-        ) : (
-          showJob.length > 0 ? (
-            showJob.map((job, index) => (
-              <div key={index} className="jobList" onClick={() => handleJobClick(job)}>
-                <div className="jobListTop">
-                  <img src={job.company.logo} alt="company logo" className="jobLogo" />
+        {errorMessage ? 
+          ( <div className="jobList flex flex-col justify-center items-center">
+            <IoSearchSharp size={50}/>
+            <p className='text-lg font-semibold'>{errorMessage}</p>
+            <p className='mt-2 text-sm'> We couldn't find anything that matched your search.
+              Try adjusting the filters or check for spelling errors.</p>
+            </div>
+          ) 
+          : 
+          (showJob.length > 0 ? 
+            (showJob.map((job, index) => (
+                <div key={index} className="jobList" onClick={() => handleJobClick(job)}>
+                  <div className="jobListTop">
+                    <img src={job.company.logo} alt="company logo" className="jobLogo" />
+                    <div>
+                      <h4>{job.jobTitle}</h4>
+                      <p>{job.company.name} - {job.jobCategory}</p>
+                    </div>
+                    <IoBookmarkOutline className="icon" />
+                  </div>
                   <div>
-                    <h4>{job.jobTitle}</h4>
-                    <p>{job.company.name} - {job.jobCategory}</p>
-                  </div>
-                  <IoBookmarkOutline className="icon" />
-                </div>
-                <div>
-                  <p>{job.jobType} | {job.locationType} | {job.jobLocation}</p>
-                  <div className="jobListBottom">
-                    <p>{job.time_ago}</p>
-                    <p>RM{job.minSalary}-RM{job.maxSalary}</p>
+                    <p>{job.jobType} | {job.locationType} | {job.jobLocation}</p>
+                    <div className="jobListBottom">
+                      <p>{job.time_ago}</p>
+                      <p>RM{job.minSalary}-RM{job.maxSalary}</p>
+                    </div>
                   </div>
                 </div>
+                ))) 
+            : 
+            (
+              <div className="jobList flex flex-col justify-center items-center">
+                <svg className="w-16 h-16 mb-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-1a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <p className='text-2xl font-bold mt-1'>No jobs available</p>
               </div>
-            ))
-          ) : (
-            <p>No jobs available</p>
-          )
-        )}
+            )
+          )}
       </div>
       {selectedJob ?
         <JobDetails job={selectedJob}/>

@@ -69,11 +69,11 @@ export function AdminLogin(){
     };
     return(
         <section>
-            <div className='AdminRegisterTop shadow-2xl'><h1 className='logoUser'>" MMU</h1><h1 className='logoEmp ml-[-9px]'>JOB "</h1> </div>
+            <div className='AdminRegisterTop'><h1 className='logoAdmin'>" MMUJOB "</h1> </div>
             <div className="flex justify-center adminContainer">
-                <div className="border border-black p-8 my-[139.2px] rounded-lg userLoginFormContainer">
-                    <h1 className='text-3xl font-semibold'>Admin Login</h1>
-                    <form className="userLoginForm" onSubmit={handleSubmit}>
+                <div className="border p-8 my-[139.2px] rounded-lg userLoginFormContainer ">
+                    <h1 className='text-3xl font-semibold text-customGrey'>Admin Login</h1>
+                    <form className="userLoginForm " onSubmit={handleSubmit}>
                             <label htmlFor="email">Email Address</label>
                             <input
                                 type="email"
@@ -97,7 +97,7 @@ export function AdminLogin(){
                                 </span>
                             </div>
                             <p className="error-message">{formError.password}</p>
-                            <button className='mt-4 bg-zinc-900 text-neutral-50' type="submit">Login</button>
+                            <button className='mt-4 bg-customGrey text-neutral-50' type="submit">Login</button>
                         </form>
                 </div>
             </div>

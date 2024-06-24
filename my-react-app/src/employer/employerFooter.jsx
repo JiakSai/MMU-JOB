@@ -60,15 +60,15 @@ function EmployerFooter(){
             <div className="footer-col">
             <h4>About MMUJOB</h4>
               <ul className="links">
-                <li><a href="/aboutUs">About us</a></li>
-                <li><a href="/contactUs">Contact us</a></li>
+                <li><a href="/empAboutUs">About us</a></li>
+                <li><a href="/empContactUs">Contact us</a></li>
                 <li onClick={viewSocial}>
                   <div className='flex snap-center'><p>Social &#160;</p><FaAngleDown /></div>
                   <ul className="social">
-                      <li><a href="#" className="social-link"><FaFacebookSquare />&nbsp;Facebook</a></li>
-                      <li><a href="#" className="social-link"><FiInstagram />&nbsp;Instagram</a></li>
-                      <li><a href="#" className="social-link"><FaXTwitter />&nbsp;Twitter</a></li>
-                      <li><a href="#" className="social-link"><FaYoutube />&nbsp;Youtube</a></li>
+                      <li><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="social-link"><FaFacebookSquare />&nbsp;Facebook</a></li>
+                      <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="social-link"><FiInstagram />&nbsp;Instagram</a></li>
+                      <li><a href="https://x.com/?lang=en" className="social-link" target="_blank" rel="noopener noreferrer"><FaXTwitter />&nbsp;Twitter</a></li>
+                      <li><a href="https://www.youtube.com/watch?v=OjNyNFTsB68&t=117s" target="_blank" rel="noopener noreferrer" className="social-link"><FaYoutube />&nbsp;Youtube</a></li>
                   </ul>
               </li> 
               </ul>
@@ -77,19 +77,19 @@ function EmployerFooter(){
             <div className="footer-col">
             <h4>Terms of Use</h4>
               <ul className="links">
-                <li><a href="/communityGuidelines">Community Guidelines</a></li>
-                <li><a href="/policy">Privacy Policy</a></li>
-                <li><a href="/termsAndConditions">Terms and Conditions</a></li>         
+                <li><a href="/empCommunityGuidelines">Community Guidelines</a></li>
+                <li><a href="/empPolicy">Privacy Policy</a></li>
+                <li><a href="/empTermsAndConditions">Terms and Conditions</a></li>         
               </ul>
             </div>
           </div>
 
           <div className="footer-lastrow">
             <div className="footer-lastcol">
-              <a href="#"><FaFacebookSquare /></a>
-              <a href="#"><FiInstagram/></a>
-              <a href="#"><FaXTwitter /></a>
-              <a href="#"><FaYoutube /></a>
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><FaFacebookSquare /></a>
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><FiInstagram/></a>
+              <a href="https://x.com/?lang=en" target="_blank" rel="noopener noreferrer"><FaXTwitter /></a>
+              <a href="https://www.youtube.com/watch?v=OjNyNFTsB68&t=117s" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
             </div>
             <div className="footer-lastcol2">
               <p><i className="fa-regular fa-copyright"></i>MMUJOB. 2024, all rights reserved</p>

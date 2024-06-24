@@ -65,6 +65,12 @@ nav a:hover {
   font-size: 30px;
   color: #2471A3;
 }
+.logoAdmin{
+  margin-right: 10px;
+  font-weight: bolder;
+  font-size: 30px;
+  color: #34495E;
+}
 .logo{
   margin-right: 10px;
   font-weight: bolder;
@@ -376,7 +382,7 @@ form button {
   }
   .footer-lastrow {
     padding: 0;
-    margin: 30px 0 0 15px;
+    margin: 30px 0 0 41px;
     flex-direction: column;
     gap: 5px; 
   }
@@ -387,7 +393,7 @@ form button {
     color: #5F6A6A;
     font-size: 16px;
     font-weight: 100;
-    margin: 0 0 10px 28px;
+    margin: 0 0 0 5px;
   }
   
 }
@@ -836,13 +842,16 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
 }
-.AdminRegisterTop{
-  padding: 0 10px;
-  box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.5);
+.AdminRegisterTop {
+  padding: 0 25px;
+  background-color: #F2F3F4;
+  box-shadow: 0px 80px 30px rgba(0, 0, 0, 0.5); /* Adjusted box shadow */
   height: 65px;
   display: flex;
   align-items: center;
 }
+
+
 .changeSite{
   padding: 0 0 5px 225px;
 }
@@ -1048,7 +1057,7 @@ input[type="checkbox"] {
 	background-color: #eee;
 }
 .adminContainer{
-  background-image: linear-gradient(111.5deg, rgb(4, 78, 116) 11.1%, rgb(236, 64, 122) 107.5%);
+  background-image: linear-gradient(111.5deg, rgb(235, 237, 239) 11.1%, rgb(52, 73, 94) 107.5%);
 }
 .App {
   text-align: center;

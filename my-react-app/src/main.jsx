@@ -29,12 +29,18 @@ import EmployerTable from "./admin/employerTable.jsx";
 import JobSeekerTable from "./admin/jobSeekerTable.jsx";
 import CatergoryTable from "./admin/jobCategoryTable.jsx";
 import ReviewTable from "./admin/reviewTable.jsx";
+import UserSubscribeTable from "./admin/userSubscribeTable.jsx";
 import Dashboard from "./admin/dashboard.jsx";
 import Policy from "./footerContent/policy.jsx";
 import ContactUs from "./footerContent/contactUs.jsx";
 import AboutUs from "./footerContent/aboutUs.jsx";
 import CommunityGuideLine from "./footerContent/communityGuidelines.jsx";
 import TermAndCondition from "./footerContent/termsAndConditions.jsx";
+import EmpPolicy from "./footerContent/empPolicy.jsx";
+import EmpTermAndCondition from "./footerContent/empTermsAndConditions.jsx";
+import EmpContactUs from "./footerContent/empContactUs.jsx";
+import EmpCommunityGuideLine from "./footerContent/empCommunityGuidelines.jsx";
+import EmpAboutUs from "./footerContent/empAboutUs.jsx";
 
 const router = createBrowserRouter([
   {
@@ -154,6 +160,10 @@ const router = createBrowserRouter([
     element: <Dashboard />,
   },
   {
+    path: "userSubscribeTable",
+    element: <UserSubscribeTable />,
+  },
+  {
     path: "403",
     element: <div className="flex justify-center items-center h-[100vh]">
       <h1 className="text-2xl">403 Forbidden</h1>
@@ -178,6 +188,26 @@ const router = createBrowserRouter([
   {
     path: "termsAndConditions",
     element: <TermAndCondition />,
+  },
+  {
+    path: "empPolicy",
+    element: <EmpPolicy />,
+  },
+  {
+    path: "empTermsAndConditions",
+    element: <EmpTermAndCondition />,
+  },
+  {
+    path: "empContactUs",
+    element: <EmpContactUs />,
+  },
+  {
+    path: "empCommunityGuidelines",
+    element: <EmpCommunityGuideLine />,
+  },
+  {
+    path: "empAboutUs",
+    element: <EmpAboutUs />,
   }
 ]);
 
