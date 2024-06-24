@@ -13,6 +13,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\SubscribeController;
 
 //Public
 Route::get('/JobCategories', [JobCategoryController::class, 'index']);
@@ -25,6 +26,8 @@ Route::post('/User/SendOTPEmail', [ResetPasswordController::class, 'sendOTPUser'
 Route::post('/User/ResetPassword', [ResetPasswordController::class, 'resetPasswordUser']);
 Route::post('/Employer/SendOTPEmail', [ResetPasswordController::class, 'sendOTPEmployer']);
 Route::post('/Employer/ResetPassword', [ResetPasswordController::class, 'resetPasswordEmployer']);
+Route::post('/Subscribe', [SubscribeController::class, 'store']);
+Route::get('/ShowSubscribers', [SubscribeController::class, 'show']);
 
 //User
 Route::post('/UserRegister', [UserController::class, 'createUser']);

@@ -11,7 +11,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with(['company' => function($query) {
-            $query->withCount('ratings as totalRatings')
+            $query->withCount(['ratings as totalRatings'])
                   ->with(['ratings' => function($query) {    
                 }]);
         }])->get();
@@ -41,9 +41,9 @@ class PostController extends Controller
     public function adminShowTotalPosts()
     {
         $postsByMonth = Post::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-                            ->groupBy('month')
-                            ->orderBy('month', 'asc')
-                            ->get();
+                        ->groupBy('month')
+                        ->orderBy('month', 'asc')
+                        ->get();
 
         $months = [
             1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
@@ -51,12 +51,20 @@ class PostController extends Controller
             9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
         ];
 
-        $postsCountByMonth = $postsByMonth->map(function ($item) use ($months) {
-            $monthName = $months[$item->month];
-            return "{$monthName}: {$item->total}";
-        });
+        $postsCountByMonth = [];
+        foreach ($months as $monthNumber => $monthName) {
+            // Initialize every month with 0 posts
+            $postsCountByMonth[$monthName] = 0;
+        }
 
-        return response()->json($postsCountByMonth, 200);
+        foreach ($postsByMonth as $post) {
+            if (isset($months[$post->month])) {
+                // Update the month with the actual total
+                $postsCountByMonth[$months[$post->month]] = $post->total;
+        }
+    }
+
+    return response()->json($postsCountByMonth, 200);
     }
 
     public function SearchAndFilter(Request $request)

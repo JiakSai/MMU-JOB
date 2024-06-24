@@ -266,7 +266,7 @@ export default function TermAndCondition() {
                         <p className="font-bold">21. Contact</p>
                         <ul className="list-disc pl-10 space-y-2 pb-8">
                             <br></br><br></br>
-                            <li>For questions or problems relating to our Web Site or services, or these Terms of Use, you may contact us at +603-0000 0000, or email us at mmu1@gmail.com</li>
+                            <li>For questions or problems relating to our Web Site or services, or these Terms of Use, you may contact us at +603-0000 0000, or email us at mmujob1@gmail.com</li>
                         </ul>
                     </div>
                 </div>
