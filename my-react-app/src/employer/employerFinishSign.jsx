@@ -19,6 +19,7 @@ function EmployerFinishSign() {
   const [coverFileName, setCoverFileName] = useState("No selected file");
   const [logoPic, setLogoPic] = useState(null);
   const [coverPic, setCoverPic] = useState(null);
+  const token = Cookies.get('empToken');
   const [post, setPost] = useState({
     name: '',
     website: '',
@@ -67,6 +68,9 @@ function EmployerFinishSign() {
   };
 
   useEffect(() => {
+    if (!token) {
+      navigate('/employerRegister');
+    }
     axios.get('http://localhost:8000/api/JobCategories')
       .then(response => {
         setApi(response.data);
@@ -78,8 +82,6 @@ function EmployerFinishSign() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const token = Cookies.get('empToken');
-
     try {
       const response = await axios.post('http://localhost:8000/api/AddCompany', post, {
         headers: {
@@ -101,7 +103,7 @@ function EmployerFinishSign() {
     <>
       <section>
         <div className="LoginRegisterTop">
-          <h1 className="logoEmp">" MMUJOB "</h1>
+          <a href='/listenJob' className="logoEmp">" MMUJOB "</a>
         </div>
         <div className="finishSignContainer">
           <div className="bg-white w-[560px] py-[30px] px-[30px] h-fit">

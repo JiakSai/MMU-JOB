@@ -11,7 +11,7 @@ import { useSearchParams } from 'react-router-dom';
 
 const SearchBar = () => {
   const [api, setApi] = useState([]);
-  const [value, setValue] = useState([0,0]);
+  const [value, setValue] = useState([0, 0]);
   const [selectedJobTypes, setSelectedJobTypes] = useState([]);
   const [selectedSpecializations, setSelectedSpecializations] = useState([]);
   const [selectedStates, setSelectedStates] = useState([]);
@@ -20,7 +20,7 @@ const SearchBar = () => {
   const [selectAllSpecializations, setSelectAllSpecializations] = useState(false);
   const [selectAllStates, setSelectAllStates] = useState(false);
   const [selectAllExperiences, setSelectAllExperiences] = useState(false);
-  const [query, setQuery] = useState([]);
+  const [query, setQuery] = useState("");
   let [searchParams, setSearchParams] = useSearchParams();
   var numF = 0, numS = 0, numSt = 0, numJ = 0, numE = 0, numSly = 0;
 
@@ -64,7 +64,7 @@ const SearchBar = () => {
     document.querySelector('.experienceList').style.display = numE === 0 ? 'block' : 'none';
     numE = numE === 0 ? 1 : 0;
   }
-  
+
   const hideSalary = () => {
     document.querySelector('.salary').style.display = numSly === 0 ? 'block' : 'none';
     numSly = numSly === 0 ? 1 : 0;
@@ -90,6 +90,38 @@ const SearchBar = () => {
     } else if (!isNaN(newMax) && newMax < value[0]) {
       setValue([value[0], value[0]]);
     }
+  };
+
+  const updateSearchParams = (newParams) => {
+    const params = new URLSearchParams(newParams).toString();
+    setSearchParams(params);
+    console.log('Search params:', params);
+  };
+
+  const handleApplyFilter = () => {
+    let searchData = {};
+
+    if (value[0] !== 0 || value[1] !== 0) {
+      searchData.minSalary = value[0];
+      searchData.maxSalary = value[1];
+    }
+    if (query.length > 0) {
+      searchData.search = query;
+    }
+    if (selectedJobTypes.length > 0) {
+      searchData.jobType = selectedJobTypes;
+    }
+    if (selectedSpecializations.length > 0) {
+      searchData.jobCategory = selectedSpecializations;
+    }
+    if (selectedStates.length > 0) {
+      searchData.jobLocation = selectedStates;
+    }
+    if (selectedExperiences.length > 0) {
+      searchData.experiences = selectedExperiences;
+    }
+
+    updateSearchParams(searchData);
   };
 
   const handleJobTypeSelection = (jobType) => {
@@ -167,45 +199,54 @@ const SearchBar = () => {
   const handleCancelJobTypes = () => {
     setSelectedJobTypes([]);
     setSelectAllJobTypes(false);
+    handleApplyFilter();
   };
 
   const handleCancelSpecializations = () => {
     setSelectedSpecializations([]);
     setSelectAllSpecializations(false);
+    handleApplyFilter();
   };
 
   const handleCancelStates = () => {
     setSelectedStates([]);
     setSelectAllStates(false);
+    handleApplyFilter();
   };
 
   const handleCancelExperiences = () => {
     setSelectedExperiences([]);
     setSelectAllExperiences(false);
+    handleApplyFilter();
   };
 
   const handleSelectAllJobTypesClick = () => {
     handleSelectAllJobTypes();
+    handleApplyFilter();
   };
 
   const handleSelectAllSpecializationsClick = () => {
     handleSelectAllSpecializations();
+    handleApplyFilter();
   };
 
   const handleSelectAllStatesClick = () => {
     handleSelectAllStates();
+    handleApplyFilter();
   };
 
   const handleSelectAllExperiencesClick = () => {
     handleSelectAllExperiences();
+    handleApplyFilter();
   };
 
   const handleApplySalary = () => {
-    console.log('Salary range applied:', value);
+    handleApplyFilter();
   };
 
   const handleCancelSalary = () => {
-    setValue([0,0]);
+    setValue([0, 0]);
+    handleApplyFilter();
   };
 
   const handleQueryChange = (event) => {
@@ -214,50 +255,24 @@ const SearchBar = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-  
-    let searchData = {};
-  
-    if (value[0] !== 0 || value[1] !== 0) {
-      searchData.minSalary = value[0];
-      searchData.maxSalary = value[1];
-    }
-    if(query.length > 0){
-      searchData.search = query;
-    }
-    if(selectedJobTypes.length > 0){
-      searchData.jobType = selectedJobTypes;
-    }
-    if(selectedSpecializations.length > 0){
-      searchData.jobCategory = selectedSpecializations;
-    }
-    if(selectedStates.length > 0){
-      searchData.jobLocation = selectedStates;
-    }
-    if(selectedExperiences.length > 0){
-      searchData.experiences = selectedExperiences;
-    }
-  
-    const params = serializeFormQuery(searchData);
-    setSearchParams(params);
-    console.log('Search params:', params);
+    handleApplyFilter();
   };
-  
-  
-  const serializeFormQuery = (formData) => {
-    const params = new URLSearchParams(formData).toString();
-    return params;
+
+  const handleInternshipClick = () => {
+    setSelectedJobTypes(['Internship']);
+    handleApplyFilter();
   };
 
   return (
     <form onSubmit={handleSubmit} className="searchBar">
       <div className="searchInput">
         <input type="text" 
-        value={query}
-        onChange={handleQueryChange}
-        placeholder="Search Jobs" />
+          value={query}
+          onChange={handleQueryChange}
+          placeholder="Search Jobs" />
         <IoIosSearch className="searchIcon" />
       </div>
-      <div className="filterBox" >
+      <div className="filterBox">
         <div className='flex' onClick={hideFilter}>
           <p>Filter</p>
           <GoMultiSelect className="searchIcon ml-[50px]" />
@@ -283,7 +298,7 @@ const SearchBar = () => {
             <li className='apply'>
               <div className='apply'> 
                 <p className="searchBarCancelButton" onClick={handleCancelSpecializations}>Cancel</p> 
-                <p className="searchBarButton">Apply</p>
+                <p className="searchBarButton" onClick={handleApplyFilter}>Apply</p>
               </div>
             </li>
           </div>
@@ -307,7 +322,7 @@ const SearchBar = () => {
             <li className='apply'>
               <div className='apply'> 
                 <p className="searchBarCancelButton" onClick={handleCancelStates}>Cancel</p> 
-                <p className="searchBarButton">Apply</p>
+                <p className="searchBarButton" onClick={handleApplyFilter}>Apply</p>
               </div>
             </li>
           </div>
@@ -329,7 +344,7 @@ const SearchBar = () => {
             <li className='apply'>
               <div className='apply'> 
                 <p className="searchBarCancelButton" onClick={handleCancelJobTypes}>Cancel</p> 
-                <p className="searchBarButton">Apply</p>
+                <p className="searchBarButton" onClick={handleApplyFilter}>Apply</p>
               </div>
             </li>
           </div>
@@ -351,7 +366,7 @@ const SearchBar = () => {
             <li className='apply'>
               <div className='apply'> 
                 <p className="searchBarCancelButton" onClick={handleCancelExperiences}>Cancel</p> 
-                <p className="searchBarButton">Apply</p>
+                <p className="searchBarButton" onClick={handleApplyFilter}>Apply</p>
               </div>
             </li>
           </div>
@@ -400,7 +415,7 @@ const SearchBar = () => {
           </div>
         </ul>
       </div>
-      <div className="internBox">
+      <div className="internBox" onClick={handleInternshipClick}>
         <p>Internship</p>
         <GiGraduateCap className="searchIcon" />
       </div>

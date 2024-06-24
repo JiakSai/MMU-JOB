@@ -16,6 +16,7 @@ function FinishSign() {
   const [showFileInput, setShowFileInput] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [valid, setValid] = useState(true);
+  const token = Cookies.get('token');
   const [post, setPost] = useState({
     name: '',
     phoneNumber: '',
@@ -63,17 +64,15 @@ function FinishSign() {
     const { name, value } = event.target;
     setPost({ ...post, [name]: value });
   };
+  useEffect(()=>{
+    if (!token) {
+        navigate('/userLogin');
+    }
+  })
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (valid) {
-        const token = Cookies.get('token');
-        console.log(token);
-        if (!token) {
-            console.error('No token found');
-            return;
-        }
-
         try {
             const response = await axios.post('http://localhost:8000/api/UserFinishSignup', post, {
                 headers: {
@@ -108,7 +107,7 @@ function FinishSign() {
     <>
       <section>
         <div className="LoginRegisterTop">
-          <h1 className="logoUser">" MMUJOB "</h1>
+          <a href='/SearchJob' className="logoUser">" MMUJOB "</a>
         </div>
         <div className="finishSignContainer">
           <div className="bg-white w-[560px] py-[30px] px-[30px] h-fit">

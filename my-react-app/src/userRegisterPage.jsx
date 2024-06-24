@@ -107,7 +107,7 @@ function UserRegister() {
         <>
         <section>
             <div className='LoginRegisterTop'>
-                <h1 className='logoUser'>" MMUJOB "</h1> 
+                <a href='/SearchJob' className='logoUser'>" MMUJOB "</a> 
             </div>
             <div className="registerContainer">
                 <div>

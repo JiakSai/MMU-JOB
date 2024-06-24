@@ -51,7 +51,7 @@ function EmployerHeader() {
             <nav>
                 <ul className="sidebar">
                     <li onClick={hideSidebar}><FontAwesomeIcon icon={faTimes} className="closeIcon" /></li>
-                    <li className="empLogo"><a href="#">" MMUJOB "</a></li>
+                    <li className="empLogo"><a href="/listenJob">" MMUJOB "</a></li>
                     <li>
                         <Link to={token ? "/listenJob" : "/employerLogin"}>
                             Listen Job
@@ -88,7 +88,7 @@ function EmployerHeader() {
                     <li><Link to={"/SearchJob"}>Employer site</Link></li>
                 </ul>
                 <ul>
-                    <li className="empLogo"><a href="#">" MMUJOB "</a></li>
+                    <li className="empLogo"><a href="/listenJob">" MMUJOB "</a></li>
                     <li className="hideOnMobile">
                         <Link to={token ? "/listenJob" : "/employerLogin"}>
                             Listen Job

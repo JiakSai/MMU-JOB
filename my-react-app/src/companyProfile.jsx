@@ -114,19 +114,19 @@ const CompanyProfile = () => {
                     </div>
                     <div className='flex gap-3 border-b border-neutral-600 pb-2 mt-8 mb-10'>
                         <p
-                            className={`cursor-pointer ${activeTab === 'About' ? 'text-xl border-b-2 border-blue-500 text-blue-500 mb-[-8px]' : 'text-xl text-gray-700'}`}
+                            className={`cursor-pointer ${activeTab === 'About' ? 'text-xl border-b-2 border-customBlue text-customBlue mb-[-8px] font-semibold' : 'text-xl text-gray-700'}`}
                             onClick={() => setActiveTab('About')}
                         >
                             About
                         </p>
                         <p
-                            className={`cursor-pointer ${activeTab === 'Job' ? 'text-xl border-b-2 border-blue-500 text-blue-500 mb-[-8px]' : 'text-xl text-gray-700'}`}
+                            className={`cursor-pointer ${activeTab === 'Job' ? 'text-xl border-b-2 border-customBlue text-customBlue mb-[-8px] font-semibold' : 'text-xl text-gray-700'}`}
                             onClick={() => setActiveTab('Job')}
                         >
                             Job
                         </p>
                         <p
-                            className={`cursor-pointer ${activeTab === 'Reviews' ? 'text-xl border-b-2 border-blue-500 text-blue-500 mb-[-8px]' : 'text-xl text-gray-700'}`}
+                            className={`cursor-pointer ${activeTab === 'Reviews' ? 'text-xl border-b-2 border-customBlue text-customBlue mb-[-8px] font-semibold' : 'text-xl text-gray-700'}`}
                             onClick={() => setActiveTab('Reviews')}
                         >
                             Reviews

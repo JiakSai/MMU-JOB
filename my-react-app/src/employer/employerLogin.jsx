@@ -134,7 +134,7 @@ export default function EmployerLogin() {
     return (
         <>
             <section>
-                <div className='LoginRegisterTop'><h1 className='logoEmp'>" MMUJOB "</h1> </div>
+                <div className='LoginRegisterTop'><a href='/listenJob' className='logoEmp'>" MMUJOB "</a> </div>
                 <div className="userLoginContainer">
                     <img src={loginphoto} alt="Login" className='w-[720px] h-[480px] ml-[-25px] mt-[-8px]'/>
                     <div>

@@ -64,53 +64,63 @@ export function Review({ company }) {
 
     return (
         <div>
-            <h1 className="text-2xl font-semibold mb-6">Review</h1>
+            <h1 className="text-2xl font-semibold mb-6">Reviews</h1>
             <ReviewBar company={company} />
             <hr className='mt-10 border border-zinc-300'/>
-            <div className='w-[600px] mt-14'>
-                <div className='grid gap-3'>
-                    {sortedRatings.map((review, index) => {
-                        const isLast = index === ratings.length - 1;
-                        return (
-                            <div
-                                key={index}
-                                className={`py-3 px-6 border-r-2 border-zinc-400 w-full ${isLast ? 'rounded-t-3xl' : 'border-b-2 rounded-3xl'} `}
-                            >
-                                <div className='flex justify-between'>
-                                    <div className='flex gap-3'>
-                                        <p className='text-2xl font-semibold'>{review.rating}.0</p>
-                                        <div className="flex gap-2">
-                                            {[...Array(5)].map((star, index) => (
-                                                <FaStar key={index} color={index < review.rating ? '#FFEA00' : 'gray'} size={25} />
-                                            ))}
+            {ratings.length > 0 ? (
+                <div className='w-[600px] mt-14'>
+                    <div className='grid gap-3'>
+                        {sortedRatings.map((review, index) => {
+                            const isLast = index === ratings.length - 1;
+                            return (
+                                <div
+                                    key={index}
+                                    className={`py-3 px-6 border-r-2 border-zinc-400 w-full ${isLast ? 'rounded-t-3xl' : 'border-b-2 rounded-3xl'} `}
+                                >
+                                    <div className='flex justify-between'>
+                                        <div className='flex gap-3'>
+                                            <p className='text-2xl font-semibold'>{review.rating}.0</p>
+                                            <div className="flex gap-2">
+                                                {[...Array(5)].map((star, index) => (
+                                                    <FaStar key={index} color={index < review.rating ? '#FFEA00' : 'gray'} size={25} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                        {review.user_id === userValues.id && (
+                                            <MdOutlineEdit size={20} onClick={() => handleEditClick(review)} />
+                                        )}
+                                    </div>
+                                    <p className='text-xl font-semibold'>{review.headline}</p>
+                                    <div className='flex items-center gap-3 mt-1'>    
+                                        {review.userProfilePic ?
+                                            <img src={review.userProfilePic} alt="user" className='w-10 h-10 rounded-full' />
+                                            :
+                                            <HiOutlineUserCircle size={34} />   
+                                        }
+                                        <div>
+                                            <p className='leading-tight text-zinc-800'>{review.jobTitle}</p>
+                                            <p className='leading-tight text-zinc-800'>{review.employeeType}</p>
                                         </div>
                                     </div>
-                                    {review.user_id === userValues.id && (
-                                        <MdOutlineEdit size={20} onClick={() => handleEditClick(review)} />
-                                    )}
+                                    <p className='mt-3 text-zinc-600'>{review.review}</p>
                                 </div>
-                                <p className='text-xl font-semibold'>{review.headline}</p>
-                                <div className='flex items-center gap-3 mt-1'>    
-                                    {review.userProfilePic ?
-                                        <img src={review.userProfilePic} alt="user" className='w-10 h-10 rounded-full' />
-                                        :
-                                        <HiOutlineUserCircle size={34} />   
-                                    }
-                                    <div>
-                                        <p className='leading-tight text-zinc-800'>{review.jobTitle}</p>
-                                        <p className='leading-tight text-zinc-800'>{review.employeeType}</p>
-                                    </div>
-                                </div>
-                                <p className='mt-3 text-zinc-600'>{review.review}</p>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
+                    <div className='mt-2 px-6 gap-3 flex py-2 border-2 border-zinc-400 w-full rounded-b-2xl'>
+                        <HiOutlineUserCircle size={36} />
+                        <button onClick={handleAddReviewClick} className='mt-[3px] flex bg-neutral-400 rounded-2xl items-center w-full px-6 h-8'>Leave a comment....</button>
+                    </div>
                 </div>
-                <div className='mt-2 px-6 gap-3 flex py-2 border-2 border-zinc-400 w-full rounded-b-2xl'>
-                    <HiOutlineUserCircle size={36} />
-                    <button onClick={handleAddReviewClick} className='mt-[3px] flex bg-neutral-400 rounded-2xl items-center w-full px-6 h-8'>Leave a comment....</button>
+            ) : (
+                <div className='flex flex-col items-center mt-14'>
+                    <HiOutlineUserCircle size={50} className="text-gray-400 mb-4" />
+                    <p className="text-xl text-gray-700">No ratings yet</p>
+                    <button onClick={handleAddReviewClick} className='mt-6 px-4 py-2 bg-customBlue text-white rounded-lg'>
+                        Be the first to leave a review
+                    </button>
                 </div>
-            </div>
+            )}
             {showReview && (
                 <AddReview
                     company={company}

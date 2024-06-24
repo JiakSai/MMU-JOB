@@ -63,7 +63,7 @@ function Header() {
             <nav>
                 <ul className="sidebar">
                     <li onClick={hideSidebar}><FontAwesomeIcon icon={faTimes} className="closeIcon" /></li>
-                    <li className="logo"><a href="#">" MMUJOB "</a></li>
+                    <li className="logo"><a href="/SearchJob">" MMUJOB "</a></li>
                     <li><a href="#">Job search</a></li>
                     <li>
                         <Link to={token ? "/UserProfile" : "/userLogin"}>
@@ -91,7 +91,7 @@ function Header() {
                     <li><a href="/listenJob">Employer site</a></li>
                 </ul>
                 <ul>
-                    <li className="logo"><a href="#">" MMUJOB "</a></li>
+                    <li className="logo"><a href="/SearchJob">" MMUJOB "</a></li>
                     <li className="hideOnMobile"><Link to={"/SearchJob"}>job search</Link></li>
                     <li className="hideOnMobile">
                         <Link to={token ? "/UserProfile" : "/userLogin"}>

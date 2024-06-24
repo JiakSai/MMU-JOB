@@ -108,7 +108,7 @@ function EmployerRegister() {
         <>
         <section>
             <div className='LoginRegisterTop'>
-                <h1 className='logoEmp'>" MMUJOB "</h1> 
+                <a href='/listenJob' className='logoEmp'>" MMUJOB "</a> 
             </div>
             <div className="registerContainer">
                 <div>

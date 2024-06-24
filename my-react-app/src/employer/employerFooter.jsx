@@ -63,7 +63,7 @@ function EmployerFooter(){
                 <li><a href="/empAboutUs">About us</a></li>
                 <li><a href="/empContactUs">Contact us</a></li>
                 <li onClick={viewSocial}>
-                  <div className='flex snap-center'><p>Social &#160;</p><FaAngleDown /></div>
+                  <div className='flex items-center'><p>Social &#160;</p><FaAngleDown /></div>
                   <ul className="social">
                       <li><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="social-link"><FaFacebookSquare />&nbsp;Facebook</a></li>
                       <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="social-link"><FiInstagram />&nbsp;Instagram</a></li>
