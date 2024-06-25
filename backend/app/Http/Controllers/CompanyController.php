@@ -10,11 +10,18 @@ use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
 {
-    public function index()
-    {
-        $companies = Company::withCount('ratings as totalReviews')
-                            ->withAvg('ratings as averageRating', 'rating')
-                            ->get();
+    public function index(Request $request)
+    {    
+        $searchName = $request->query('name');
+
+        $companiesQuery = Company::withCount('ratings as totalReviews')
+                            ->withAvg('ratings as averageRating', 'rating');
+
+        if (!empty($searchName)) {
+            $companiesQuery->where('name', 'LIKE', "%{$searchName}%");
+        }
+    
+        $companies = $companiesQuery->get();
 
         $companiesArray = [];
 

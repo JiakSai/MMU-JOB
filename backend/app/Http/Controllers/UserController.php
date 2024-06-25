@@ -182,6 +182,7 @@ class UserController extends Controller
         $validate = Validator::make($request->all(),
         [
             'name' => 'required',
+            'profilePic' => 'sometimes|required|mimes:jpeg,jpg,png',
             'phoneNumber' => 'required',
             'gender'=> 'required',
             'nationality' => 'required',
@@ -200,6 +201,13 @@ class UserController extends Controller
         }
 
         $data = $request->only('name', 'phoneNumber', 'gender', 'nationality', 'state', 'city', 'major');
+        
+        if($request->hasFile('profilePic')){
+            $profilePic = $request->file('profilePic');
+            $profilePicName = time().'_profilePic'.$profilePic->getClientOriginalName();
+            $profilePic->move(public_path('images/User'), $profilePicName);
+            $data['profilePic'] = asset('images/User/'.$profilePicName);
+        }
         
         if($request->hasFile('resume')){
             $resume = $request->file('resume');

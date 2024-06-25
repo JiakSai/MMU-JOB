@@ -247,6 +247,10 @@ class EmployerController extends Controller
             $employer->company->delete();
         }
 
+        if($employer->posts){
+            $employer->posts()->delete();
+        }
+        
         $employer->delete();
 
         return response()->json([
