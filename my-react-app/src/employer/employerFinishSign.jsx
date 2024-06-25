@@ -197,7 +197,7 @@ function EmployerFinishSign() {
                           :
                           <div className='flex flex-col items-center'>
                               <img src={uploadCloud} alt="Upload Icon" className="w-20 h-20" />
-                              <p className="font-bold">Upload Your Profile logoPic</p>
+                              <p className="font-bold">Upload Your Company Logo</p>
                               <p>Support file type: .png, svg, jpeg</p> 
                           </div>
                       }
@@ -215,7 +215,7 @@ function EmployerFinishSign() {
                 <label>Company cover</label>
                 <div className="flex">
                   <input type="checkbox" onChange={handleCoverCheckboxChange} />
-                  <label htmlFor="hideFileInput">I don't have a company cover</label>
+                  <label htmlFor="hideFileInput">I don't have a company banner</label>
                 </div>
                 {showCoverFileInput && (
                   <>
@@ -229,7 +229,7 @@ function EmployerFinishSign() {
                                 :
                                 <div className='flex flex-col items-center'>
                                     <img src={uploadCloud} alt="Upload Icon" className="w-20 h-20" />
-                                    <p className="font-bold">Upload Your Profile coverPic</p>
+                                    <p className="font-bold">Upload Your Company Banner</p>
                                     <p>Support file type: .png, svg, jpeg</p> 
                                 </div>
                             }

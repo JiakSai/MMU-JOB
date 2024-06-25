@@ -95,6 +95,10 @@ export function AddRole({ onClose, role, justClose }) {
     };
 
     const years = Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i);
+    const States = ["Kuala Lumpur", "Selangor", "Putrajaya", "Penang", "Johor", "Perlis", "Kedah", "Kelantan", "Terengganu", "Melaka",
+        "Negeri Sembilan", "Pahang", "Perak", "Sabah", "Sarawak", "Singapore", "Overseas"];
+    const jobTypes = ["Internship", "Part-Time", "Full-Time", "Freelance"];
+    const locationTypes = ["On-site", "Remote", "Hybrid"];
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     return (
@@ -130,35 +134,50 @@ export function AddRole({ onClose, role, justClose }) {
                         
                         <div className='flex flex-col gap-2'>
                             <label >Company location</label>
-                            <input
-                                type="text"
-                                name='location'
-                                className='border border-black p-2'
-                                value={roleValue.location}
-                                onChange={handleInput}
-                            />
+                            <select
+                                    name="location"
+                                    value={roleValue.location}
+                                    onChange={handleInput}
+                                    className="border border-black p-2">
+                                    <option value="" disabled>Select company location</option>
+                                    {States.map((State, index) => (
+                                        <option key={index} value={State}>
+                                            {State}
+                                        </option>
+                                    ))}
+                                </select>
                         </div>
                         
                         <div className='flex flex-col gap-2'>
                             <label >Location type</label>
-                            <input
-                                type="text"
-                                name='locationType'
-                                className='border border-black p-2'
-                                value={roleValue.locationType}
-                                onChange={handleInput}
-                            />
+                                <select
+                                    name="locationType"
+                                    value={roleValue.locationType}
+                                    onChange={handleInput}
+                                    className="border border-black p-2">
+                                    <option value="" disabled>Select location type</option>
+                                    {locationTypes.map((locationType, index) => (
+                                        <option key={index} value={locationType}>
+                                            {locationType}
+                                        </option>
+                                    ))}
+                                </select>
                         </div>
                         
                         <div className='flex flex-col gap-2'>
                             <label >Job type</label>
-                            <input
-                                type="text"
-                                name='jobType'
-                                className='border border-black p-2'
-                                value={roleValue.jobType}
-                                onChange={handleInput}
-                            />
+                            <select
+                                    name="jobType"
+                                    value={roleValue.jobType}
+                                    onChange={handleInput}
+                                    className="border border-black p-2">
+                                    <option value="" disabled>Select job type</option>
+                                    {jobTypes.map((jobType, index) => (
+                                        <option key={index} value={jobType}>
+                                            {jobType}
+                                        </option>
+                                    ))}
+                                </select>
                         </div>
 
                         <div className='flex flex-col gap-2'>

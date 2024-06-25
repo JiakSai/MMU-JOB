@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import UserRegister from "./userRegisterPage.jsx";
 import UserLogin from "./userLoginPage.jsx";
-import FinishSign from './finishSign.jsx';
+import FinishSign from "./finishSign.jsx";
 import JobDetails from "./jobSearch-components/jobDetails.jsx";
 import JobList from "./jobSearch-components/jobList.jsx";
 import SearchBar from "./jobSearch-components/searchBar.jsx";
@@ -29,7 +29,6 @@ import EmployerTable from "./admin/employerTable.jsx";
 import JobSeekerTable from "./admin/jobSeekerTable.jsx";
 import CatergoryTable from "./admin/jobCategoryTable.jsx";
 import ReviewTable from "./admin/reviewTable.jsx";
-import UserSubscribeTable from "./admin/userSubscribeTable.jsx";
 import Dashboard from "./admin/dashboard.jsx";
 import Policy from "./footerContent/policy.jsx";
 import ContactUs from "./footerContent/contactUs.jsx";
@@ -77,13 +76,15 @@ const router = createBrowserRouter([
   },
   {
     path: "UserProfile",
-    element: <UserProfile/>
+    element: <UserProfile />,
   },
   {
     path: "*",
-    element: <div className="flex justify-center items-center h-[100vh]">
-      <h1 className="text-2xl">404 Not Found</h1>
-    </div>,
+    element: (
+      <div className="flex justify-center items-center h-[100vh]">
+        <h1 className="text-2xl">404 Not Found</h1>
+      </div>
+    ),
   },
   {
     path: "application",
@@ -136,14 +137,16 @@ const router = createBrowserRouter([
   {
     path: "listenJob",
     element: <ListenJob />,
-  },{
+  },
+  {
     path: "adminLogin",
     element: <AdminLogin />,
   },
   {
     path: "employerTable",
     element: <EmployerTable />,
-  },{
+  },
+  {
     path: "jobSeekerTable",
     element: <JobSeekerTable />,
   },
@@ -160,14 +163,12 @@ const router = createBrowserRouter([
     element: <Dashboard />,
   },
   {
-    path: "userSubscribeTable",
-    element: <UserSubscribeTable />,
-  },
-  {
     path: "403",
-    element: <div className="flex justify-center items-center h-[100vh]">
-      <h1 className="text-2xl">403 Forbidden</h1>
-    </div>,
+    element: (
+      <div className="flex justify-center items-center h-[100vh]">
+        <h1 className="text-2xl">403 Forbidden</h1>
+      </div>
+    ),
   },
   {
     path: "policy",
@@ -208,7 +209,7 @@ const router = createBrowserRouter([
   {
     path: "empAboutUs",
     element: <EmpAboutUs />,
-  }
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

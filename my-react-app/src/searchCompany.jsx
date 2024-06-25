@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import { GoSearch } from "react-icons/go";
 import search from './photo/searchBar.svg';
-import { useEffect, useState} from 'react';
 import axios from 'axios';
 import { FaStar } from "react-icons/fa6";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const SearchCompany = () => {
+    let [searchParams, setSearchParams] = useSearchParams();
     const [showCompany, setShowCompany] = useState([]);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
+    const [query, setQuery] = useState("");
 
     useEffect(() => {
         const timer = setTimeout(() => setLoading(false), 1100);
@@ -22,6 +22,35 @@ const SearchCompany = () => {
     const handleCompanyClick = (company) => {
         const type = 'About';
         navigate('/companyProfile', {state: {company, type}});
+    };
+
+    const updateSearchParams = (newParams) => {
+        const comParams = new URLSearchParams(newParams).toString();
+        setSearchParams(comParams);
+        console.log('Search params:', comParams);
+    };
+
+    const handleApplyFilter = (searchQuery) => {
+        let searchData = {};
+
+        if (searchQuery.length > 0) {
+            searchData.search = searchQuery;
+        }
+
+        console.log('Search data:', searchData);
+        updateSearchParams(searchData);
+
+        axios.get('http://localhost:8000/api/ShowCompany')
+          .then(response => {
+            const filteredCompanies = response.data.filter(company =>
+                company.company.name.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            setShowCompany(filteredCompanies);
+            console.log(filteredCompanies);
+          })
+          .catch(error => {
+            console.error('There was an error!', error);
+          });
     };
 
     useEffect(() => {
@@ -35,15 +64,17 @@ const SearchCompany = () => {
           });
       }, []);
 
-      if (loading) { 
-        return ( 
-            <> 
-                <div className="loader"></div> 
-                <div className='flex justify-center mt-[630px]'> <p className='text-3xl font-bold text-customBlue'>
-                    " MMUJOB "</p> 
-                </div> 
-            </> 
-        ); }
+    if (loading) {
+        return (
+            <>
+                <div className="loader"></div>
+                <div className='flex justify-center mt-[630px]'>
+                    <p className='text-3xl font-bold text-customBlue'>" MMUJOB "</p>
+                </div>
+            </>
+        );
+    }
+
     return (
         <>
             <Header />
@@ -61,8 +92,18 @@ const SearchCompany = () => {
                                     type="text" 
                                     placeholder='Search by company name'
                                     className='h-[45px] w-[510px] rounded-md px-12'
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    onKeyPress={(e) => {
+                                        if (e.key === 'Enter') {
+                                            handleApplyFilter(query);
+                                        }
+                                    }}
                                 />
-                                <div className='absolute left-2 top-1/2 transform -translate-y-1/2 flex items-center border rounded border-black justify-center h-[30px] w-[30px]'>
+                                <div 
+                                    className='absolute left-2 top-1/2 transform -translate-y-1/2 flex items-center border rounded border-black justify-center h-[30px] w-[30px] cursor-pointer'
+                                    onClick={() => handleApplyFilter(query)}
+                                >
                                     <GoSearch className='h-[20px] w-[20px]' />
                                 </div>
                             </div>
@@ -70,20 +111,20 @@ const SearchCompany = () => {
                         <img className='w-64 h-52 ml-28' src={search} alt="Search" />
                     </div>
                 </div>
-                {showCompany.map((company, index) => ( 
+                {showCompany.map((company, index) => (
                     <div key={index} onClick={() => handleCompanyClick(company)}>
-                            <div className='flex items-center py-4 border-b border-black justify-between'>
-                                <div className='flex items-center'>
-                                    <img src={company.company.logo} alt="company logo" className='h-[75px] w-[75px] rounded-md' />
-                                    <p className='font-medium text-2xl ml-8'>{company.company.name}</p>
-                                </div>
-                                <div className='flex items-center mr-8'>
-                                    <FaStar color='yellow' size={35}/>
-                                    <div className='ml-6'>
-                                        <span className='font-extralight text-2xl'>4.5</span><span className='text-2xl font-bold'>·</span><span className='font-extralight text-2xl'>300 reviews</span>
-                                    </div>
+                        <div className='flex items-center py-4 border-b border-black justify-between'>
+                            <div className='flex items-center'>
+                                <img src={company.company.logo} alt="company logo" className='h-[75px] w-[75px] rounded-md' />
+                                <p className='font-medium text-2xl ml-8'>{company.company.name}</p>
+                            </div>
+                            <div className='flex items-center mr-8'>
+                                <FaStar color='yellow' size={35}/>
+                                <div className='ml-6'>
+                                    <span className='font-extralight text-2xl'>4.5</span><span className='text-2xl font-bold'>·</span><span className='font-extralight text-2xl'>300 reviews</span>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 ))}
             </section>

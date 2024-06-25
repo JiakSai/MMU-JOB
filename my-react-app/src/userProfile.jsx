@@ -228,6 +228,7 @@ const UserProfile = () => {
             )
         },
     ];
+    
     if (loading) { 
         return ( 
             <> 
@@ -292,7 +293,11 @@ const UserProfile = () => {
                                 :
                                 <p className='text-lg'>Upload a resumé for easy applying and access no matter where you are.</p>
                             }
-                            <button onClick={()=> setShowAddResume(true)} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>Add resume</button>
+                            {resumeValues ?
+                                <button onClick={()=> setShowAddResume(true)} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>Edit resume</button>
+                                :
+                                <button onClick={()=> setShowAddResume(true)} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>Add resume</button>
+                            }
                         </div>
                         <div className='mb-[40px]'>
                             <h1 className='font-bold text-[26px] mb-[30px]'>Skills</h1>
@@ -303,7 +308,11 @@ const UserProfile = () => {
                                 :
                                 <p className='text-lg'>Add your skills to show employers what you're good at</p>
                             }
-                            <button onClick= {()=> setShowAddSkills(true)} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>Add skills</button>
+                            {skillsValues ?
+                                <button onClick={()=> setShowAddSkills(true)} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>Edit skills</button>
+                                :
+                                <button onClick={()=> setShowAddSkills(true)} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>Add skills</button>
+                            }
                             
                         </div>
                         

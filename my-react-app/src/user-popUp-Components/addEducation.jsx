@@ -86,11 +86,12 @@ export function AddEducation({ onClose, education, justClose }) {
         }
     }
     const years = Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i);
+    const educationLevel = ["High school", "Diploma", "Bachelor's degree", "Master's degree", "Doctorate degree", "Professional qualification"];
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     return(
         <div className='addrole fixed inset-0 flex items-center justify-end bg-black bg-opacity-50'>
-            <div className='bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full overflow-y-auto z-2001'>
+            <div className='bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full overflow-y-auto z-2001 h-full'>
                 <button onClick={justClose} className='absolute top-2 right-2 text-xl font-bold'>
                     <IoClose size={25}/>
                 </button>
@@ -110,13 +111,18 @@ export function AddEducation({ onClose, education, justClose }) {
                         
                         <div className='flex flex-col gap-2'>
                             <label>Education level</label>
-                            <input 
-                                type="text"
-                                name='degree'
-                                className='border border-black p-2'
-                                value={educationValue.degree} 
-                                onChange={handleInput}
-                            />
+                            <select
+                                    name="degree"
+                                    value={educationValue.degree}
+                                    onChange={handleInput}
+                                    className="border border-black p-2">
+                                    <option value="" disabled>Select education level</option>
+                                    {educationLevel.map((education, index) => (
+                                        <option key={index} value={education}>
+                                            {education}
+                                        </option>
+                                    ))}
+                                </select>
                         </div>
                         
                         <div className='flex flex-col gap-2'>
@@ -168,7 +174,7 @@ export function AddEducation({ onClose, education, justClose }) {
                         </div>
                         
                         <div className='flex flex-col gap-2'>
-                        <label>Grade</label>
+                        <label>Grade/CGPA</label>
                         <input 
                             type='text'
                             name='grade'

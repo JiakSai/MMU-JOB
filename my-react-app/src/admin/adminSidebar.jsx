@@ -10,7 +10,6 @@ import { MdStorage } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { FaRegBell } from "react-icons/fa6";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -21,7 +20,6 @@ const Home = () => {
     { name: "Posted Job", link: "/adminTable", icon: TbReportAnalytics, margin: true },
     { name: "Job Categories", link: "/categoryTable", icon: MdStorage },
     { name: "Review", link: "/reviewTable", icon: MdOutlineMessage },
-    { name: "User Subscribe", link: "/userSubscribeTable", icon: FaRegBell}
   ];
 
   const [open, setOpen] = useState(true);

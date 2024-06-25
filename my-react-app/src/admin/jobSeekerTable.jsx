@@ -10,7 +10,7 @@ const JobSeekerTable = () => {
     const [jobSeekers, setJobSeekers] = useState([]);
     const [selectedJobSeekers, setSelectedJobSeekers] = useState([]);
     const [error, setError] = useState(null);
-    const [filterType, setFilterType] = useState('jobTitle');
+    const [filterType, setFilterType] = useState('id');
     const [filterValue, setFilterValue] = useState('');
     const [sortCriteria, setSortCriteria] = useState({ key: '', order: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);

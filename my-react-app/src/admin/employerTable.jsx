@@ -10,7 +10,7 @@ const EmployerTable = () => {
     const [employer, setEmployer] = useState([]);
     const [selectEmployer, setSelectEmployer] = useState([]);
     const [error, setError] = useState(null);
-    const [filterType, setFilterType] = useState('jobTitle');
+    const [filterType, setFilterType] = useState('email');
     const [filterValue, setFilterValue] = useState('');
     const [sortCriteria, setSortCriteria] = useState({ key: '', order: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);
@@ -216,8 +216,8 @@ const EmployerTable = () => {
                             onChange={(e) => setFilterType(e.target.value)}
                             className="mr-2 p-2 border border-gray-400 rounded"
                         >
-                            <option value="id">Employer ID </option>
                             <option value="email">Employer Email</option>
+                            <option value="id">Employer ID </option>
                             <option value="company.name">Company Name</option>
                             <option value="location">Location</option>
                             <option value="company.category">Category</option>

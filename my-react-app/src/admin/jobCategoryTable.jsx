@@ -12,7 +12,7 @@ const CatergoryTable = () => {
     const [selectCatergory, setSelectCatergory] = useState([]);
     const [showAddJob, setShowAddJob] = useState(false);
     const [error, setError] = useState(null);
-    const [filterType, setFilterType] = useState('jobTitle');
+    const [filterType, setFilterType] = useState('id');
     const [filterValue, setFilterValue] = useState('');
     const [sortCriteria, setSortCriteria] = useState({ key: '', order: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);
@@ -120,7 +120,7 @@ const CatergoryTable = () => {
 
     const filteredcatergory = useMemo(() => {
         let filteredData = catergory;
-
+    
         // Filter
         if (filterValue) {
             filteredData = filteredData.filter(jobSeeker => {
@@ -133,19 +133,25 @@ const CatergoryTable = () => {
                 return value && value.includes(filterValue.toLowerCase());
             });
         }
-
+    
         // Sort
         if (sortCriteria.key) {
             filteredData.sort((a, b) => {
                 let aValue = a[sortCriteria.key];
                 let bValue = b[sortCriteria.key];
-
+    
+                // Convert to number if sorting by id
+                if (sortCriteria.key === 'id') {
+                    aValue = Number(aValue);
+                    bValue = Number(bValue);
+                }
+    
                 if (aValue < bValue) return sortCriteria.order === 'asc' ? -1 : 1;
                 if (aValue > bValue) return sortCriteria.order === 'asc' ? 1 : -1;
                 return 0;
             });
         }
-
+    
         return filteredData;
     }, [filterType, filterValue, sortCriteria, catergory]);
 

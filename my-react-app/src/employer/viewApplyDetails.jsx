@@ -135,7 +135,6 @@ export default function ViewApplyDetails({ onclose, justClose, apply }) {
                                 :
                                 <p className='text-lg'>Upload a resumé for easy applying and access no matter where you are.</p>
                             }
-                            <button onClick={() => setShowAddResume(true)} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>Add resume</button>
                         </div>
                         <div>
                             <h1 className='font-bold text-xl mb-[10px] underline underline-offset-4'>Skills</h1>
@@ -146,7 +145,6 @@ export default function ViewApplyDetails({ onclose, justClose, apply }) {
                                 :
                                 <p className='text-lg'>Add your skills to show employers what you're good at</p>
                             }
-                            <button onClick={() => setShowAddSkills(true)} className='text-lg border border-black px-4 py-1 mt-[10px] rounded'>Add skills</button>
                         </div>      
                     
                 </div> 

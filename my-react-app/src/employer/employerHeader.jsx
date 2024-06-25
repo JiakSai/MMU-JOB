@@ -54,7 +54,7 @@ function EmployerHeader() {
                     <li className="empLogo"><a href="/listenJob">" MMUJOB "</a></li>
                     <li>
                         <Link to={token ? "/listenJob" : "/employerLogin"}>
-                            Listen Job
+                            Listed Job
                         </Link>
                     </li>
                     <li>
@@ -91,7 +91,7 @@ function EmployerHeader() {
                     <li className="empLogo"><a href="/listenJob">" MMUJOB "</a></li>
                     <li className="hideOnMobile">
                         <Link to={token ? "/listenJob" : "/employerLogin"}>
-                            Listen Job
+                            Listed Job
                         </Link>
                     </li>
                     <li className="hideOnMobile">

@@ -5,8 +5,9 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 export function AddReview({ onClose, company, justClose, review }) {
-    const [rating, setRating] = useState(null);
+    const [privacyPolicyChecked, setPrivacyPolicyChecked] = useState(false);
     const [hover, setHover] = useState(null);
+    const [error, setError] = useState('');
 
     const [post, setPost] = useState({
         rating: '',
@@ -17,7 +18,6 @@ export function AddReview({ onClose, company, justClose, review }) {
     });
 
     useEffect(() => {
-        console.log(review);
         if (review) {
             setPost({
                 rating: review.rating,
@@ -34,28 +34,35 @@ export function AddReview({ onClose, company, justClose, review }) {
         setPost({ ...post, [name]: value });
     };
 
+    const handleCheckboxChange = (event) => {
+        setPrivacyPolicyChecked(event.target.checked);
+        setError('');
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const token = Cookies.get('token');
+
+        if (!privacyPolicyChecked) {
+            setError('* You must agree to the Privacy Policy');
+            return;
+        }
+
         try {
-            let response;
-            if(review){
-                response = await axios.patch(`http://localhost:8000/api/UpdateRating/${review.id}`, post, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    }
-                });
-            }
-            else{
-                response = await axios.post(`http://localhost:8000/api/AddRating/${company.id}`, post, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-            }
+            const url = review
+                ? `http://localhost:8000/api/UpdateRating/${review.id}`
+                : `http://localhost:8000/api/AddRating/${company.id}`;
+            const method = review ? 'patch' : 'post';
+            await axios({
+                method: method,
+                url: url,
+                data: post,
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
             onClose();
-            console.log(response.data);
         } catch (error) {
             console.error('AxiosError', error);
         }
@@ -69,7 +76,7 @@ export function AddReview({ onClose, company, justClose, review }) {
                     <form className="flex flex-col" onSubmit={handleSubmit}>
                         <h1>Rate a Company</h1>
                         <p>It only takes a minute! And your anonymous review will help other job seekers.</p>
-                        <div className="flex items-center">
+                        <div className="flex items-center mt-4">
                             <img className='w-20 h-20 mr-3' src={company.logo} alt="Company Logo" />
                             <div>
                                 <p className="text-sm text-gray-600">Company</p>
@@ -77,7 +84,7 @@ export function AddReview({ onClose, company, justClose, review }) {
                             </div>
                         </div>
                         <p className="mt-4">Overall Rating*</p>
-                        <div className='flex gap-5'>
+                        <div className='flex gap-1'>
                             {[...Array(5)].map((_, index) => {
                                 const ratingValue = index + 1;
                                 return (
@@ -152,9 +159,15 @@ export function AddReview({ onClose, company, justClose, review }) {
                             <p>All information contributed above will be visible to people who visit MMUJOB.</p>
                         </div>
                         <div className='flex items-center mt-4 gap-6 pl-[18px]'>
-                            <input type="checkbox" className="form-checkbox h-5 w-5 text-blue-500" />
+                            <input 
+                                type="checkbox" 
+                                className="form-checkbox h-5 w-5 text-blue-500" 
+                                checked={privacyPolicyChecked}
+                                onChange={handleCheckboxChange}
+                            />
                             <label className="text-sm text-gray-600">I agree to the MMUJOB Terms of Use and that this review is an honest and accurate account of my experience at my current or former employer.</label>
                         </div>
+                        {error && <p className="text-red-500 mt-2">{error}</p>}
                         <button type="submit" className='mt-4 bg-blue-500 text-white p-2 rounded'>Submit Review</button>
                     </form>
                 </div>
