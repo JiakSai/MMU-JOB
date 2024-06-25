@@ -82,38 +82,32 @@ class PostController extends Controller
 
         // Job Location filter
         if($request->has('jobLocation')) {
-            $jobLocation = $request->input('jobLocation');
-            $query->where('jobLocation', "$jobLocation");
-        }
-    
-        // Location type filter
-        if($request->has('locationType')) {
-            $locationType = $request->input('locationType');
-            $query->where('locationType', $locationType);
+            $jobLocations = explode(',', $request->input('jobLocation'));
+            $query->whereIn('jobLocation', $jobLocations);
         }
     
         // Job category filter
         if($request->has('jobCategory')) {
-            $jobCategory = $request->input('jobCategory');
-            $query->where('jobCategory', $jobCategory);
+            $categories = explode(',', $request->input('jobCategory'));
+            $query->whereIn('jobCategory', $categories);
         }
 
         //Job type filter
         if($request->has('jobType')) {
-            $jobType = $request->input('jobType');
-            $query->where('jobType', $jobType);
+            $jobTypes = explode(',', $request->input('jobType'));
+            $query->whereIn('jobType', $jobTypes);
         }
 
-        // Education level filter
-        if($request->has('educationLevel')) {
-            $educationLevel = $request->input('educationLevel');
-            $query->where('educationLevel', $educationLevel);
-        }
+        // // Education level filter
+        // if($request->has('educationLevel')) {
+        //     $educationLevels = explode(',', $request->input('educationLevel'));
+        //     $query->whereIn('educationLevel', $educationLevels);
+        // }
 
         // Experience filter
         if($request->has('experience')) {
-            $experience = $request->input('experience');
-            $query->where('experience', $experience);
+            $experiences = explode(',', $request->input('experience'));
+            $query->whereIn('experience', $experiences);
         }
 
         // Salary filter
