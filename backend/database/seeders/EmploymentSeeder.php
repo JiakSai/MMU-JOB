@@ -41,7 +41,7 @@ class EmploymentSeeder extends Seeder
         $post = [
             [
                 'jobTitle' => 'Software Engineer',
-                'jobType' => 'Full Time',
+                'jobType' => 'Full-Time',
                 'jobCategory' => 'Information Technology',
                 'minSalary' => 5000,
                 'maxSalary' => 10000,
@@ -58,7 +58,7 @@ class EmploymentSeeder extends Seeder
             ],
             [
                 'jobTitle' => 'Data Analyst',
-                'jobType' => 'Full Time',
+                'jobType' => 'Full-Time',
                 'jobCategory' => 'Information Technology',
                 'minSalary' => 4000,
                 'maxSalary' => 8000,
@@ -75,7 +75,7 @@ class EmploymentSeeder extends Seeder
             ],
             [
                 'jobTitle' => 'Network Engineer',
-                'jobType' => 'Full Time',
+                'jobType' => 'Full-Time',
                 'jobCategory' => 'Information Technology',
                 'minSalary' => 6000,
                 'maxSalary' => 12000,
@@ -92,7 +92,7 @@ class EmploymentSeeder extends Seeder
             ],
             [
                 'jobTitle' => 'UX Designer',
-                'jobType' => 'Full Time',
+                'jobType' => 'Full-Time',
                 'jobCategory' => 'Creative',
                 'minSalary' => 4000,
                 'maxSalary' => 8000,
@@ -109,7 +109,7 @@ class EmploymentSeeder extends Seeder
             ],
             [
                 'jobTitle' => 'Product Manager',
-                'jobType' => 'Full Time',
+                'jobType' => 'Full-Time',
                 'jobCategory' => 'Product Management',
                 'minSalary' => 8000,
                 'maxSalary' => 15000,
