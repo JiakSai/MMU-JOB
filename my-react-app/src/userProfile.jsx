@@ -16,6 +16,7 @@ import { AddProfileImage } from './user-popUp-Components/addProfileImage.jsx';
 import { MdOutlineMail } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import ResetPassword from './user-popUp-Components/resetPasword.jsx';
 import axios from 'axios';
 
 const UserProfile = () => {
@@ -36,6 +37,7 @@ const UserProfile = () => {
     const [selectedProfile, setSelectedProfile] = useState(null);
     const [showAddProfileImage, setShowAddProfileImage] = useState(false);
     const [userProfilePic, setUserProfilePic] = useState(null);
+    const [showResetPassword, setShowResetPassword] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -82,6 +84,10 @@ const UserProfile = () => {
         setSelectedProfile(profileValues);
         setShowEditProfile(true);
     };
+    const handleResetPassword = () => {
+        setShowResetPassword(true);
+        setSelectedProfile(profileValues);
+    }
 
     useEffect(() => {
         if (showAddRole || showAddEducation || showAddResume || showAddSkills || showEditProfile || showAddProfileImage) {
@@ -261,7 +267,7 @@ const UserProfile = () => {
                                 </div>
                                 <div className='flex flex-col justify-center gap-2'>
                                     <button className='border border-black px-4 py-1 text-2xl' onClick={handleEditProfile} >Edit Profile</button>
-                                    <button className='border border-black px-4 py-1 text-2xl'>Share</button>
+                                    <button className='border border-black px-4 py-1 text-2xl' onClick={handleResetPassword}>Reset PW</button>
                                 </div>
                             </div>
                         </div>
@@ -354,6 +360,13 @@ const UserProfile = () => {
                                 justClose={() => { setShowAddProfileImage(false); }}
                                 onClose={() => { setShowAddProfileImage(false); window.location.reload(); }}
                             />
+                        )}
+                        {showResetPassword && (
+                            <ResetPassword
+                            justClose={() => { setShowResetPassword(false); }}
+                            profile={selectedProfile}
+                            onClose={() => { setShowResetPassword(false); window.location.reload(); }}
+                        />
                         )}
                     </div>
                     <img src={addInfo} alt="addInfo" className='w-[656px] h-[480px] ml-[260px] mt-[50px]' />
