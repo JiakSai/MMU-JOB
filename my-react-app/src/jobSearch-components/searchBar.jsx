@@ -118,7 +118,7 @@ const SearchBar = () => {
       searchData.jobLocation = selectedStates;
     }
     if (selectedExperiences.length > 0) {
-      searchData.experiences = selectedExperiences;
+      searchData.experience = selectedExperiences;
     }
 
     updateSearchParams(searchData);

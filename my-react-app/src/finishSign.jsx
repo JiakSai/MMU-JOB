@@ -11,6 +11,9 @@ import registerPhoto from "./photo/Messy.svg";
 import { useNavigate } from "react-router-dom";
 
 function FinishSign() {
+  const [profileName, setProfileName] = useState("No selected file");
+  const [pic, setPic] = useState(null);
+  const [showProfileInput, setShowProfileInput] = useState(true);
   const navigate = useNavigate();
   const [fileName, setFileName] = useState("No selected file");
   const [showFileInput, setShowFileInput] = useState(true);
@@ -26,8 +29,24 @@ function FinishSign() {
     resume: null,
     state: "",
     city: "",
+    profilePic: "",
     _method: "PATCH",
   });
+
+  const handleProfileChange = (event) => {
+    const file = event.target.files[0];
+    setPost({ ...post, profilePic: file });
+    setProfileName(file.name);
+    setPic(URL.createObjectURL(file));
+  };
+
+  const handlePicCheckboxChange = () => {
+    setShowProfileInput(!showProfileInput);
+    if (!showProfileInput) {
+      setPost({ ...post, profilePic: null });
+      setProfileName("No selected file");
+    }
+  };
 
   const handleChange = (value) => {
     setPhoneNumber(value);
@@ -64,19 +83,25 @@ function FinishSign() {
     const { name, value } = event.target;
     setPost({ ...post, [name]: value });
   };
+
   useEffect(() => {
     if (!token) {
       navigate("/userLogin");
     }
-  });
+  }, [token, navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (valid) {
+      const formData = new FormData();
+      Object.keys(post).forEach((key) => {
+        formData.append(key, post[key]);
+      });
+
       try {
         const response = await axios.post(
           "http://localhost:8000/api/UserFinishSignup",
-          post,
+          formData,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -84,7 +109,6 @@ function FinishSign() {
             },
           }
         );
-        console.log(response);
         if (response.status === 200) {
           navigate("/SearchJob");
         }
@@ -188,7 +212,7 @@ function FinishSign() {
                       : "peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-focus:top-[-12px] peer-focus:left-2 peer-focus:text-customBlue"
                   }`}
                 >
-                  gender
+                  Gender
                 </label>
               </div>
               {["nationality", "state", "city"].map((field) => (
@@ -274,6 +298,52 @@ function FinishSign() {
                         }}
                       />
                     </span>
+                  </div>
+                </>
+              )}
+              <div className="flex">
+                <input type="checkbox" onChange={handlePicCheckboxChange} />
+                <label htmlFor="hideProfileInput">
+                  I don't have a profile picture
+                </label>
+              </div>
+              {showProfileInput && (
+                <>
+                  <div className="flex flex-col gap-2">
+                    <label>Drop your profile picture here!!!</label>
+                    <div
+                      className="flex flex-col items-center justify-center border-2 border-dashed border-black h-[300px] w-full cursor-pointer mt-[5px]"
+                      onClick={() =>
+                        document.querySelector(".profile-input-field").click()
+                      }
+                    >
+                      <input
+                        type="file"
+                        className="profile-input-field hidden"
+                        onChange={handleProfileChange}
+                      />
+                      {post.profilePic ? 
+                        <img src={pic} alt="pic" className="scale-100" />
+                          :
+                          <div className='flex flex-col items-center'>
+                            <img src={uploadCloud} alt="Upload Icon" className="w-28 h-28" />
+                            <p className="font-bold">Upload Your Profile Pic</p>
+                            <p>Support file type: .png, svg, jpeg</p> 
+                         </div>
+                      }
+                    </div>
+                    <div className="flex items-center ">
+                      <FaFileAlt />
+                      <span className="flex items-center justify-between w-full">
+                        {profileName}
+                        <RiDeleteBin6Line
+                          onClick={() => {
+                            setProfileName("No selected file");
+                            setPost({ ...post, profilePic: null });
+                          }}
+                        />
+                      </span>
+                    </div>
                   </div>
                 </>
               )}
