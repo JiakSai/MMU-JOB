@@ -31,9 +31,12 @@ export default function ListenJob() {
                         headers: { 'Authorization': `Bearer ${token}` }
                     })
                 ]);
-                console.log(jobResponse.data);
-                console.log(companyResponse.data);
-                setJobs(jobResponse.data);
+
+                const sortedJobs = jobResponse.data.sort((a, b) => {
+                    return new Date(b.createdAt) - new Date(a.createdAt); 
+                });
+
+                setJobs(sortedJobs);
                 setCompany(companyResponse.data);
                 setIsLoading(false);
             } catch (error) {
@@ -57,10 +60,9 @@ export default function ListenJob() {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            setJobs(jobs.filter(job => job.id !== jobID)); // Update the state to remove the deleted job
+            setJobs(jobs.filter(job => job.id !== jobID));
         } catch (error) {
-            console.log(jobID)
-            console.error('Error deleting experience:', error);
+            console.error('Error deleting job:', error);
         }
     };
 
@@ -100,7 +102,7 @@ export default function ListenJob() {
                                     </div>
                                 </div>
                             </div>
-                        ))
+                        )).reverse() // Reverse the order to ensure latest job is at the top
                     ) : (
                         <div className="w-[280px] border border-zinc-700 p-4 rounded-sm shadow-md text-center">
                             <p className="text-xl font-semibold mt-2">No Jobs Available</p>

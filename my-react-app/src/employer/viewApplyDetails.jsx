@@ -33,7 +33,7 @@ export default function ViewApplyDetails({ onclose, justClose, apply }) {
     const myConstants = [
         {
             title: "Career History",
-            value: "Add a personal summary to your profile as a way to introduce who you are",
+            value: "Job seeker has not added any work experience yet.",
             button: "Add role",
             userValue: roleValues,
             renderFunction: (value) => (
@@ -62,7 +62,7 @@ export default function ViewApplyDetails({ onclose, justClose, apply }) {
         },
         {
             title: "Education",
-            value: "Include your most recent educational achievements and qualifications",
+            value: "Job seeker has not added any education yet.",
             button: "Add education",
             userValue: educationValues,
             renderFunction: (value) => (
@@ -133,7 +133,7 @@ export default function ViewApplyDetails({ onclose, justClose, apply }) {
                                     <a href={apply.user.resume} className='flex items-center gap-2'><FaFileAlt />{resumeFileName}</a>
                                 </div>
                                 :
-                                <p className='text-lg'>Upload a resumé for easy applying and access no matter where you are.</p>
+                                <p className='text-lg'>Job seeker has not added resume yet.</p>
                             }
                         </div>
                         <div>
@@ -143,7 +143,7 @@ export default function ViewApplyDetails({ onclose, justClose, apply }) {
                                     <p className='font-normal text-sm text-gray-900'>{apply.user.skills}</p>
                                 </div>
                                 :
-                                <p className='text-lg'>Add your skills to show employers what you're good at</p>
+                                <p className='text-lg'>Job seeker has not added any skills yet.</p>
                             }
                         </div>      
                     

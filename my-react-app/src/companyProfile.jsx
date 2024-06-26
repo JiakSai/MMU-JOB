@@ -49,7 +49,7 @@ const CompanyProfile = () => {
                     console.error('There was an error!', error);
                 });
         } else {
-            setLoading(false); // stop loading if no company id is found
+            setLoading(false); 
         }
     }, [company?.company?.id]);
 
