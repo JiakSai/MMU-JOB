@@ -6,6 +6,7 @@ import search from './photo/searchBar.svg';
 import axios from 'axios';
 import { FaStar } from "react-icons/fa6";
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { IoSearchOutline } from "react-icons/io5";
 
 const SearchCompany = () => {
     let [searchParams, setSearchParams] = useSearchParams();
@@ -13,6 +14,7 @@ const SearchCompany = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [query, setQuery] = useState("");
+    const [noResults, setNoResults] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => setLoading(false), 1100);
@@ -21,7 +23,7 @@ const SearchCompany = () => {
 
     const handleCompanyClick = (company) => {
         const type = 'About';
-        navigate('/companyProfile', {state: {company, type}});
+        navigate('/companyProfile', { state: { company, type } });
     };
 
     const updateSearchParams = (newParams) => {
@@ -30,39 +32,43 @@ const SearchCompany = () => {
         console.log('Search params:', comParams);
     };
 
-    const handleApplyFilter = (searchQuery) => {
+    const handleApplyFilter = () => {
         let searchData = {};
 
-        if (searchQuery.length > 0) {
-            searchData.search = searchQuery;
+        if (query.length > 0) {
+            searchData.search = query;
         }
 
         console.log('Search data:', searchData);
         updateSearchParams(searchData);
 
+        // Filter the company list based on the search query
         axios.get('http://localhost:8000/api/ShowCompany')
-          .then(response => {
-            const filteredCompanies = response.data.filter(company =>
-                company.company.name.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-            setShowCompany(filteredCompanies);
-            console.log(filteredCompanies);
-          })
-          .catch(error => {
-            console.error('There was an error!', error);
-          });
+            .then(response => {
+                const filteredCompanies = response.data.filter(company =>
+                    company.company.name.toLowerCase().includes(query.toLowerCase())
+                );
+                setShowCompany(filteredCompanies);
+                setNoResults(filteredCompanies.length === 0); 
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+                setNoResults(true);
+            });
     };
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/ShowCompany')
-          .then(response => {
-            setShowCompany(response.data);
-            console.log(response.data);
-          })
-          .catch(error => {
-            console.error('There was an error!', error);
-          });
-      }, []);
+            .then(response => {
+                setShowCompany(response.data);
+                setLoading(false); // Set loading false on successful load
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+                setLoading(false); // Set loading false on error
+            });
+    }, []);
 
     if (loading) {
         return (
@@ -88,21 +94,22 @@ const SearchCompany = () => {
                             </div>
                             <p className='text-lg font-medium text-slate-500'>Everything you need to know about a company, all in one place</p>
                             <div className='relative'>
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     placeholder='Search by company name'
                                     className='h-[45px] w-[510px] rounded-md px-12'
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}
-                                    onKeyPress={(e) => {
+                                    onKeyDown={(e) => {
                                         if (e.key === 'Enter') {
                                             handleApplyFilter(query);
                                         }
                                     }}
+
                                 />
-                                <div 
+                                <div
                                     className='absolute left-2 top-1/2 transform -translate-y-1/2 flex items-center border rounded border-black justify-center h-[30px] w-[30px] cursor-pointer'
-                                    onClick={() => handleApplyFilter(query)}
+                                    onClick={handleApplyFilter}
                                 >
                                     <GoSearch className='h-[20px] w-[20px]' />
                                 </div>
@@ -111,22 +118,31 @@ const SearchCompany = () => {
                         <img className='w-64 h-52 ml-28' src={search} alt="Search" />
                     </div>
                 </div>
-                {showCompany.map((company, index) => (
-                    <div key={index} onClick={() => handleCompanyClick(company)}>
-                        <div className='flex items-center py-4 border-b border-black justify-between'>
-                            <div className='flex items-center'>
-                                <img src={company.company.logo} alt="company logo" className='h-[75px] w-[75px] rounded-md' />
-                                <p className='font-medium text-2xl ml-8'>{company.company.name}</p>
-                            </div>
-                            <div className='flex items-center mr-8'>
-                                <FaStar color='yellow' size={35}/>
-                                <div className='ml-6'>
-                                    <span className='font-extralight text-2xl'>4.5</span><span className='text-2xl font-bold'>·</span><span className='font-extralight text-2xl'>300 reviews</span>
+                {noResults ? (
+                    <div className=" mt-16 flex flex-col items-center">
+                        <IoSearchOutline size={40}/>
+                        <p className='2xl text-gray-800 mt-2'>No companies match your search.</p>
+                        <p className='text-sm text-gray-500'>We couldn't find anything that matched your search. 
+                        Try adjusting the filters or check for spelling errors.</p>
+                    </div>
+                ) : (
+                    showCompany.map((company, index) => (
+                        <div key={index} onClick={() => handleCompanyClick(company)}>
+                            <div className='flex items-center py-4 border-b border-black justify-between'>
+                                <div className='flex items-center'>
+                                    <img src={company.company.logo} alt="company logo" className='h-[75px] w-[75px] rounded-md' />
+                                    <p className='font-medium text-2xl ml-8'>{company.company.name}</p>
+                                </div>
+                                <div className='flex items-center mr-8'>
+                                    <FaStar color='yellow' size={35} />
+                                    <div className='ml-6'>
+                                        <span className='font-extralight text-2xl'>{company.averageRating} </span><span className='text-2xl font-bold'> · </span><span className='font-extralight text-2xl'> {company.totalReviews} Reviews</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))
+                )}
             </section>
             <Footer />
         </>
