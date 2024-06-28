@@ -15,7 +15,6 @@ import { TfiAngleDown } from "react-icons/tfi";
 import { TfiAngleUp } from "react-icons/tfi";
 import Cookies from 'js-cookie';
 import { BiCategory } from "react-icons/bi";
-import axios from 'axios';
 
 export default function JobDetails(props) {
     const job = props.job;

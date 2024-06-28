@@ -14,7 +14,7 @@ const CompanyProfile = () => {
     const company = location.state?.company;
     const type = location.state?.type;
     const [showCompany, setShowCompany] = useState([]); 
-    const [activeTab, setActiveTab] = useState(localStorage.getItem('activeTab') || 'About');
+    const [activeTab, setActiveTab] = useState(localStorage.getItem('activeTab') || 'About' || type);
     const [showReview, setShowReview] = useState(false);
     const [loading, setLoading] = useState(true);
 
@@ -30,12 +30,6 @@ const CompanyProfile = () => {
             document.body.style.overflow = 'unset';
         }
     }, [showReview]);
-
-    useEffect(() => {
-        if (type) {
-            setActiveTab(type);
-        }
-    }, [type]);
 
     useEffect(() => {
         if (company?.company?.id) {

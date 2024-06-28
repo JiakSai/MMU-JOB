@@ -1,9 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import ViewJobAndApply from './viewJobAndApply';
 
 export function Job({company}){
     const [showCompany, setShowCompany] = useState([]);
+    const [showJob, setShowJob] = useState(null);
     const truncateText = (text, wordLimit) => {
         const words = text.split(' ');
         if (words.length <= wordLimit) {
@@ -22,14 +24,18 @@ export function Job({company}){
             });
     }, []);
 
+    const handleJobClick = (job) => {
+        setShowJob(job);
+    };
+
     return(
         <>
             <div className='flex items-center gap-1'>
                         <p>{showCompany.length}</p><p>job</p><p>in</p><p>intel</p>
-                    </div>
+            </div>
                 <div className='grid grid-cols-2 md:grid-cols-auto-fit md:grid-rows-2 gap-6 mt-4'>
                     {showCompany.map((company, index) => (
-                        <div key={index} className='ml-4 w-[440px] px-8 py-4 border-b border-r border-black rounded shadow-xl flex flex-col justify-between'>
+                        <div onClick={() => handleJobClick(company)}  key={index} className='ml-4 w-[440px] px-8 py-4 border-b border-r border-black rounded shadow-xl flex flex-col justify-between'>
                             <div>
                                 <p className='text-xl font-semibold'>{company.jobTitle}</p>
                                 <p className='my-1'>{company.jobLocation} - {company.jobCategory}</p>
@@ -45,6 +51,14 @@ export function Job({company}){
                         </div>
                     ))}
                 </div>
+                {
+                    showJob && (
+                        <ViewJobAndApply job={showJob}
+                        justClose={() => setShowJob(null)}
+                        company = {company}
+                        />
+                    )
+                }
         </>
     );
 }

@@ -223,6 +223,27 @@ function Application() {
   }, [navigate, showProfileMessage, showRoleMessage, showEducationMessage, showResumeMessage, showSkillsMessage]);
   
 
+  const handleRoleDeleteClick = async (experienceId) => {
+    const token = Cookies.get("token");
+    if (!token) {
+      console.error("No token found");
+      return;
+    }
+    try {
+      await axios.delete(
+        `http://localhost:8000/api/DeleteExperience/${experienceId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      window.location.reload();
+    } catch (error) {
+      console.log(experienceId);
+      console.error("Error deleting experience:", error);
+    }
+  };
   const handleEduDeleteClick = async (educationId) => {
     const token = Cookies.get("token");
     if (!token) {
@@ -240,7 +261,8 @@ function Application() {
       );
       window.location.reload();
     } catch (error) {
-      console.error("Error deleting education:", error);
+      console.log(experienceId);
+      console.error("Error deleting experience:", error);
     }
   };
 
@@ -526,6 +548,12 @@ function Application() {
           >
             Submit application
           </button>
+          {showJobDetail && (
+            <ViewJobDetails
+              job={selectedValue}
+              onClose={() => setShowJobDetail(false)}
+            />
+          )}
           {showEditProfile && (
             <EditProfile
               justClose={() => {
