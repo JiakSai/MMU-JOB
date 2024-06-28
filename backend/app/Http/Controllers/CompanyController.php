@@ -84,7 +84,22 @@ class CompanyController extends Controller
         $company->totalPosts = $company->posts->count();
 
         foreach ($company->posts as $post) {
+            
             $post->time_ago = $post->created_at->diffForHumans();
+            
+            $post->companyDetails = [
+                'id' => $company->id,
+                'employer_id' => $company->employer_id,
+                'logo' => $company->logo,
+                'name' => $company->name,
+                'category' => $company->category,
+                'location' => $company->location,
+                'companySize' => $company->companySize,
+                'description' => $company->description,
+                'benefits' => $company->benefits,
+                'website' => $company->website,
+                'cover' => $company->cover,
+            ];
         }
 
         return response()->json($company, 200);
