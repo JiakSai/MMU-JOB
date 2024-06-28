@@ -15,6 +15,7 @@ const JobList = () => {
   const [searchParams] = useSearchParams();
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(true);
+  const [sortBy, setSortBy] = useState('date'); // Default sort by date
 
   const handleJobClick = (job) => {
     setSelectedJob(job);
@@ -25,25 +26,39 @@ const JobList = () => {
     const params = serializeFormQuery(searchParams);
     console.log('params:', params);
 
-    axios.get('http://localhost:8000/api/SearchAndFilter' + (params ? `?${params}` : ''))
+    axios.get(`http://localhost:8000/api/SearchAndFilter${params ? `?${params}` : ''}`)
       .then(response => {
         if (response.data.length === 0) {
           setErrorMessage('No jobs found for the given location.');
+          setShowJob([]);
         } else {
-          setShowJob(response.data);
+          let sortedJobs = [...response.data];
+
+          if (sortBy === 'salary') {
+            sortedJobs.sort((a, b) => b.maxSalary - a.maxSalary); // Sort by maxSalary descending
+          } else if (sortBy === 'date') {
+            sortedJobs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sort by date descending
+          }
+
+          setShowJob(sortedJobs);
           setErrorMessage('');
-          console.log('Job data fetched successfully:', response.data);
+          console.log('Job data fetched successfully:', sortedJobs);
         }
       })
       .catch(error => {
-        setErrorMessage('No matching search results');
+        setErrorMessage('Error fetching job data.');
         console.error('Error fetching job data:', error);
       })
       .finally(() => {
         setLoading(false);
       });
 
-  }, [searchParams]);
+  }, [searchParams, sortBy]);
+
+  const toggleSort = () => {
+    const newSortBy = sortBy === 'date' ? 'salary' : 'date';
+    setSortBy(newSortBy);
+  };
 
   const serializeFormQuery = (formData) => {
     // Filter out empty parameters
@@ -61,7 +76,9 @@ const JobList = () => {
       <div className="allJob">
         <div className="jobQty">
           <p>{showJob.length} jobs</p>
-          <p className="flex items-center">Sorted by relevance <LiaAngleDownSolid /></p>
+          <p className="flex items-center cursor-pointer" onClick={toggleSort}>
+            Sorted by {sortBy === 'date' ? 'date' : 'salary'} <LiaAngleDownSolid />
+          </p>
         </div>
         {loading ? (
           <div className="loadingContainer flex flex-col mt-[200px] items-center">
