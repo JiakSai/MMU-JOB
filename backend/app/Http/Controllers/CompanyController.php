@@ -86,8 +86,8 @@ class CompanyController extends Controller
         foreach ($company->posts as $post) {
             
             $post->time_ago = $post->created_at->diffForHumans();
-            
-            $post->companyDetails = [
+
+            $post->company = [
                 'id' => $company->id,
                 'employer_id' => $company->employer_id,
                 'logo' => $company->logo,
