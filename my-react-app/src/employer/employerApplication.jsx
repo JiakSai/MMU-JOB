@@ -31,7 +31,7 @@ export default function EmployerApplication() {
     return (
         <>
             <EmployerHeader />
-            <div className='mt-24 mb-8 mx-8 md:mx-32 min-h-96'>
+            <div className='mt-24 mb-8 mx-8 md:mx-32 min-h-[100vh]'>
                 <div className='flex flex-col md:flex-row justify-between items-center'>
                     <h1 className='text-2xl font-bold'>Application Status</h1>
                     <div className='flex justify-center space-x-8 md:space-x-20 border border-gray-300 p-2 rounded-md bg-gray-100 shadow-sm'>

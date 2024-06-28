@@ -3,7 +3,7 @@ import axios from 'axios';
 import Cookies from "js-cookie";
 import { IoClose } from "react-icons/io5";
 
-export function AddSkill({onClose, justClose}) {
+export function AddSkill({onClose, justClose, skills}) {
     const [skillValue, setSkillValue] = useState({
          skills: "",
     });
@@ -15,6 +15,15 @@ const handleInputChange = (event) => {
         [event.target.name]: event.target.value
     });
 };
+
+    useEffect(() =>{
+        console.log(skills);
+        if(skills){
+            setSkillValue({
+                skills: skills,
+            });
+        }
+    },[skills])
 
     const handleSubmit = async (event) => {
         event.preventDefault();

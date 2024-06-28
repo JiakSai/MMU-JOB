@@ -84,11 +84,11 @@ export default function ListenJob() {
     return (
         <>
             <EmployerHeader />
-            <main className="mt-[100px] mb-[30px] mx-[120px] flex space-x-10 ">
-                <div className="scroll h-[739.2px] flex flex-col space-y-2 overflow-y-auto overflow-x-hidden">
+            <main className="mt-[100px] mb-[30px] mx-[120px] flex space-x-10">
+                <div className="scroll h-[739.2px] flex flex-col space-y-2 overflow-y-auto overflow-x-hidden w-[277px]">
                     {jobs.length > 0 ? (
                         jobs.map(job => (
-                            <div className="w-[275px] border border-zinc-700 p-4 rounded shadow-md" key={job.id} onClick={() => handleJobClick(job)}>
+                            <div className="w-[270px] border border-zinc-700 p-4 rounded shadow-md" key={job.id} onClick={() => handleJobClick(job)}>
                                 <div className='flex w-full justify-between'>
                                     <img src={company.company?.logo || 'https://via.placeholder.com/180/E5E4E2'} alt='Company Logo' className='rounded h-[40px] max-w-[90px] border-black' />
                                     <MdDeleteOutline size={23} onClick={() => handleDeleteClick(job.id)}/>
@@ -102,22 +102,22 @@ export default function ListenJob() {
                                     </div>
                                 </div>
                             </div>
-                        )).reverse() // Reverse the order to ensure latest job is at the top
+                        ))
                     ) : (
-                        <div className="w-[280px] border border-zinc-700 p-4 rounded-sm shadow-md text-center">
+                        <div className="w-[270px] border border-zinc-700 p-4 rounded-sm shadow-md text-center">
                             <p className="text-xl font-semibold mt-2">No Jobs Available</p>
                             <p>Please add new jobs to see them listed here.</p>
                         </div>
                     )}
                 </div>
-                <div className="w-[956px] h-[739.2px]">
+                <div className="w-[950px] h-[739.2px]">
                     {showEditPost ? 
                         <AddEditPost 
                             job={showEditPost}
-                            onClose={() => {window.location.reload(); }}
+                            onClose={() => { window.location.reload(); }}
                         />
                         :
-                        <div className="bg-white p-8 h-full rounded">
+                        <div className="bg-white p-8 h-full rounded border-l border-neutral-300">
                             <h1 className='flex items-center gap-4 text-2xl font-semibold'><FaArrowLeftLong className='text-2xl'/>Select a job</h1>
                             <p className='ml-[45px] mt-[2px]'>Display job details here and edit!!</p>
                             <div className='grid place-content-center w-full mt-[160px]'>

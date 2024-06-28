@@ -192,7 +192,7 @@ export default function AddEditPost({ job, onClose }) {
                             className="border-b p-2 w-full border-neutral-400 text-neutral-600 appearance-none">
                             <option value="" disabled>Select job category</option>
                             {api.map((category, index) => (
-                                <option key={index} value={category.id}>
+                                <option key={index} value={category.name}>
                                     {category.name}
                                 </option>
                             ))}
