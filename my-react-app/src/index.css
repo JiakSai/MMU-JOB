@@ -1137,7 +1137,7 @@ th {
   vertical-align: middle;
 }
 .scroll::-webkit-scrollbar{
-  width: 8px;
+  width: 6px;
 }
 .scroll::-webkit-scrollbar-thumb {
   background: #C0C0C0;;

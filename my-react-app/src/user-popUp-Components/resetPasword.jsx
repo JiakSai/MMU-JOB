@@ -71,6 +71,7 @@ export default function ResetPassword({ justClose, onClose, profile}) {
       .then((response) => {
         console.log("Password reset successful:", response.data);
         setMessage("Password reset successful.");
+        onClose();
       })
       .catch((error) => {
         console.error("Error resetting password:", error);
