@@ -3,10 +3,11 @@ import { IoBookmarkOutline, IoSearchSharp } from "react-icons/io5";
 import { LiaAngleDownSolid } from "react-icons/lia";
 import JobDetails from "./jobDetails.jsx";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import jobsearch from '/src/photo/jobSearch.png';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const JobList = () => {
   const [showJob, setShowJob] = useState([]);
@@ -109,8 +110,16 @@ const JobList = () => {
           <div className='py-8 px-8'>
             <h1 className='flex items-center gap-4 text-2xl font-semibold'><FaArrowLeftLong className='text-3xl'/>Select a job</h1>
             <p className='ml-[45px] mt-[8px]'>Display job details here!!</p>
-            <div className='grid place-content-center w-full mt-[120px]'>
-              <img src={jobsearch} alt="job search" className="w-[200px] h-[220px]" />
+            <div className='mt-6'>
+              <div className="skeleton-wrapper">
+                <Skeleton height={30} width={'100%'} />
+                <Skeleton height={20} width={'80%'} className='mt-2' />
+                <Skeleton height={20} width={'90%'} className='mt-2' />
+                <Skeleton height={20} width={'70%'} className='mt-2' />
+                <Skeleton height={15} width={'75%'} className='mt-2' />
+                <Skeleton height={22} width={'85%'} className='mt-2' />
+                <Skeleton height={290} width={'100%'} className='mt-2' />
+              </div>
             </div>
           </div>
         </div>

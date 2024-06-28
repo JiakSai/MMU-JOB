@@ -14,14 +14,10 @@ const AdminTable = () => {
     const [filterValue, setFilterValue] = useState('');
     const [sortCriteria, setSortCriteria] = useState({ key: '', order: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);
+    const [alertMessage, setAlertMessage] = useState('');
     const token = Cookies.get('adminToken');
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 1000);
-        return () => clearTimeout(timer);
-    }, []);
 
     useEffect(() => {
         console.log(token);
@@ -45,8 +41,10 @@ const AdminTable = () => {
             });
             setPostedJob(postedJob.filter(job => job.id !== id));
             setSelectPostedJob(selectPostedJob.filter(selectedId => selectedId !== id));
+            window.alert('Job post deleted successfully.'); 
         } catch (error) {
-            console.error('Error deleting job seeker:', error);
+            console.error('Error deleting job post:', error);
+            window.alert('Failed to delete job post.'); 
         }
     };
 
@@ -65,10 +63,12 @@ const AdminTable = () => {
                     })
                 )
             );
-            setPostedJob(postedJob.filter(job => !selectPostedJob.includes(job.id)));
             setSelectPostedJob([]);
+            setPostedJob(postedJob.filter(job => !selectPostedJob.includes(job.id)));
+            window.alert('Selected job posts deleted successfully.'); 
         } catch (error) {
-            console.error('Error deleting selected job seekers:', error);
+            console.error('Error deleting selected job posts:', error);
+            window.alert('Failed to delete selected job posts.'); 
         }
     };
 
@@ -104,6 +104,8 @@ const AdminTable = () => {
                 console.error('Error Response:', error.response);  
                 setError(error.response.data.message || 'An error occurred');
                 console.error('There was an error!', error.message);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -181,6 +183,7 @@ const AdminTable = () => {
             <Home />
             <div className="py-3 px-6 w-full">
                 <h1 className="text-2xl text-gray-900 font-semibold uppercase">Manage Posted job</h1>
+                {alertMessage && <p className="text-green-500">{alertMessage}</p>}
                 {error && <p className="text-red-500">{error}</p>}
                 <div className="flex items-center mt-4 mb-2 justify-between ">
                     <div>

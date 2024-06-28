@@ -19,11 +19,6 @@ const EmployerTable = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 1000);
-        return () => clearTimeout(timer);
-    }, []);
-    
-    useEffect(() => {
         console.log(token);
         if (!token) {
             navigate('/403');
@@ -45,9 +40,11 @@ const EmployerTable = () => {
             });
             setEmployer(employer.filter(emp => emp.id !== id));
             setSelectEmployer(selectEmployer.filter(selectedId => selectedId !== id));
+            window.alert('Employer deleted successfully.');
         } catch (error) {
             console.error('Error deleting job seeker:', error);
-        }
+            window.alert('Failed to delete employer.'); 
+        } 
     };
 
     const handleDeleteSelected = async () => {
@@ -67,8 +64,10 @@ const EmployerTable = () => {
             );
             setEmployer(employer.filter(emp => !selectEmployer.includes(emp.id)));
             setSelectEmployer([]);
+            window.alert('Selected employer deleted successfully.');
         } catch (error) {
             console.error('Error deleting selected job seekers:', error);
+            window.alert('Failed to delete selected employer.');
         }
     };
 
@@ -104,6 +103,8 @@ const EmployerTable = () => {
                 console.error('Error Response:', error.response);
                 setError(error.response.data.message || 'An error occurred');
                 console.error('There was an error!', error.message);
+            } finally {
+                setIsLoading(false);
             }
         };
 

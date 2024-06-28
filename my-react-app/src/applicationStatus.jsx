@@ -57,7 +57,7 @@ export default function ApplicationStatus() {
     return (
         <>
             <Header />
-            <div className='mt-[100px] mb-[30px] mx-[120px]'>
+            <div className='mt-[100px] mb-[30px] mx-[120px] min-h-[100vh]'>
                 <h1 className='text-xl font-semibold'>Application Status</h1>
                 {applicationStatus.length > 0 ? (
                     <table className='application'>
@@ -83,7 +83,7 @@ export default function ApplicationStatus() {
                         </tbody>
                     </table>
                 ) : (
-                    <div className='flex flex-col items-center justify-center mt-16 text-gray-500'>
+                    <div className='flex flex-col items-center mt-52 text-gray-500 min-h-[100vh]'>
                         <svg className="w-16 h-16 mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-1a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>

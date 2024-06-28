@@ -158,10 +158,10 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="flex mt-8 justify-between">
-          <div className="w-[950px]">
-            <Line data={chartData} />
-          </div>
           <div>
+            <Line data={chartData}  className="w-full"/>
+          </div>
+          <div className="w-full">
             <p className="mb-2 font-bold text-lg">Recent Job Seeker</p>
             <div className="scroll h-[443px] overflow-y-auto">
               {jobSeekers.map((jobSeeker, index) => (

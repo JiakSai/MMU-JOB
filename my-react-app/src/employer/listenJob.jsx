@@ -7,6 +7,8 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import AddEditPost from "./Add&EditPost";
 import { FaFileSignature } from "react-icons/fa";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export default function ListenJob() {
     const [company, setCompany] = useState({});
@@ -120,8 +122,20 @@ export default function ListenJob() {
                         <div className="bg-white p-8 h-full rounded border-l border-neutral-300">
                             <h1 className='flex items-center gap-4 text-2xl font-semibold'><FaArrowLeftLong className='text-2xl'/>Select a job</h1>
                             <p className='ml-[45px] mt-[2px]'>Display job details here and edit!!</p>
-                            <div className='grid place-content-center w-full mt-[160px]'>
-                                <FaFileSignature size={200}/>
+                            <div className='mt-6'>
+                                <div className="skeleton-wrapper">
+                                    <Skeleton height={30} width={'100%'} />
+                                    <Skeleton height={25} width={'80%'} className='mt-2' />
+                                    <Skeleton height={20} width={'90%'} className='mt-2' />
+                                    <Skeleton height={15} width={'70%'} className='mt-2' />
+                                    <Skeleton height={22} width={'95%'} className='mt-2' />
+                                    <Skeleton height={292} width={'100%'} className='mt-2' />
+                                    <Skeleton height={22} width={'85%'} className='mt-2' />
+                                    <Skeleton height={20} width={'60%'} className='mt-2' />
+                                    <Skeleton height={25} width={'90%'} className='mt-2' />
+                                    <Skeleton height={18} width={'100%'} className='mt-2' />
+                                    <Skeleton height={15} width={'85%'} className='mt-2' />
+                                </div>
                             </div>
                         </div>
                     }

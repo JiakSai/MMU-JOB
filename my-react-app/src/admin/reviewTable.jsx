@@ -4,7 +4,7 @@ import Home from './adminSidebar';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { BiSortAlt2 } from "react-icons/bi";
-import { CiShare1 } from "react-icons/ci";
+import { RiShareBoxLine } from "react-icons/ri";
 import ShowReviewss from './showReview';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,18 +13,13 @@ const ReviewTable = () => {
     const [selectReview, setSelectReview] = useState([]);
     const [showReview, setShowReview] = useState(null);
     const [error, setError] = useState(null);
-    const [filterType, setFilterType] = useState('jobTitle');
+    const [filterType, setFilterType] = useState('id');
     const [filterValue, setFilterValue] = useState('');
     const [sortCriteria, setSortCriteria] = useState({ key: '', order: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);
     const token = Cookies.get('adminToken');
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 1000);
-        return () => clearTimeout(timer);
-    }, []);
 
     useEffect(() => {
         console.log(token);
@@ -48,8 +43,10 @@ const ReviewTable = () => {
             });
             setReview(review.filter(review => review.id !== id));
             setSelectReview(selectReview.filter(selectedId => selectedId !== id));
+            window.alert('Review deleted successfully.'); 
         } catch (error) {
             console.error('Error deleting job seeker:', error);
+            window.alert('Failed to delete review.'); 
         }
     };
 
@@ -70,8 +67,10 @@ const ReviewTable = () => {
             );
             setReview(review.filter(review => !selectReview.includes(review.id)));
             setSelectReview([]);
+            window.alert('Selected review deleted successfully.'); 
         } catch (error) {
             console.error('Error deleting selected job seekers:', error);
+            window.alert('Failed to delete selected review.');
         }
     };
 
@@ -107,6 +106,8 @@ const ReviewTable = () => {
                 console.error('Error Response:', error.response);  
                 setError(error.response.data.message || 'An error occurred');
                 console.error('There was an error!', error.message);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -239,12 +240,12 @@ const ReviewTable = () => {
                                 <td className="border border-gray-300 p-2">{review.jobTitle}</td>
                                 <td className="border border-gray-300 p-2">{review.rating}</td>
                                 <td className="border border-gray-300 p-2">{review.user_id}</td>
-                                <td className="border border-gray-300 p-2 space-x-3">
+                                <td className="border border-gray-300 p-2 space-x-4">
                                 <button
                                         onClick={() => setShowReview(review)}
                                         className="text-red-500 hover:text-red-700"
                                     >
-                                        <CiShare1 size={20}/>
+                                        <RiShareBoxLine size={20}/>
                                     </button>
                                     <button 
                                         onClick={() => handleDelete(review.id)}

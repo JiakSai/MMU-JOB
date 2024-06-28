@@ -18,13 +18,8 @@ const CatergoryTable = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const token = Cookies.get('adminToken');
     const navigate = useNavigate();
+    const [alertMessage, setAlertMessage] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 1000);
-        return () => clearTimeout(timer);
-    }, []);
-
     
     useEffect(() => {
         console.log(token);
@@ -48,8 +43,10 @@ const CatergoryTable = () => {
             });
             setCatergory(catergory.filter(jobSeeker => jobSeeker.id !== id));
             setSelectCatergory(selectCatergory.filter(selectedId => selectedId !== id));
+            window.alert('Job catergory deleted successfully.');
         } catch (error) {
             console.error('Error deleting job seeker:', error);
+            window.alert('Failed to delete job catergory.');
         }
     };
 
@@ -70,8 +67,10 @@ const CatergoryTable = () => {
             );
             setCatergory(catergory.filter(jobSeeker => !selectCatergory.includes(jobSeeker.id)));
             setSelectCatergory([]);
+            window.alert('Selected job catergory deleted successfully.');
         } catch (error) {
             console.error('Error deleting selected job seekers:', error);
+            window.alert('Failed to delete selected job catergory.'); 
         }
     };
 
@@ -107,6 +106,8 @@ const CatergoryTable = () => {
                 console.error('Error Response:', error.response);  
                 setError(error.response.data.message || 'An error occurred');
                 console.error('There was an error!', error.message);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -116,7 +117,11 @@ const CatergoryTable = () => {
             console.error('No token found, user might not be authenticated');
             setError('User not authenticated');
         }
-    }, [token]);
+        if (alertMessage) {
+            window.alert('Job catergory added successfully.');
+            getcatergory();
+        }
+    }, [token, alertMessage]);
 
     const filteredcatergory = useMemo(() => {
         let filteredData = catergory;
@@ -184,7 +189,7 @@ const CatergoryTable = () => {
         <div className='flex'>
             <Home />
             <div className="py-3 px-6 w-full">
-                <h1 className="text-2xl text-gray-900 font-semibold uppercase">Manage Job seeker</h1>
+                <h1 className="text-2xl text-gray-900 font-semibold uppercase">Manage Job Catergory</h1>
                 {error && <p className="text-red-500">{error}</p>}
                 <div className="flex items-center mt-4 mb-2 justify-between ">
                     <div>
@@ -279,8 +284,8 @@ const CatergoryTable = () => {
                 </div>
             </div>
             {showAddJob && <AddJobCatorgories 
-            onClose={() =>{() => setShowAddJob(false); window.location.reload();}} 
             justClose={() => setShowAddJob(false)}
+            alertMessage={() => {setAlertMessage(true); setShowAddJob(false);}}
             />}
         </div>
     );

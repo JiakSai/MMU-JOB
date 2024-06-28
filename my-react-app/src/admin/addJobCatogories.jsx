@@ -4,7 +4,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
-export default function AddJobCatorgories({onClose, justClose}){
+export default function AddJobCatorgories({onClose, justClose ,alertMessage}){
     const token = Cookies.get('adminToken');
     const navigate = useNavigate();
     useEffect(() => {
@@ -30,7 +30,7 @@ export default function AddJobCatorgories({onClose, justClose}){
                 }
             });
             console.log(response);
-            onClose();
+            alertMessage();
         }catch (error){
             console.error(error);
         }
