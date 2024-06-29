@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import axios from 'axios';
@@ -17,7 +17,6 @@ const CompanyProfile = () => {
     const [activeTab, setActiveTab] = useState(localStorage.getItem('activeTab') || 'About' || type);
     const [showReview, setShowReview] = useState(false);
     const [loading, setLoading] = useState(true);
-
     useEffect(() => {
         const timer = setTimeout(() => setLoading(false), 1300);
         return () => clearTimeout(timer);
@@ -49,6 +48,7 @@ const CompanyProfile = () => {
 
     useEffect(() => {
         localStorage.setItem('activeTab', activeTab);
+        window.scrollTo({ top: 300, behavior: "smooth" });
     }, [activeTab]);
 
     if (!company) {
@@ -63,7 +63,8 @@ const CompanyProfile = () => {
                 <Footer />
             </>
         );
-    }
+    }0
+    
 
     if (loading) { 
         return ( 
@@ -88,15 +89,15 @@ const CompanyProfile = () => {
                 <div className='mx-5'>
                     <div className='mt-4 flex justify-between items-center'>
                         <div className='flex flex-col space-y-1'>
-                            {logo && <img className='w-20 h-20 rounded-lg' src={logo} alt="Company Logo" />}
-                            {name && <p className='text-xl font-[550]'>{name}</p>}
+                            {logo && <img className='h-20 max-w-44 rounded-lg' src={logo} alt="Company Logo" />}
+                            {name && <p className='text-3xl font-bold mt-1'>{name}</p>}
                             <div className='flex'>
                                 {[...Array(5)].map((star, index) => (
-                                    <FaStar key={index} color={index < rating ? 'yellow' : 'gray'} size={20} />
+                                    <FaStar key={index} color={index < rating ? 'yellow' : 'gray'} size={24} />
                                 ))}
-                                <div className='flex gap-1 ml-[10px] text-gray-800'>
+                                <div className='flex gap-1 ml-[10px] text-gray-800 text-lg'>
                                     <span>{rating || "N/A"}</span>
-                                    <span>total rate from</span>
+                                    <span>total rate from </span>
                                     <span>{totalRatings || 0}</span>
                                     <span>reviews</span>
                                 </div>

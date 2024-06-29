@@ -6,8 +6,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import jobsearch from '/src/photo/jobSearch.png';
 
 const JobList = () => {
   const [showJob, setShowJob] = useState([]);
@@ -15,7 +14,7 @@ const JobList = () => {
   const [searchParams] = useSearchParams();
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState('date'); // Default sort by date
+  const [sortBy, setSortBy] = useState('Date'); // Default sort by date
 
   const handleJobClick = (job) => {
     setSelectedJob(job);
@@ -34,9 +33,9 @@ const JobList = () => {
         } else {
           let sortedJobs = [...response.data];
 
-          if (sortBy === 'salary') {
+          if (sortBy === 'Salary') {
             sortedJobs.sort((a, b) => b.maxSalary - a.maxSalary); // Sort by maxSalary descending
-          } else if (sortBy === 'date') {
+          } else if (sortBy === 'Date') {
             sortedJobs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sort by date descending
           }
 
@@ -56,7 +55,7 @@ const JobList = () => {
   }, [searchParams, sortBy]);
 
   const toggleSort = () => {
-    const newSortBy = sortBy === 'date' ? 'salary' : 'date';
+    const newSortBy = sortBy === 'Date' ? 'Salary' : 'Date';
     setSortBy(newSortBy);
   };
 
@@ -77,7 +76,7 @@ const JobList = () => {
         <div className="jobQty">
           <p>{showJob.length} jobs</p>
           <p className="flex items-center cursor-pointer" onClick={toggleSort}>
-            Sorted by {sortBy === 'date' ? 'date' : 'salary'} <LiaAngleDownSolid />
+            Sorted by {sortBy === 'Date' ? 'Date' : 'Salary'} <LiaAngleDownSolid />
           </p>
         </div>
         {loading ? (
@@ -100,7 +99,6 @@ const JobList = () => {
                   <h4>{job.jobTitle}</h4>
                   <p>{job.company.name} - {job.jobCategory}</p>
                 </div>
-                <IoBookmarkOutline className="icon" />
               </div>
               <div>
                 <p>{job.jobType} | {job.locationType} | {job.jobLocation}</p>
@@ -124,22 +122,14 @@ const JobList = () => {
         <JobDetails job={selectedJob}/>
       ) : (
         <div className='jobDetails'>
-          <div className='py-8 px-8'>
+        <div className='py-8 px-8'>
             <h1 className='flex items-center gap-4 text-2xl font-semibold'><FaArrowLeftLong className='text-3xl'/>Select a job</h1>
-            <p className='ml-[45px] mt-[8px]'>Display job details here!!</p>
-            <div className='mt-6'>
-              <div className="skeleton-wrapper">
-                <Skeleton height={30} width={'100%'} />
-                <Skeleton height={20} width={'80%'} className='mt-2' />
-                <Skeleton height={20} width={'90%'} className='mt-2' />
-                <Skeleton height={20} width={'70%'} className='mt-2' />
-                <Skeleton height={15} width={'75%'} className='mt-2' />
-                <Skeleton height={22} width={'85%'} className='mt-2' />
-                <Skeleton height={290} width={'100%'} className='mt-2' />
-              </div>
+            <p className='ml-[47px] mt-[8px]'>Display job details here!!</p>
+            <div className='grid place-content-center w-full mt-[120px]'>
+              <img src={jobsearch} alt="job search" className="w-[200px] h-[220px]" />
             </div>
-          </div>
         </div>
+      </div>
       )}
     </div>
   );

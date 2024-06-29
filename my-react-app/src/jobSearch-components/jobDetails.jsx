@@ -85,8 +85,6 @@ export default function JobDetails(props) {
                         <div className="jobDetailTittle">
                             <h1 className='text-xl font-semibold'>{job.jobTitle}</h1>
                             <div className="jobDetailsBox">
-                                <button className="btn1"><IoIosMore /></button>
-                                <button className="btn2"><IoBookmarkOutline /></button>
                                 <button className="btn3" onClick={() => handleJobClick(job)}>Quick apply</button>
                             </div>
                         </div>
@@ -145,7 +143,6 @@ export default function JobDetails(props) {
                     </div>
                 </div>
                 <div className='jobDetailBottom' style={{ display: showJobDetailBottom ? 'flex' : 'none' }}>
-                    <button className="btn2"><IoBookmarkOutline /></button>
                     <button className="btn3" onClick={() => handleJobClick(job)}>Quick apply</button>
                 </div>
             </div>

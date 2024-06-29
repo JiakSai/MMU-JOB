@@ -3,6 +3,7 @@ import { FaStar } from "react-icons/fa";
 import { IoEarth } from "react-icons/io5";
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { IoClose } from "react-icons/io5";
 
 export function AddReview({ onClose, company, justClose, review }) {
     const [privacyPolicyChecked, setPrivacyPolicyChecked] = useState(false);
@@ -71,16 +72,16 @@ export function AddReview({ onClose, company, justClose, review }) {
     return (
         <div className="addrole fixed inset-0 flex items-center justify-end bg-black bg-opacity-50">
             <div className='bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full overflow-y-auto z-2001'>
-                <button onClick={justClose} className='absolute top-2 right-2 text-xl font-bold'>&times;</button>
+                <button onClick={justClose} className='absolute top-2 right-2 text-xl font-bold'><IoClose size={25}/></button>
                 <div className="py-4 px-6 bg-white">
                     <form className="flex flex-col" onSubmit={handleSubmit}>
-                        <h1>Rate a Company</h1>
+                        <h1 className='text-3xl font-bold mb-4'>Rate a Company</h1>
                         <p>It only takes a minute! And your anonymous review will help other job seekers.</p>
                         <div className="flex items-center mt-4">
                             <img className='w-20 h-20 mr-3' src={company.logo} alt="Company Logo" />
-                            <div>
-                                <p className="text-sm text-gray-600">Company</p>
-                                <p className="font-semibold">{company.name}</p>
+                            <div className='ml-2'>
+                                <p className="text-sm text-gray-600">Company*</p>
+                                <p className="text-xl font-semibold ml-1">{company.name}</p>
                             </div>
                         </div>
                         <p className="mt-4">Overall Rating*</p>
@@ -158,12 +159,11 @@ export function AddReview({ onClose, company, justClose, review }) {
                             <IoEarth size={30} />
                             <p>All information contributed above will be visible to people who visit MMUJOB.</p>
                         </div>
-                        <div className='flex items-center mt-4 gap-6 pl-[18px]'>
+                        <div className='flex items-center mt-4 gap-6'>
                             <input 
                                 type="checkbox" 
-                                className="form-checkbox h-5 w-5 text-blue-500" 
+                                className="form-checkbox h-10 w-10 text-blue-500" 
                                 checked={privacyPolicyChecked}
-                                onChange={handleCheckboxChange}
                             />
                             <label className="text-sm text-gray-600">I agree to the MMUJOB Terms of Use and that this review is an honest and accurate account of my experience at my current or former employer.</label>
                         </div>

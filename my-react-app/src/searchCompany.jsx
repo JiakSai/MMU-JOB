@@ -84,7 +84,7 @@ const SearchCompany = () => {
     return (
         <>
             <Header />
-            <section className='mt-[70px] mx-[120px] mb-[100px] min-h-[400px]'>
+            <section className='mt-[70px] mx-[120px] mb-[100px] min-h-[100vh]'>
                 <div className='companySearch mx-[-120px]'>
                     <div className='px-[120px] py-8 flex items-center'>
                         <div className='flex flex-col items-center gap-3'>
@@ -105,7 +105,6 @@ const SearchCompany = () => {
                                             handleApplyFilter(query);
                                         }
                                     }}
-
                                 />
                                 <div
                                     className='absolute left-2 top-1/2 transform -translate-y-1/2 flex items-center border rounded border-black justify-center h-[30px] w-[30px] cursor-pointer'
@@ -128,9 +127,9 @@ const SearchCompany = () => {
                 ) : (
                     showCompany.map((company, index) => (
                         <div key={index} onClick={() => handleCompanyClick(company)}>
-                            <div className='flex items-center py-4 border-b border-black justify-between'>
+                            <div className='flex items-center py-4 border-b border-black justify-between shadow-bottom'>
                                 <div className='flex items-center'>
-                                    <img src={company.company.logo} alt="company logo" className='h-[75px] w-[75px] rounded-md' />
+                                    <img src={company.company.logo} alt="company logo" className='h-[60px] max-w-[140px] rounded-md' />
                                     <p className='font-medium text-2xl ml-8'>{company.company.name}</p>
                                 </div>
                                 <div className='flex items-center mr-8'>

@@ -187,10 +187,10 @@ const UserProfile = () => {
 
     fetchData();
   
-    if (showProfileMessage || showRoleMessage || showEducationMessage || showResumeMessage || showSkillsMessage) {
+    if (showProfilePicMessage||showProfileMessage || showRoleMessage || showEducationMessage || showResumeMessage || showSkillsMessage) {
       fetchData();
     }
-  }, [navigate,showProfileMessage, showRoleMessage, showEducationMessage, showResumeMessage, showSkillsMessage]);
+  }, [navigate,showProfileMessage, showRoleMessage, showEducationMessage, showResumeMessage, showSkillsMessage, showProfilePicMessage]);
   
 
   const handleRoleDeleteClick = async (experienceId) => {
@@ -328,7 +328,7 @@ const UserProfile = () => {
       <section>
         <div className="userProfileTop relative">
           <div className="mx-[120px]">
-            <div className="profileInfo flex items-center justify-between w-[1279.2px] absolute top-[85px]">
+            <div className="profileInfo flex items-center justify-between w-[1279.2px] absolute top-[78px]">
               <div onClick={() => setShowAddProfileImage(true)}>
                 {userProfilePic ? (
                   <img
@@ -358,13 +358,13 @@ const UserProfile = () => {
                 </div>
                 <div className="flex flex-col justify-center gap-2">
                   <button
-                    className="border border-black px-4 py-1 text-2xl"
+                    className="border border-black px-4 py-1 text-2xl rounded"
                     onClick={handleEditProfile}
                   >
                     Edit Profile
                   </button>
                   <button
-                    className="border border-black px-4 py-1 text-2xl"
+                    className="border border-black px-4 py-1 text-2xl rounded"
                     onClick={handleResetPassword}
                   >
                     Reset PW

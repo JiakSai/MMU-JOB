@@ -35,7 +35,7 @@ export default function ViewJobAndApply({job, justClose}) {
                         <img src={job.company.logo} alt="jobLogo" className="h-[40px] rounded max-w-[150px]" />
                         <p className='text-2xl mx-4 uppercase'>{job.company.name}</p>
                     </div>
-                    <button className="btn3" onClick={() => handleJobClick(job)}>Quick apply</button>
+                    <button className="bg-customBlue rounded px-3 text-white mr-1" onClick={() => handleJobClick(job)}>Quick apply</button>
                 </div>
                 <div className="minimalistInformation">
                             <div className="jobDetailsBox">

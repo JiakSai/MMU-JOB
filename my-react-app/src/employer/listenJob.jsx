@@ -7,12 +7,11 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import AddEditPost from "./Add&EditPost";
 import { FaFileSignature } from "react-icons/fa";
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 
 export default function ListenJob() {
     const [company, setCompany] = useState({});
     const [jobs, setJobs] = useState([]);
+    const [showDeleteMessage, setShowDeleteMessage] = useState(false);
     const [showEditPost, setShowEditPost] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -20,6 +19,10 @@ export default function ListenJob() {
         const timer = setTimeout(() => setIsLoading(false), 1300);
         return () => clearTimeout(timer);
     }, []);
+
+    useEffect(() => {
+        setTimeout(() => setShowDeleteMessage(false), 8000);
+    })
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,7 +38,7 @@ export default function ListenJob() {
                 ]);
 
                 const sortedJobs = jobResponse.data.sort((a, b) => {
-                    return new Date(b.createdAt) - new Date(a.createdAt); 
+                    return new Date(b.created_at) - new Date(a.created_at); 
                 });
 
                 setJobs(sortedJobs);
@@ -63,6 +66,7 @@ export default function ListenJob() {
                 }
             });
             setJobs(jobs.filter(job => job.id !== jobID));
+            setShowDeleteMessage(true);
         } catch (error) {
             console.error('Error deleting job:', error);
         }
@@ -86,7 +90,13 @@ export default function ListenJob() {
     return (
         <>
             <EmployerHeader />
-            <main className="mt-[100px] mb-[30px] mx-[120px] flex space-x-10">
+            <main className="mt-[100px] mb-[30px] mx-[120px] ">
+                    {showDeleteMessage && (
+                        <div className="delete-message">
+                            Delete post successfully!
+                        </div>
+                    )}
+                <div className="flex space-x-10">
                 <div className="scroll h-[739.2px] flex flex-col space-y-2 overflow-y-auto overflow-x-hidden w-[277px]">
                     {jobs.length > 0 ? (
                         jobs.map(job => (
@@ -122,23 +132,12 @@ export default function ListenJob() {
                         <div className="bg-white p-8 h-full rounded border-l border-neutral-300">
                             <h1 className='flex items-center gap-4 text-2xl font-semibold'><FaArrowLeftLong className='text-2xl'/>Select a job</h1>
                             <p className='ml-[45px] mt-[2px]'>Display job details here and edit!!</p>
-                            <div className='mt-6'>
-                                <div className="skeleton-wrapper">
-                                    <Skeleton height={30} width={'100%'} />
-                                    <Skeleton height={25} width={'80%'} className='mt-2' />
-                                    <Skeleton height={20} width={'90%'} className='mt-2' />
-                                    <Skeleton height={15} width={'70%'} className='mt-2' />
-                                    <Skeleton height={22} width={'95%'} className='mt-2' />
-                                    <Skeleton height={292} width={'100%'} className='mt-2' />
-                                    <Skeleton height={22} width={'85%'} className='mt-2' />
-                                    <Skeleton height={20} width={'60%'} className='mt-2' />
-                                    <Skeleton height={25} width={'90%'} className='mt-2' />
-                                    <Skeleton height={18} width={'100%'} className='mt-2' />
-                                    <Skeleton height={15} width={'85%'} className='mt-2' />
-                                </div>
+                            <div className='grid place-content-center w-full mt-[160px]'>
+                                <FaFileSignature size={200}/>
                             </div>
                         </div>
                     }
+                </div>
                 </div>
             </main>
             <EmployerFooter />
