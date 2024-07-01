@@ -123,8 +123,8 @@ class CompanyController extends Controller
             'companySize' => 'required',
             'category' => 'required',
             'location' => 'required',
-            'logo' => 'required|image|max:2999',
-            'cover' => 'required|image|max:3999',
+            'logo' => 'sometimes|image|max:2999',
+            'cover' => 'somtimes|image|max:3999',
             'description' => 'required|min:5',
             'benefits' => 'required',
         ]);

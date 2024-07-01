@@ -182,7 +182,7 @@ class UserController extends Controller
         $validate = Validator::make($request->all(),
         [
             'name' => 'required',
-            'profilePic' => 'sometimes|required|mimes:jpeg,jpg,png',
+            'profilePic' => 'sometimes|mimes:jpeg,jpg,png',
             'phoneNumber' => 'required',
             'gender'=> 'required',
             'nationality' => 'required',

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employer_id');
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->string('name', 50);
             $table->string('category');
             $table->string('location');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('benefits');
             $table->string('website');
-            $table->string('cover');
+            $table->string('cover')->nullable();
             $table->timestamps();
         });
     }
