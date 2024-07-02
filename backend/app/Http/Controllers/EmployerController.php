@@ -139,7 +139,8 @@ class EmployerController extends Controller
     public function showOwnCompany(Request $request)
     {
         $employerId = auth()->guard('employer')->id();
-        $company = Employer::find($employerId)->company;
+        $employer = Employer::find($employerId);
+        $company = $employer->company;
 
         if (!$company) {
             return response()->json([
@@ -150,7 +151,8 @@ class EmployerController extends Controller
 
         return response()->json([
             'status' => true,
-            'company' => $company
+            'company' => $company,
+            'employerEmail' => $employer->email
         ], 200);
     }
     
