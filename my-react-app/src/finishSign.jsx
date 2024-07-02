@@ -29,7 +29,7 @@ function FinishSign() {
     resume: null,
     state: "",
     city: "",
-    profilePic: "",
+    profilePic: null,
     _method: "PATCH",
   });
 
@@ -93,15 +93,11 @@ function FinishSign() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (valid) {
-      const formData = new FormData();
-      Object.keys(post).forEach((key) => {
-        formData.append(key, post[key]);
-      });
 
       try {
         const response = await axios.post(
           "http://localhost:8000/api/UserFinishSignup",
-          formData,
+          post,
           {
             headers: {
               Authorization: `Bearer ${token}`,

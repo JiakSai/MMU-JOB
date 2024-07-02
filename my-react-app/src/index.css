@@ -906,6 +906,18 @@ input[type="checkbox"] {
   cursor: pointer;
   padding-top: 5px;
 }
+.userProfilePPassword-toggle-icon{
+  position: absolute;
+  right: 50px;
+  cursor: pointer;
+  top: 175px;
+}
+.userProfilePassword-toggle-icon{
+  position: absolute;
+  right: 50px;
+  cursor: pointer;
+  top: 229px;
+}
 .adminpassword-toggle-icon{
   position: absolute;
   right: 630px;
@@ -1162,16 +1174,6 @@ th {
   text-align: center;
   border-radius: 5px;
   margin-bottom: 20px;
-}
-.delete-message{
-  background-color: #f2dede;
-  color: #a94442;
-  border: 1px solid #ebccd1;
-  padding: 15px;
-  text-align: center;
-  border-radius: 5px;
-  margin-bottom: 20px;
-
 }
 .shadow-bottom {
   box-shadow: 0 6px 2px -2px rgba(0, 0, 0, 0.1)

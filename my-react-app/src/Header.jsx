@@ -30,6 +30,7 @@ function Header() {
             Cookies.remove('token');
             sessionStorage.setItem('logoutInitiated', 'true');
             setLoading(false);
+            window.location.reload();
         })
         .catch(error => {
             console.error('There was an error!', error);

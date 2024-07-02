@@ -12,6 +12,7 @@ export default function ListenJob() {
     const [company, setCompany] = useState({});
     const [jobs, setJobs] = useState([]);
     const [showDeleteMessage, setShowDeleteMessage] = useState(false);
+    const [showEditMessage, setShowEditMessage] = useState(false);
     const [showEditPost, setShowEditPost] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -21,7 +22,11 @@ export default function ListenJob() {
     }, []);
 
     useEffect(() => {
-        setTimeout(() => setShowDeleteMessage(false), 8000);
+        if (showDeleteMessage || showEditMessage) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => setShowDeleteMessage(false), 6000);
+            setTimeout(() => setShowEditMessage(false), 6000);
+        }
     })
 
     useEffect(() => {
@@ -51,7 +56,11 @@ export default function ListenJob() {
         };
 
         fetchData();
-    }, []);
+
+        if (showEditMessage) {
+            fetchData();
+        }
+    }, [showEditMessage]);
 
     const handleDeleteClick = async (jobID) => {
         const token = Cookies.get('empToken');
@@ -92,8 +101,13 @@ export default function ListenJob() {
             <EmployerHeader />
             <main className="mt-[100px] mb-[30px] mx-[120px] ">
                     {showDeleteMessage && (
-                        <div className="delete-message">
+                        <div className="success-message">
                             Delete post successfully!
+                        </div>
+                    )}
+                    {showEditMessage && (
+                        <div className="success-message">
+                            Edit post successfully!
                         </div>
                     )}
                 <div className="flex space-x-10">
@@ -126,7 +140,7 @@ export default function ListenJob() {
                     {showEditPost ? 
                         <AddEditPost 
                             job={showEditPost}
-                            onClose={() => { window.location.reload(); }}
+                            onClose={() => { setShowEditMessage(true);}}
                         />
                         :
                         <div className="bg-white p-8 h-full rounded border-l border-neutral-300">

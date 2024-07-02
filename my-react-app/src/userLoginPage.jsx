@@ -9,6 +9,8 @@ import Cookies from 'js-cookie';
 export default function UserLogin() {
     const navigate = useNavigate();
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [resetPassVisible, setResetPassVisible] = useState(false);
+    const [resetPassConfirmVisible, setResetPassConfirmVisible] = useState(false);
     const [loginPost, setLoginPost] = useState({ email: '', password: '' });
     const [resetPost, setResetPost] = useState({ email: '', token: '', password: '', password_confirmation: '' });
     const [formError, setFormError] = useState({ email: '', password: '' });
@@ -17,6 +19,14 @@ export default function UserLogin() {
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
+    };
+
+    const toggleResetPassVisibility = () => {
+        setResetPassVisible(!resetPassVisible);
+    };
+
+    const toggleResetPassConfirmVisibility = () => {
+        setResetPassConfirmVisible(!resetPassConfirmVisible);
     };
 
     const handleInput = (event) => {
@@ -203,19 +213,29 @@ export default function UserLogin() {
                                     value={resetPost.token}
                                 />
                                 <label htmlFor="newPassword">New Password</label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    onChange={handleInput}
-                                    value={resetPost.password}
-                                />
+                                <div className="password-container">
+                                    <input
+                                        type={resetPassVisible ? "text" : "password"} 
+                                        name="password"
+                                        onChange={handleInput}
+                                        value={resetPost.password}
+                                    />
+                                    <span onClick={toggleResetPassVisibility} className="userpassword-toggle-icon">
+                                            {resetPassVisible ? <FaRegEye /> : <FaRegEyeSlash />}
+                                    </span>
+                                </div>
                                 <label htmlFor="confirmNewPassword">Confirm New Password</label>
-                                <input
-                                    type="password"
-                                    name="password_confirmation"
-                                    onChange={handleInput}
-                                    value={resetPost.password_confirmation}
-                                />
+                                <div className="password-container">
+                                    <input
+                                        type={resetPassConfirmVisible ? "text" : "password"} 
+                                        name="password_confirmation"
+                                        onChange={handleInput}
+                                        value={resetPost.password_confirmation}
+                                    />
+                                    <span onClick={toggleResetPassConfirmVisibility} className="userpassword-toggle-icon">
+                                            {resetPassConfirmVisible ? <FaRegEye /> : <FaRegEyeSlash />}
+                                    </span>
+                                </div>
                                 <button type="submit">Reset Password</button>
                                 <p className="error-message">{message}</p>
                                 <div className="rememberForgot">

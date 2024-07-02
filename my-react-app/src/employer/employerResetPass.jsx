@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import axios from "axios";
 
-export default function ResetPassword({ justClose, onClose, profile}) {
+export default function EmpResetPassword({ justClose, onClose, profile}) {
   const [resetPost, setResetPost] = useState({
     email: "",
     token: "",
@@ -44,7 +44,7 @@ export default function ResetPassword({ justClose, onClose, profile}) {
     }
 
     axios
-      .post("http://localhost:8000/api/User/SendOTPEmail", {
+      .post("http://localhost:8000/api/Employer/SendOTPEmail", {
         email: resetPost.email,
       })
       .then((response) => {
@@ -74,7 +74,7 @@ export default function ResetPassword({ justClose, onClose, profile}) {
     }
 
     axios
-      .post("http://localhost:8000/api/User/ResetPassword", {
+      .post("http://localhost:8000/api/Employer/ResetPassword", {
         token,
         password,
         password_confirmation,
@@ -109,7 +109,7 @@ export default function ResetPassword({ justClose, onClose, profile}) {
               />
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
+                className="bg-customPink text-white px-4 py-2 rounded hover:bg-pink-700 transition duration-200"
               >
                 Send OTP
               </button>
@@ -154,7 +154,7 @@ export default function ResetPassword({ justClose, onClose, profile}) {
               </div>
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
+                className="bg-customPink text-white px-4 py-2 rounded hover:bg-pink-700 transition duration-200"
               >
                 Reset Password
               </button>
