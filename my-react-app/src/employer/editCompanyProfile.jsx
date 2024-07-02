@@ -12,6 +12,7 @@ const EditComProfile = () => {
   const navigate = useNavigate();
   const [showEcp, setShowEcp] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showEditMessage, setShowEditMessage] = useState(false);
   const [showResetPass, setShowResetPass] = useState(false);
   const [company, setCompany] = useState({
     company: {
@@ -27,6 +28,14 @@ const EditComProfile = () => {
     },
   });
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (showSuccessMessage || showEditMessage) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => setShowSuccessMessage(false), 6000);
+        setTimeout(() => setShowEditMessage(false), 6000);
+    }
+ }, [showSuccessMessage, showEditMessage]);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1300);
@@ -73,7 +82,10 @@ const EditComProfile = () => {
     };
 
     fetchData();
-  }, []);
+    if (showEditMessage) {
+      fetchData();
+    }
+  }, [showEditMessage]);
 
   if (isLoading) {
     return (
@@ -91,6 +103,20 @@ const EditComProfile = () => {
     <>
       <EmployerHeader />
       <section className="mt-[100px] mb-[30px] mx-[120px] flex flex-col items-center bg-white pb-8 rounded">
+        {
+            showSuccessMessage && (
+                <div className="success-message w-full">
+                    Reset password successful!
+                </div>
+            )
+        }
+        {
+            showEditMessage && (
+                <div className="success-message w-full">
+                    Edit company profile successful!
+                </div>
+            )
+        }
         <div className="companyCover relative">
           {company.company.cover && (
             <img
@@ -243,7 +269,7 @@ const EditComProfile = () => {
             company={company}
             onClose={() => {
               setShowEcp(false);
-              window.location.reload();
+              setShowEditMessage(true)
             }}
           />
         )}

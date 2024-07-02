@@ -38,7 +38,7 @@ export default function EmpResetPassword({ justClose, onClose, profile}) {
       setMessage("* Invalid email address");
       return;
     }
-    if(resetPost.email !== profile.email){
+    if(resetPost.email !== profile.employerEmail){
         setMessage("* Email does not match");
         return;
     }
