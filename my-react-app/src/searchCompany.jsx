@@ -42,14 +42,13 @@ const SearchCompany = () => {
         console.log('Search data:', searchData);
         updateSearchParams(searchData);
 
-        // Filter the company list based on the search query
         axios.get('http://localhost:8000/api/ShowCompany')
             .then(response => {
                 const filteredCompanies = response.data.filter(company =>
                     company.company.name.toLowerCase().includes(query.toLowerCase())
                 );
                 setShowCompany(filteredCompanies);
-                setNoResults(filteredCompanies.length === 0); 
+                setNoResults(filteredCompanies.length === 0);
             })
             .catch(error => {
                 console.error('There was an error!', error);
@@ -61,12 +60,12 @@ const SearchCompany = () => {
         axios.get('http://localhost:8000/api/ShowCompany')
             .then(response => {
                 setShowCompany(response.data);
-                setLoading(false); // Set loading false on successful load
+                setLoading(false);
                 console.log(response.data);
             })
             .catch(error => {
                 console.error('There was an error!', error);
-                setLoading(false); // Set loading false on error
+                setLoading(false);
             });
     }, []);
 
@@ -80,6 +79,10 @@ const SearchCompany = () => {
             </>
         );
     }
+
+    const getInitials = (name) => {
+        return name.split(' ').map(n => n[0]).join('');
+    };
 
     return (
         <>
@@ -119,7 +122,7 @@ const SearchCompany = () => {
                 </div>
                 {noResults ? (
                     <div className=" mt-16 flex flex-col items-center">
-                        <IoSearchOutline size={40}/>
+                        <IoSearchOutline size={40} />
                         <p className='2xl text-gray-800 mt-2'>No companies match your search.</p>
                         <p className='text-sm text-gray-500'>We couldn't find anything that matched your search. 
                         Try adjusting the filters or check for spelling errors.</p>
@@ -129,7 +132,15 @@ const SearchCompany = () => {
                         <div key={index} onClick={() => handleCompanyClick(company)}>
                             <div className='flex items-center py-4 border-b border-black justify-between shadow-bottom'>
                                 <div className='flex items-center'>
-                                    <img src={company.company.logo} alt="company logo" className='h-[60px] max-w-[140px] rounded-md' />
+                                    {
+                                        company.company.logo ? (
+                                            <img className='h-20 w-20 rounded-lg' src={company.company.logo} alt="Company Logo" />
+                                        ) : (
+                                            <div className='h-20 w-20 rounded-lg bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600'>
+                                                {getInitials(company.company.name)}
+                                            </div>
+                                        )
+                                    }
                                     <p className='font-medium text-2xl ml-8'>{company.company.name}</p>
                                 </div>
                                 <div className='flex items-center mr-8'>

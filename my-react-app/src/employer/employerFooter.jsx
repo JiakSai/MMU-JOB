@@ -22,17 +22,6 @@ function EmployerFooter(){
 
     return(
         <footer >
-          <div className="newsletter">
-              <div>
-                <p>Subscribe to our newsletter</p>
-                <p className="newsletterP">stay up to date with our news and articles</p>
-              </div>
-              <form action="#">
-                <input type="text" placeholder="Your Email" required/>
-                <button type="submit">SUBSCRIBE</button>
-              </form>
-          </div>
-            
           <div className="footer-row">
             <div className="footer-col">
               <p className='employerLogo'>" MMUJOB "</p>
