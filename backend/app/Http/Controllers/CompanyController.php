@@ -124,7 +124,7 @@ class CompanyController extends Controller
             'category' => 'required',
             'location' => 'required',
             'logo' => 'sometimes|image|max:2999',
-            'cover' => 'somtimes|image|max:3999',
+            'cover' => 'sometimes|image|max:3999',
             'description' => 'required|min:5',
             'benefits' => 'required',
         ]);
