@@ -17,7 +17,7 @@ export default function ShowReviewss({justClose, review}){
         <div className='addrole fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
             <div className="bg-white shadow-lg relative max-w-2xl max-h-full z-2001 w-[500px]">
                 <div className="bg-customGrey w-full p-4 text-white">
-                    <p>Add Job Catogories</p>
+                    <p>Show Review Details</p>
                     <button onClick={justClose} className='absolute top-1 right-2 text-xl font-bold'>
                         &times;
                     </button>

@@ -72,13 +72,23 @@ export default function JobDetails(props) {
         };
     }, []);
 
+    const getInitials = (name) => {
+        return name.split(' ').map(n => n[0]).join('');
+    };
+
     return (
         <>
             <div className="jobDetails">
                 <div className='jobScroll'>
                     <div className='jobDetailsTop'>
                         <div className="jobDetailsBox">
+                            {job.company.logo ?
                             <img src={job.company.logo} alt="bytes" className="h-[50px] rounded max-w-[150px]" />
+                            :
+                            <div className='h-20 w-20 rounded-lg bg-sky-100 flex items-center justify-center text-2xl font-bold text-customBlue'>
+                                {getInitials(job.company.name)}
+                            </div>
+                            }
                             <p className='text-2xl mx-4 uppercase'>{job.company.name}</p>
                             <p onClick={() => handleViewJobClick(job)} className="viewJob cursor-pointer">View all jobs</p>
                         </div>
@@ -113,7 +123,15 @@ export default function JobDetails(props) {
                         <p className='ml-[25px] leading-7'>{job.requirement}</p>
                         <h3>Company profile</h3>
                         <div className="companyInfoBox">
-                            <img src={job.company.logo} alt="company logo" className='rounded' />
+                            {
+                                job.company.logo ? (
+                                    <img src={job.company.logo} alt="company logo" className='rounded' />
+                                ) : (
+                                    <div className='h-14 w-14 rounded-lg bg-sky-100 flex items-center justify-center text-xl font-bold text-customBlue'>
+                                        {getInitials(job.company.name)}
+                                    </div>
+                                )
+                            }
                             <p className='text-2xl font-bold mt-4 '>{job.company.name}</p>
                             <div className="jobDetailsBox">
                                 <FaStar color='yellow' /><p> {job.company.averageRating} · {job.company.totalRatings} reviews</p>

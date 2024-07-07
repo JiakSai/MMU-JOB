@@ -151,8 +151,18 @@ export default function EmployerLogin() {
                     <div>
                         <p className='changeSite'><Link to="/userLogin">Are you a job seeker?</Link></p>
                         <div className='userLoginFormContainer'>
-                            <h1 className='text-[28px] font-bold text-customPink'>Employer Sign In</h1>
-                            <p>Please login to your account</p>
+                            <h1 className='text-[28px] font-bold text-customPink'>
+                                {currentForm === 'login' ? 'Employer Sign In' : currentForm === 'resetRequest' ? 'Reset Password' : 'Enter OTP and New Password'}
+                            </h1>
+                            {currentForm === 'login' && (
+                                <p>Please login to your account</p>
+                            )}
+                            {currentForm === 'resetRequest' && (
+                                <p>Please enter your email to receive an OTP</p>
+                            )}
+                            {currentForm === 'resetPassword' && (
+                                <p>Please enter the OTP sent to your email and your new password</p>
+                            )}
                             {currentForm === 'login' && (
                                 <form className="userLoginForm" onSubmit={handleLoginSubmit}>
                                     <label htmlFor="email">Email Address</label>

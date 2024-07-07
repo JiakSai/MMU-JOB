@@ -54,7 +54,15 @@ const handleInputChange = (event) => {
                 </button>
                 <div className="py-4 px-6 bg-white">
                     <form className='flex flex-col gap-6' onSubmit={handleSubmit}>
-                        <h1 className="text-3xl font-bold mb-4">Add Skills</h1>
+                        {
+                            skills ?(
+                                <h1 className="text-3xl font-bold mb-4">Edit Skills</h1>
+                            )
+                            :
+                            (
+                                <h1 className="text-3xl font-bold mb-4">Add Skills</h1>
+                            )
+                        }
                         <div className='flex flex-col gap-2'>
                             <label>Add your skills here!!!</label>
                             <textarea

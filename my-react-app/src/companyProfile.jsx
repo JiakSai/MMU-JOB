@@ -78,18 +78,34 @@ const CompanyProfile = () => {
     }
 
     const { cover, logo, name, rating, totalRatings } = showCompany;
+    
+    const getInitials = (name) => {
+        return name.split(' ').map(n => n[0]).join('');
+    };
 
     return (
         <>
             <Header />
             <section className='mt-[100px] mb-[30px] mx-[250px]'>
-                <div className='py-10 bg-neutral-300 rounded-t-3xl shadow-lg shadow-neutral-400'>
-                    {cover && <img className='w-full h-[190px]' src={cover} alt="Company Cover" />}
-                </div>
+                {cover ? (
+                    <div className='py-10 bg-neutral-300 rounded-t-3xl shadow-lg shadow-neutral-400'>
+                        <img className='w-full h-[190px] object-cover rounded-t-3xl' src={cover} alt="Company Cover" />
+                    </div>
+                ) : (
+                    <div className='py-10 h-[190px] bg-neutral-300 rounded-t-3xl shadow-lg shadow-neutral-400 flex items-center justify-center'>
+                        <p className='text-xl text-gray-500'>No cover image available</p>
+                    </div>
+                )}
                 <div className='mx-5'>
                     <div className='mt-4 flex justify-between items-center'>
                         <div className='flex flex-col space-y-1'>
-                            {logo && <img className='h-20 max-w-44 rounded-lg' src={logo} alt="Company Logo" />}
+                            {logo ? (
+                                <img className='h-20 max-w-44 rounded-lg' src={logo} alt="Company Logo"/>
+                            ) : (
+                                <div className='h-20 w-20 rounded-lg bg-sky-100 flex items-center justify-center text-xl font-bold text-customBlue'>
+                                    {getInitials(name)}
+                                </div>
+                            )}
                             {name && <p className='text-3xl font-bold mt-1'>{name}</p>}
                             <div className='flex'>
                                 {[...Array(5)].map((star, index) => (

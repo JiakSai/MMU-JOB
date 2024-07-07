@@ -147,7 +147,7 @@ const EditComProfile = () => {
             onClick={() => setShowResetPass(true)}
             className="mt-[85px] text-base font-semibold text-neutral-700 mr-1"
           >
-            Reset Passowrd
+            Reset Password
           </p>
         </div>
         <div className="companyContent border border-zinc-500 w-[1210px] p-8 flex flex-col gap-4 rounded">

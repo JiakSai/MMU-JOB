@@ -70,6 +70,10 @@ const JobList = () => {
     return new URLSearchParams(filteredParams).toString();
   };
 
+  const getInitials = (name) => {
+    return name.split(' ').map(n => n[0]).join('');
+};
+
   return (
     <div className="showJob">
       <div className="allJob">
@@ -94,7 +98,15 @@ const JobList = () => {
           showJob.map((job, index) => (
             <div key={index} className="jobList" onClick={() => handleJobClick(job)}>
               <div className="jobListTop">
-                <img src={job.company.logo} alt="company logo" className="jobLogo" />
+                {
+                  job.company.logo ? (
+                    <img src={job.company.logo} alt="company logo" className="jobLogo" />
+                  )
+                  :
+                  <div className='h-[50px] w-[50px] rounded-lg bg-sky-100 flex items-center justify-center text-xl font-bold text-customBlue'>
+                      {getInitials(job.company.name)}
+                  </div>
+                }
                 <div>
                   <h4>{job.jobTitle}</h4>
                   <p>{job.company.name} - {job.jobCategory}</p>

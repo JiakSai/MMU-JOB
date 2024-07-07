@@ -121,9 +121,9 @@ const SearchCompany = () => {
                     </div>
                 </div>
                 {noResults ? (
-                    <div className=" mt-16 flex flex-col items-center">
-                        <IoSearchOutline size={40} />
-                        <p className='2xl text-gray-800 mt-2'>No companies match your search.</p>
+                    <div className=" mt-20 flex flex-col items-center">
+                        <IoSearchOutline size={60} />
+                        <p className='2xl text-gray-800 mt-3'>No companies match your search.</p>
                         <p className='text-sm text-gray-500'>We couldn't find anything that matched your search. 
                         Try adjusting the filters or check for spelling errors.</p>
                     </div>
@@ -136,7 +136,7 @@ const SearchCompany = () => {
                                         company.company.logo ? (
                                             <img className='h-20 w-20 rounded-lg' src={company.company.logo} alt="Company Logo" />
                                         ) : (
-                                            <div className='h-20 w-20 rounded-lg bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600'>
+                                            <div className='h-20 w-20 rounded-lg bg-sky-100 flex items-center justify-center text-3xl font-bold text-customBlue'>
                                                 {getInitials(company.company.name)}
                                             </div>
                                         )

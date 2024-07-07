@@ -82,7 +82,7 @@ export default function PendingApplication() {
                                     )}
                                     <div className="flex flex-col justify-center">
                                         <h2 className="text-xl font-semibold">{apply.post.jobTitle}</h2>
-                                        <p className="text-md text-gray-600 uppercase">{apply.user.name}</p>
+                                        <p className="text-md text-gray-600 uppercase">{apply.user.name} - {apply.user.gender}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-6">

@@ -108,6 +108,7 @@ export default function ViewApplyDetails({ onclose, justClose, apply }) {
                                 <p className="uppercase font-semibold">{apply.user.name}</p>
                                 <p className="text-lg">{apply.user.email}</p>
                                 <p className="text-lg">{apply.user.phoneNumber}</p>
+                                <p className="text-lg">{apply.user.gender}</p>
                             </div>
                         </div>
                     </div>

@@ -161,9 +161,9 @@ export default function Dashboard() {
           <div className="w-[960px]">
             <Line data={chartData} />
           </div>
-          <div className="w-full">
+          <div>
             <p className="mb-2 font-bold text-lg">Recent Job Seeker</p>
-            <div className="scroll h-[443px] overflow-y-auto">
+            <div className="scroll w-[220px] h-[443px] overflow-y-auto">
               {jobSeekers.map((jobSeeker, index) => (
                 <div
                   key={index}

@@ -6,7 +6,7 @@ import axios from 'axios';
 import Cookies from "js-cookie";
 import { IoClose } from "react-icons/io5";
 
-export function AddResume ({onClose, justClose}){
+export function AddResume ({onClose, justClose, resume}){
     const [fileName, setFileName] = useState("No selected file");
     const [resumeFile, setResumeFile] = useState({
         resume: null,
@@ -18,6 +18,22 @@ export function AddResume ({onClose, justClose}){
         setResumeFile({...resumeFile, resume: file});
         setFileName(file.name); 
     };
+
+    useEffect(() =>{
+        if(resume){
+            setFileName(
+                resume
+                  ? resume
+                      .split("_")
+                      .slice(1)
+                      .join("_")
+                      .split("e")
+                      .slice(2)
+                      .join("e")
+                  : null
+              );
+        }
+    },[resume])
     
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -49,7 +65,15 @@ export function AddResume ({onClose, justClose}){
                 </button>
                 <div className="py-4 px-6 bg-white">
                     <form className='flex flex-col gap-6' onSubmit={handleSubmit}>
-                        <h1 className="text-3xl font-bold mb-4">Add Resume</h1>
+                        {
+                            resume ?(
+                                <h1 className="text-3xl font-bold mb-4">Edit Resume</h1>
+                            )
+                            :
+                            (
+                                <h1 className="text-3xl font-bold mb-4">Add Resume</h1>
+                            )
+                        }
                         <div className='flex flex-col gap-2'>
                             <label>Drop your resume here!!!</label>
                             <div className="flex flex-col items-center justify-center border-2 border-dashed border-black h-[300px] w-full cursor-pointer mt-[5px]" 

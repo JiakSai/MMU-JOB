@@ -482,6 +482,7 @@ const UserProfile = () => {
                   setShowAddResume(false);
                   setShowResumeMessage(true);
                 }}
+                resume={resumeValues}
               />
             )}
             {showAddSkills && (
