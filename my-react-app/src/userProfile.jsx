@@ -46,7 +46,7 @@ const UserProfile = () => {
   const [showRoleMessage, setShowRoleMessage] = useState(false);
   const [showEducationMessage, setShowEducationMessage] = useState(false);
   const [showResumeMessage, setShowResumeMessage] = useState(false);
- const [showSkillsMessage, setShowSkillsMessage] = useState(false);
+  const [showSkillsMessage, setShowSkillsMessage] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1100);
@@ -55,7 +55,15 @@ const UserProfile = () => {
 
   useEffect(() => {
     let timer;
-    if (showSuccessMessage || showProfilePicMessage || showProfileMessage || showRoleMessage || showEducationMessage || showResumeMessage || showSkillsMessage) {
+    if (
+      showSuccessMessage ||
+      showProfilePicMessage ||
+      showProfileMessage ||
+      showRoleMessage ||
+      showEducationMessage ||
+      showResumeMessage ||
+      showSkillsMessage
+    ) {
       timer = setTimeout(() => {
         setShowSuccessMessage(false);
         setShowProfilePicMessage(false);
@@ -67,7 +75,15 @@ const UserProfile = () => {
       }, 8000);
     }
     return () => clearTimeout(timer);
-  }, [showSuccessMessage, showProfilePicMessage, showProfileMessage, showRoleMessage, showEducationMessage, showResumeMessage, showSkillsMessage]);
+  }, [
+    showSuccessMessage,
+    showProfilePicMessage,
+    showProfileMessage,
+    showRoleMessage,
+    showEducationMessage,
+    showResumeMessage,
+    showSkillsMessage,
+  ]);
 
   const handleEditClick = (role) => {
     setSelectedRole(role);
@@ -141,14 +157,17 @@ const UserProfile = () => {
       console.error("No token found");
       return;
     }
-    
+
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/ShowUserProfile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          "http://localhost:8000/api/ShowUserProfile",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch profile data");
         }
@@ -183,15 +202,28 @@ const UserProfile = () => {
         console.error("Error:", error);
       }
     };
-  
 
     fetchData();
-  
-    if (showProfilePicMessage||showProfileMessage || showRoleMessage || showEducationMessage || showResumeMessage || showSkillsMessage) {
+
+    if (
+      showProfilePicMessage ||
+      showProfileMessage ||
+      showRoleMessage ||
+      showEducationMessage ||
+      showResumeMessage ||
+      showSkillsMessage
+    ) {
       fetchData();
     }
-  }, [navigate,showProfileMessage, showRoleMessage, showEducationMessage, showResumeMessage, showSkillsMessage, showProfilePicMessage]);
-  
+  }, [
+    navigate,
+    showProfileMessage,
+    showRoleMessage,
+    showEducationMessage,
+    showResumeMessage,
+    showSkillsMessage,
+    showProfilePicMessage,
+  ]);
 
   const handleRoleDeleteClick = async (experienceId) => {
     const token = Cookies.get("token");
@@ -402,7 +434,12 @@ const UserProfile = () => {
               <h1 className="font-bold text-[26px] mb-[30px]">Resume</h1>
               {resumeValues ? (
                 <div className="border border-black px-4 py-2 w-[460px] flex justify-between rounded">
-                  <a href={resumeValues} className="flex items-center gap-2">
+                  <a
+                    href={resumeValues}
+                    className="flex items-center gap-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <FaFileAlt />
                     {resumeFileName}
                   </a>
@@ -492,7 +529,7 @@ const UserProfile = () => {
                 }}
                 onClose={() => {
                   setShowAddSkills(false);
-                  setShowSkillsMessage(true)
+                  setShowSkillsMessage(true);
                 }}
                 skills={skillsValues}
               />
@@ -504,7 +541,7 @@ const UserProfile = () => {
                 }}
                 onClose={() => {
                   setShowEditProfile(false);
-                  setShowProfileMessage(true)
+                  setShowProfileMessage(true);
                 }}
                 profile={selectedProfile}
               />
@@ -540,7 +577,7 @@ const UserProfile = () => {
                     className="text-white ml-1"
                     onClick={() => setShowSuccessMessage(false)}
                   >
-                    <IoClose size={25}/>
+                    <IoClose size={25} />
                   </button>
                 </div>
               </div>
@@ -553,84 +590,76 @@ const UserProfile = () => {
                     className="text-white ml-1"
                     onClick={() => setShowProfilePicMessage(false)}
                   >
-                    <IoClose size={25}/>
+                    <IoClose size={25} />
                   </button>
                 </div>
               </div>
             )}
             {showProfileMessage && (
-                <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
-                    <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
-                    <p>Profile updated successfully!</p>
-                    <button
-                        className="text-white ml-1"
-                        onClick={() => setShowProfileMessage(false)}
-                    >
-                       <IoClose size={25}/>
-                    </button>
-                    </div>
+              <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
+                <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
+                  <p>Profile updated successfully!</p>
+                  <button
+                    className="text-white ml-1"
+                    onClick={() => setShowProfileMessage(false)}
+                  >
+                    <IoClose size={25} />
+                  </button>
                 </div>
+              </div>
             )}
-            {
-                showRoleMessage && (
-                    <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
-                        <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
-                            <p>Role updated successfully!</p>
-                            <button
-                                className="text-white ml-1"
-                                onClick={() => setShowRoleMessage(false)}
-                            >
-                                <IoClose size={25}/>
-                            </button>
-                        </div>
-                    </div>
-                )
-            }
-            {
-                showEducationMessage && (
-                    <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
-                        <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
-                            <p>Education updated successfully!</p>
-                            <button
-                                className="text-white ml-1"
-                                onClick={() => setShowEducationMessage(false)}
-                            >
-                                <IoClose size={25}/>
-                            </button>
-                        </div>
-                    </div>
-                )
-            }
-            {
-                showResumeMessage && (
-                    <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
-                        <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
-                            <p>Resume updated successfully!</p>
-                            <button
-                                className="text-white ml-1"
-                                onClick={() => setShowResumeMessage(false)}
-                            >
-                                <IoClose size={25}/>
-                            </button>
-                        </div>
-                    </div>
-                )
-            }
-            {
-                showSkillsMessage && (
-                    <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
-                        <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
-                            <p>Skills updated successfully!</p>
-                            <button
-                                className="text-white ml-1"
-                                onClick={() => setShowSkillsMessage(false)}
-                            >
-                                <IoClose size={25}/>
-                            </button>
-                        </div>
-                    </div>
-                )
-            }
+            {showRoleMessage && (
+              <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
+                <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
+                  <p>Role updated successfully!</p>
+                  <button
+                    className="text-white ml-1"
+                    onClick={() => setShowRoleMessage(false)}
+                  >
+                    <IoClose size={25} />
+                  </button>
+                </div>
+              </div>
+            )}
+            {showEducationMessage && (
+              <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
+                <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
+                  <p>Education updated successfully!</p>
+                  <button
+                    className="text-white ml-1"
+                    onClick={() => setShowEducationMessage(false)}
+                  >
+                    <IoClose size={25} />
+                  </button>
+                </div>
+              </div>
+            )}
+            {showResumeMessage && (
+              <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
+                <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
+                  <p>Resume updated successfully!</p>
+                  <button
+                    className="text-white ml-1"
+                    onClick={() => setShowResumeMessage(false)}
+                  >
+                    <IoClose size={25} />
+                  </button>
+                </div>
+              </div>
+            )}
+            {showSkillsMessage && (
+              <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
+                <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
+                  <p>Skills updated successfully!</p>
+                  <button
+                    className="text-white ml-1"
+                    onClick={() => setShowSkillsMessage(false)}
+                  >
+                    <IoClose size={25} />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
           <img
             src={addInfo}

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EmployerFooter from './employerFooter';
 import EmployerHeader from './employerHeader';
 import AcceptApplication from './acceptApplication';
 import RejectApplication from './rejectApplication';
 import PendingApplication from './pendingApplication';
-import { useEffect } from 'react';
 
 export default function EmployerApplication() {
-    const [currentView, setCurrentView] = useState('Pending');
+    const [currentView, setCurrentView] = useState(() => {
+        const savedView = localStorage.getItem('currentView');
+        return savedView || 'Pending';
+    });
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -15,19 +17,25 @@ export default function EmployerApplication() {
         return () => clearTimeout(timer);
     }, []);
 
+    useEffect(() => {
+        localStorage.setItem('currentView', currentView);
+    }, [currentView]);
+
     const handleViewChange = (view) => {
         setCurrentView(view);
     };
+
     if (isLoading) {
-        return ( 
-            <> 
-                <div className="Emploader"></div> 
-                <div className='flex justify-center mt-[630px]'> <p className='text-3xl font-bold text-customPink'>
-                    " MMUJOB "</p> 
-                </div> 
-            </> 
+        return (
+            <>
+                <div className="Emploader"></div>
+                <div className='flex justify-center mt-[630px]'>
+                    <p className='text-3xl font-bold text-customPink'>" MMUJOB "</p>
+                </div>
+            </>
         );
     }
+
     return (
         <>
             <EmployerHeader />

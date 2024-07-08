@@ -159,7 +159,7 @@ const router = createBrowserRouter([
     element: <ReviewTable />,
   },
   {
-    path: "dashboard",
+    path: "AdminDashboard",
     element: <Dashboard />,
   },
   {

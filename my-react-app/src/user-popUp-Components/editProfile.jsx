@@ -62,7 +62,7 @@ export function EditProfile({onClose, justClose, profile}){
     };
     return(
         <div className='addrole fixed inset-0 flex items-center justify-end bg-black bg-opacity-50'>
-            <div className="bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full overflow-y-auto z-2001 h-[695.2px]">
+            <div className="bg-white p-4 rounded shadow-lg relative w-full max-w-2xl h-full overflow-y-auto z-2001">
                 <button onClick={justClose} className='absolute top-2 right-2 text-xl font-bold'>
                 <IoClose size={25}/>
                 </button>

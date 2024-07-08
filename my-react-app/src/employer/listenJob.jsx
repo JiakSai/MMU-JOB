@@ -114,7 +114,7 @@ export default function ListenJob() {
                 <div className="scroll h-[739.2px] flex flex-col space-y-2 overflow-y-auto overflow-x-hidden w-[277px]">
                     {jobs.length > 0 ? (
                         jobs.map(job => (
-                            <div className="w-[270px] border border-zinc-700 p-4 rounded shadow-md" key={job.id} onClick={() => handleJobClick(job)}>
+                            <div className="w-[270px] border border-zinc-700 p-4 rounded shadow-md cursor-pointer" key={job.id} onClick={() => handleJobClick(job)}>
                                 <div className='flex w-full justify-between'>
                                     <img src={company.company?.logo || 'https://via.placeholder.com/180/E5E4E2'} alt='Company Logo' className='rounded h-[40px] max-w-[90px] border-black' />
                                     <MdDeleteOutline size={23} onClick={() => handleDeleteClick(job.id)}/>

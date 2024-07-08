@@ -393,7 +393,7 @@ const SearchBar = () => {
                     type="number" 
                     value={value[0]} 
                     onChange={handleMinChange} 
-                    step={50}
+                    step={10}
                   />
                 </div>
                 <div>
@@ -403,7 +403,7 @@ const SearchBar = () => {
                     type="number" 
                     value={value[1]} 
                     onChange={handleMaxChange} 
-                    step={50}
+                    step={10}
                   />
                 </div>
               </Box>

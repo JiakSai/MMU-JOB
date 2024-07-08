@@ -14,7 +14,7 @@ import Cookies from "js-cookie";
 const Home = () => {
   const navigate = useNavigate();
   const menus = [
-    { name: "Dashboard", link: "/dashboard", icon: MdOutlineDashboard },
+    { name: "Dashboard", link: "/AdminDashboard", icon: MdOutlineDashboard },
     { name: "Job Seekers", link: "/jobSeekerTable", icon: AiOutlineUser },
     { name: "Employer", link: "/employerTable", icon: BsBuildings },
     { name: "Posted Job", link: "/adminTable", icon: TbReportAnalytics, margin: true },

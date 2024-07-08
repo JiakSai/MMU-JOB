@@ -145,7 +145,7 @@ const EditComProfile = () => {
           </p>
           <p
             onClick={() => setShowResetPass(true)}
-            className="mt-[85px] text-base font-semibold text-neutral-700 mr-1"
+            className="mt-[85px] text-base font-semibold text-neutral-700 mr-1 cursor-pointer"
           >
             Reset Password
           </p>

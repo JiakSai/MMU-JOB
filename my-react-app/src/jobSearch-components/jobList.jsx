@@ -96,7 +96,7 @@ const JobList = () => {
           </div>
         ) : showJob.length > 0 ? (
           showJob.map((job, index) => (
-            <div key={index} className="jobList" onClick={() => handleJobClick(job)}>
+            <div key={index} className="jobList cursor-pointer" onClick={() => handleJobClick(job)}>
               <div className="jobListTop">
                 {
                   job.company.logo ? (

@@ -67,7 +67,13 @@ function Application() {
 
   useEffect(() => {
     let timer;
-    if (showProfileMessage || showRoleMessage || showEducationMessage || showResumeMessage || showSkillsMessage) {
+    if (
+      showProfileMessage ||
+      showRoleMessage ||
+      showEducationMessage ||
+      showResumeMessage ||
+      showSkillsMessage
+    ) {
       timer = setTimeout(() => {
         setShowProfileMessage(false);
         setShowRoleMessage(false);
@@ -77,7 +83,13 @@ function Application() {
       }, 6000);
     }
     return () => clearTimeout(timer);
-  }, [showProfileMessage, showRoleMessage, showEducationMessage, showResumeMessage, showSkillsMessage]);
+  }, [
+    showProfileMessage,
+    showRoleMessage,
+    showEducationMessage,
+    showResumeMessage,
+    showSkillsMessage,
+  ]);
 
   const handleEditClick = (role) => {
     setSelectedRole(role);
@@ -167,33 +179,36 @@ function Application() {
         console.error("No token found");
         return;
       }
-  
+
       try {
-        const response = await fetch("http://localhost:8000/api/ShowUserProfile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-  
+        const response = await fetch(
+          "http://localhost:8000/api/ShowUserProfile",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
         if (!response.ok) {
           throw new Error("Failed to fetch profile data");
         }
-  
+
         const data = await response.json();
         console.log(data);
-  
+
         if (data && Array.isArray(data.experience)) {
           setRoleValues(data.experience);
         } else {
           setRoleValues([]);
         }
-  
+
         if (data && Array.isArray(data.education)) {
           setEducationValues(data.education);
         } else {
           setEducationValues([]);
         }
-  
+
         setProfileValues(data);
         setResumeValues(data.resume);
         setResumeFileName(
@@ -212,16 +227,28 @@ function Application() {
         console.error("Error:", error);
       }
     };
-  
+
     // Fetch data when component mounts
     fetchData();
-  
+
     // Fetch again when any of the message flags are true
-    if (showProfileMessage || showRoleMessage || showEducationMessage || showResumeMessage || showSkillsMessage) {
+    if (
+      showProfileMessage ||
+      showRoleMessage ||
+      showEducationMessage ||
+      showResumeMessage ||
+      showSkillsMessage
+    ) {
       fetchData();
     }
-  }, [navigate, showProfileMessage, showRoleMessage, showEducationMessage, showResumeMessage, showSkillsMessage]);
-  
+  }, [
+    navigate,
+    showProfileMessage,
+    showRoleMessage,
+    showEducationMessage,
+    showResumeMessage,
+    showSkillsMessage,
+  ]);
 
   const handleRoleDeleteClick = async (experienceId) => {
     const token = Cookies.get("token");
@@ -482,7 +509,12 @@ function Application() {
                 </h1>
                 {resumeValues ? (
                   <div className="border border-black px-4 py-2 w-[520px] flex justify-between rounded">
-                    <a href={resumeValues} className="flex items-center gap-2">
+                    <a
+                      href={resumeValues}
+                      className="flex items-center gap-2"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <FaFileAlt />
                       {resumeFileName}
                     </a>
@@ -567,127 +599,119 @@ function Application() {
             />
           )}
           {showAddRole && (
-              <AddRole
-                justClose={handleJustClose}
-                onClose={handleClose}
-                role={selectedRole}
-              />
-            )}
-            {showAddEducation && (
-              <AddEducation
-                justClose={handleJustCloseEducation}
-                onClose={handleCloseEducation}
-                education={selectedEducation}
-              />
-            )}
-            {showAddResume && (
-              <AddResume
-                justClose={() => {
-                  setShowAddResume(false);
-                }}
-                onClose={() => {
-                  setShowAddResume(false);
-                  setShowResumeMessage(true);
-                }}
-              />
-            )}
-            {showAddSkills && (
-              <AddSkill
-                justClose={() => {
-                  setShowAddSkills(false);
-                }}
-                onClose={() => {
-                  setShowAddSkills(false);
-                  setShowSkillsMessage(true)
-                }}
-                skills={skillsValues}
-              />
-            )}
-            {showEditProfile && (
-              <EditProfile
-                justClose={() => {
-                  setShowEditProfile(false);
-                }}
-                onClose={() => {
-                  setShowEditProfile(false);
-                  setShowProfileMessage(true)
-                }}
-                profile={selectedProfile}
-              />
-            )}
-            {showProfileMessage && (
-                <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
-                    <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
-                    <p>Profile updated successfully!</p>
-                    <button
-                        className="text-white ml-1"
-                        onClick={() => setShowProfileMessage(false)}
-                    >
-                       <IoClose size={25}/>
-                    </button>
-                    </div>
-                </div>
-            )}
-            {
-                showRoleMessage && (
-                    <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
-                        <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
-                            <p>Role updated successfully!</p>
-                            <button
-                                className="text-white ml-1"
-                                onClick={() => setShowRoleMessage(false)}
-                            >
-                                <IoClose size={25}/>
-                            </button>
-                        </div>
-                    </div>
-                )
-            }
-            {
-                showEducationMessage && (
-                    <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
-                        <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
-                            <p>Education updated successfully!</p>
-                            <button
-                                className="text-white ml-1"
-                                onClick={() => setShowEducationMessage(false)}
-                            >
-                                <IoClose size={25}/>
-                            </button>
-                        </div>
-                    </div>
-                )
-            }
-            {
-                showResumeMessage && (
-                    <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
-                        <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
-                            <p>Resume updated successfully!</p>
-                            <button
-                                className="text-white ml-1"
-                                onClick={() => setShowResumeMessage(false)}
-                            >
-                                <IoClose size={25}/>
-                            </button>
-                        </div>
-                    </div>
-                )
-            }
-            {
-                showSkillsMessage && (
-                    <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
-                        <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
-                            <p>Skills updated successfully!</p>
-                            <button
-                                className="text-white ml-1"
-                                onClick={() => setShowSkillsMessage(false)}
-                            >
-                                <IoClose size={25}/>
-                            </button>
-                        </div>
-                    </div>
-                )
-            }
+            <AddRole
+              justClose={handleJustClose}
+              onClose={handleClose}
+              role={selectedRole}
+            />
+          )}
+          {showAddEducation && (
+            <AddEducation
+              justClose={handleJustCloseEducation}
+              onClose={handleCloseEducation}
+              education={selectedEducation}
+            />
+          )}
+          {showAddResume && (
+            <AddResume
+              justClose={() => {
+                setShowAddResume(false);
+              }}
+              onClose={() => {
+                setShowAddResume(false);
+                setShowResumeMessage(true);
+              }}
+            />
+          )}
+          {showAddSkills && (
+            <AddSkill
+              justClose={() => {
+                setShowAddSkills(false);
+              }}
+              onClose={() => {
+                setShowAddSkills(false);
+                setShowSkillsMessage(true);
+              }}
+              skills={skillsValues}
+            />
+          )}
+          {showEditProfile && (
+            <EditProfile
+              justClose={() => {
+                setShowEditProfile(false);
+              }}
+              onClose={() => {
+                setShowEditProfile(false);
+                setShowProfileMessage(true);
+              }}
+              profile={selectedProfile}
+            />
+          )}
+          {showProfileMessage && (
+            <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
+              <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
+                <p>Profile updated successfully!</p>
+                <button
+                  className="text-white ml-1"
+                  onClick={() => setShowProfileMessage(false)}
+                >
+                  <IoClose size={25} />
+                </button>
+              </div>
+            </div>
+          )}
+          {showRoleMessage && (
+            <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
+              <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
+                <p>Role updated successfully!</p>
+                <button
+                  className="text-white ml-1"
+                  onClick={() => setShowRoleMessage(false)}
+                >
+                  <IoClose size={25} />
+                </button>
+              </div>
+            </div>
+          )}
+          {showEducationMessage && (
+            <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
+              <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
+                <p>Education updated successfully!</p>
+                <button
+                  className="text-white ml-1"
+                  onClick={() => setShowEducationMessage(false)}
+                >
+                  <IoClose size={25} />
+                </button>
+              </div>
+            </div>
+          )}
+          {showResumeMessage && (
+            <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
+              <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
+                <p>Resume updated successfully!</p>
+                <button
+                  className="text-white ml-1"
+                  onClick={() => setShowResumeMessage(false)}
+                >
+                  <IoClose size={25} />
+                </button>
+              </div>
+            </div>
+          )}
+          {showSkillsMessage && (
+            <div className="addrole fixed inset-0 flex items-end justify-center mb-5">
+              <div className="p-4 rounded-2xl bg-customBlue text-white flex justify-between items-center">
+                <p>Skills updated successfully!</p>
+                <button
+                  className="text-white ml-1"
+                  onClick={() => setShowSkillsMessage(false)}
+                >
+                  <IoClose size={25} />
+                </button>
+              </div>
+            </div>
+          )}
         </section>
       )}
 

@@ -59,7 +59,7 @@ export function AddResume ({onClose, justClose, resume}){
 
     return(
         <div className='addrole fixed inset-0 flex items-center justify-end bg-black bg-opacity-50'>
-            <div className='bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full overflow-y-auto z-2001 h-[695.2px]'>
+            <div className='bg-white p-4 rounded shadow-lg relative w-full max-w-2xl overflow-y-auto z-2001 h-full'>
                 <button onClick={justClose} className='absolute top-2 right-2 text-xl font-bold'>
                     <IoClose size={25}/>
                 </button>
@@ -90,7 +90,6 @@ export function AddResume ({onClose, justClose, resume}){
                             <FaFileAlt />
                             <span className="flex items-center justify-between w-full"> 
                             {fileName}
-                            <RiDeleteBin6Line onClick={() => { setFileName("No selected file");}} />
                             </span>
                         </div>
                         <button type="submit" className=' bg-customBlue font-bold text-white p-2 rounded mt-auto'>Submit</button>
