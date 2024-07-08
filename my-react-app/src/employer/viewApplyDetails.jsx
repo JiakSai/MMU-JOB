@@ -1,6 +1,7 @@
 import { HiOutlineUserCircle } from "react-icons/hi2";
 import { useState, useEffect } from "react";
 import { FaFileAlt } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -116,9 +117,9 @@ export default function ViewApplyDetails({ onclose, justClose, apply }) {
       <div className="bg-white p-4 rounded shadow-lg relative w-full max-w-2xl max-h-full">
         <button
           onClick={justClose}
-          className="absolute top-1 right-2 text-xl font-bold"
+          className="absolute top-3 right-3 text-xl font-bold"
         >
-          &times;
+          <IoClose size={28}/>
         </button>
         <div className="appScroll h-[500px] overflow-y-auto mr-[-16px]">
           <div>
