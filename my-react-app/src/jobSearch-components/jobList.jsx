@@ -45,7 +45,8 @@ const JobList = () => {
         }
       })
       .catch(error => {
-        setErrorMessage('Error fetching job data.');
+        setErrorMessage('No jobs match your search..');
+        showJob.length = 0;
         console.error('Error fetching job data:', error);
       })
       .finally(() => {

@@ -104,7 +104,6 @@ export function AddEducation({ onClose, education, justClose }) {
         }
     }
     const years = Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i);
-    const educationLevel = ["High school", "Diploma", "Bachelor's degree", "Master's degree", "Doctorate degree", "Professional qualification"];
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     return(
@@ -128,19 +127,14 @@ export function AddEducation({ onClose, education, justClose }) {
                         </div>
                         
                         <div className='flex flex-col gap-2'>
-                            <label>Education level</label>
-                            <select
-                                    name="degree"
-                                    value={educationValue.degree}
-                                    onChange={handleInput}
-                                    className="border border-black p-2">
-                                    <option value="" disabled>Select education level</option>
-                                    {educationLevel.map((education, index) => (
-                                        <option key={index} value={education}>
-                                            {education}
-                                        </option>
-                                    ))}
-                                </select>
+                            <label>Degree</label>
+                            <input 
+                                type="text"
+                                name='degree'
+                                className='border border-black p-2'
+                                value={educationValue.degree} 
+                                onChange={handleInput}
+                            />
                         </div>
                         
                         <div className='flex flex-col gap-2'>
