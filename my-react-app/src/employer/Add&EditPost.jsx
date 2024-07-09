@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export default function AddEditPost({ job, onClose }) {
     const navigate = useNavigate();
     const [api, setApi] = useState([]);
+    const [allErrorMessage, setAllErrorMessage] = useState('');
     const [initialPost, setInitialPost] = useState({
         jobTitle: '',
         jobType: '',
@@ -98,6 +99,19 @@ export default function AddEditPost({ job, onClose }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const token = Cookies.get('empToken');
+
+        const {
+            jobTitle, jobType, jobCategory, jobLocation, locationType,
+            minSalary, maxSalary, description, requirement, educationLevel, experience
+        } = post;
+
+        if (!jobTitle || !jobType || !jobCategory || !jobLocation || !locationType || 
+            !minSalary || !maxSalary || !description || !requirement || 
+            !educationLevel || !experience) {
+            setAllErrorMessage('Please fill in all the fields');
+            return;
+        }
+
         try {
             let response;
             if (job) {
@@ -126,12 +140,13 @@ export default function AddEditPost({ job, onClose }) {
 
     const handleCancel = () => {
         setPost(initialPost);
+        setAllErrorMessage('');
     };
 
     const States = ["Kuala Lumpur", "Selangor", "Putrajaya", "Penang", "Johor", "Perlis", "Kedah", "Kelantan", "Terengganu", "Melaka",
         "Negeri Sembilan", "Pahang", "Perak", "Sabah", "Sarawak", "Singapore", "Overseas"];
     const jobTypes = ["Internship", "Part-Time", "Full-Time", "Freelance"];
-    const experiences = ["Intern", "Fresh Graduate","No pior experience required", "1 to 3 Years of Experience", "4 to 7 Years of Experience", "8 to 10 Years of Experience",
+    const experiences = ["Intern", "Fresh Graduate","No prior experience required", "1 to 3 Years of Experience", "4 to 7 Years of Experience", "8 to 10 Years of Experience",
         "Over 10 Years of Experience"];
     const locationTypes = ["On-site", "Remote", "Hybrid"];
     const educationLevel = ["High school", "Diploma", "Bachelor's degree", "Master's degree", "Doctorate degree", "Professional qualification"];
@@ -307,8 +322,11 @@ export default function AddEditPost({ job, onClose }) {
                         className='border border-black p-2 w-[693px] rounded'
                         rows={4}
                     />
+                    
                 </div>
+                {allErrorMessage && <p className='text-red-500 justify-end flex'>{allErrorMessage}</p>}
                 <div className='flex justify-end space-x-3'>
+                    
                     <button type="button" onClick={handleCancel} className='bg-neutral-300 text-white px-4 py-2 mt-4 rounded-md'>
                         Cancel
                     </button>
