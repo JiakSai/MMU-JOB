@@ -32,7 +32,7 @@ function Footer(){
                 <li><a href="/userRegister">Register for free</a></li>
                 <li><a href="/SearchJob">Job search</a></li>
                 <li><a href="/searchCompany">Company search</a></li>
-                <li><a href="/UserProfile">User rofile</a></li>
+                <li><a href="/UserProfile">User profile</a></li>
               </ul>
             </div>
       
