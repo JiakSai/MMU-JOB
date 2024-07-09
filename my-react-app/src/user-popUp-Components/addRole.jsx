@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { IoClose } from "react-icons/io5";
 
 export function AddRole({ onClose, role, justClose }) {
+    const [errorMessage, setErrorMessage] = useState('');
     const [roleValue, setRoleValue] = useState({
         title: "",
         companyName: "",
@@ -88,6 +89,19 @@ export function AddRole({ onClose, role, justClose }) {
         if (name === 'endDateMonth' || name === 'endDateYear') {
             if (updatedRoleValue.endDateMonth && updatedRoleValue.endDateYear) {
                 updatedRoleValue.endDate = `${updatedRoleValue.endDateMonth} ${updatedRoleValue.endDateYear}`;
+            }
+        }
+
+        if (updatedRoleValue.startDate && updatedRoleValue.endDate) {
+            const startDate = new Date(`${updatedRoleValue.startDateMonth} 1, ${updatedRoleValue.startDateYear}`);
+            const endDate = new Date(`${updatedRoleValue.endDateMonth} 1, ${updatedRoleValue.endDateYear}`);
+            
+            if (endDate < startDate) {
+                setErrorMessage('End date cannot be earlier than start date.');
+            } else if (startDate.getTime() === endDate.getTime()) {
+                setErrorMessage('End date and start date cannot be the same.');
+            } else {
+                setErrorMessage('');
             }
         }
 
@@ -226,8 +240,8 @@ export function AddRole({ onClose, role, justClose }) {
                                     {years.map((year, index) => <option key={index} value={year}>{year}</option>)}
                                 </select>
                             </div>
+                            {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
                         </div>
-                        
                         <div className='flex flex-col gap-2'>
                             <div className='flex flex-col'>
                                 <label >Description</label>

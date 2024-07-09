@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { IoClose } from "react-icons/io5";
 
 export function AddEducation({ onClose, education, justClose }) {
+    const [errorMessage, setErrorMessage] = useState('');
     const [educationValue, setEducationValue] = useState({
         school: "",
         degree: "",
@@ -47,6 +48,23 @@ export function AddEducation({ onClose, education, justClose }) {
                 updatedEduValue.endDate = `${updatedEduValue.endDateMonth} ${updatedEduValue.endDateYear}`;
             }
         }
+
+        if(updatedEduValue.endDate < updatedEduValue.startDate){
+            setErrorMessage('End date cannot be earlier than start date.');
+        }
+        if (updatedEduValue.startDate && updatedEduValue.endDate) {
+            const startDate = new Date(`${updatedEduValue.startDateMonth} 1, ${updatedEduValue.startDateYear}`);
+            const endDate = new Date(`${updatedEduValue.endDateMonth} 1, ${updatedEduValue.endDateYear}`);
+            
+            if (endDate < startDate) {
+                setErrorMessage('End date cannot be earlier than start date.');
+            } else if (startDate.getTime() === endDate.getTime()) {
+                setErrorMessage('End date and start date cannot be the same.');
+            } else {
+                setErrorMessage('');
+            }
+        }
+
         setEducationValue(updatedEduValue);
     };
     const handleSubmit = async (event) =>{
@@ -171,6 +189,7 @@ export function AddEducation({ onClose, education, justClose }) {
                                     {years.map((year, index) => <option key={index} value={year}>{year}</option>)}
                                 </select>
                             </div>
+                            {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
                         </div>
                         
                         <div className='flex flex-col gap-2'>
