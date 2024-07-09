@@ -149,7 +149,7 @@ export default function AddEditPost({ job, onClose }) {
     }
 
     return (
-        <div className='w-full bg-[#FDFEFE] p-8 rounded'>
+        <div className='w-full bg-[#FDFEFE] p-8 rounded addJOb'>
             <p className='text-2xl text-stone-400 font-semibold'>
                 {job ?
                     'Edit Job'

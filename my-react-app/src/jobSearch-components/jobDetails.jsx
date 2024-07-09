@@ -78,7 +78,7 @@ export default function JobDetails(props) {
 
     return (
         <>
-            <div className="jobDetails">
+            <div className="jobDetails ">
                 <div className='jobScroll'>
                     <div className='jobDetailsTop'>
                         <div className="jobDetailsBox">

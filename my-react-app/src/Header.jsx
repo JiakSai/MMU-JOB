@@ -111,9 +111,6 @@ function Header() {
                             }
                                 {token && (
                                     <ul className="Dropdown">
-                                        <li><Link to={token ? "/UserProfile" : "/userLogin"}>
-                                            Profile
-                                        </Link></li>
                                         <li><Link to={token ? "/userApplicationStatus" : "/userLogin"}>
                                             Job Application
                                         </Link></li>

@@ -115,11 +115,6 @@ function EmployerHeader() {
                                 }
                                 {token && (
                                     <ul className="Dropdown">
-                                        <li>
-                                            <Link to={token ? "/editComProfile" : "/employerLogin"}>
-                                            Company profile
-                                            </Link>
-                                        </li>
                                         <li><Link to={token ? "/employerApplication" : "/employerLogin"}>Job application</Link></li>
                                         <li style={{ color: 'red' }}><a href='#' onClick={handleLogout}>Logout</a></li>
                                     </ul>

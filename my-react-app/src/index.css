@@ -476,7 +476,7 @@ form button {
   display: flex;
   height: auto;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
 }
 .allJob::-webkit-scrollbar {
   display: none;
@@ -485,6 +485,7 @@ form button {
   padding: 20px 120px;
   display: flex;
   gap: 56px;
+  
 }
 .jobQty{
   display: flex;
@@ -499,6 +500,9 @@ form button {
   border: 1px solid #B2BABB;
   border-radius: 4px;
   padding: 15px;
+}
+.jobList{
+  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 2.4px;
 }
 .jobLogo {
   height: 50px;
@@ -530,16 +534,17 @@ form button {
 .jobList{
   font-size: 14px;
 }
-.jobDetails{
+.jobDetails {
   width: 790px;
   border: 1px solid #B2BABB;
   border-radius: 4px;
   max-height: 850px;
   position: sticky;
-  top: 70px; 
-  height: calc(100vh - 70px); 
+  top: 70px;
+  height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
 }
 .jobScroll{
   overflow-y: auto;
@@ -1177,4 +1182,7 @@ th {
 }
 .shadow-bottom {
   box-shadow: 0 6px 2px -2px rgba(0, 0, 0, 0.1)
+}
+.addJOb{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
