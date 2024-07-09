@@ -40,6 +40,7 @@ export default function AddEditPost({ job, onClose }) {
             const jobData = {
                 jobTitle: job.jobTitle,
                 jobType: job.jobType,
+                jobCategory: job.jobCategory,
                 jobLocation: job.jobLocation,
                 locationType: job.locationType,
                 minSalary: job.minSalary,
@@ -130,7 +131,7 @@ export default function AddEditPost({ job, onClose }) {
     const States = ["Kuala Lumpur", "Selangor", "Putrajaya", "Penang", "Johor", "Perlis", "Kedah", "Kelantan", "Terengganu", "Melaka",
         "Negeri Sembilan", "Pahang", "Perak", "Sabah", "Sarawak", "Singapore", "Overseas"];
     const jobTypes = ["Internship", "Part-Time", "Full-Time", "Freelance"];
-    const experiences = ["Intern", "Fresh Graduate","No pior experiance require", "1 to 3 Years of Experience", "4 to 7 Years of Experience", "8 to 10 Years of Experience",
+    const experiences = ["Intern", "Fresh Graduate","No pior experience required", "1 to 3 Years of Experience", "4 to 7 Years of Experience", "8 to 10 Years of Experience",
         "Over 10 Years of Experience"];
     const locationTypes = ["On-site", "Remote", "Hybrid"];
     const educationLevel = ["High school", "Diploma", "Bachelor's degree", "Master's degree", "Doctorate degree", "Professional qualification"];
