@@ -5,6 +5,7 @@ import { IoClose } from "react-icons/io5";
 
 export function AddRole({ onClose, role, justClose }) {
     const [errorMessage, setErrorMessage] = useState('');
+    const [allErrorMessage, setAllErrorMessage] = useState('');
     const [roleValue, setRoleValue] = useState({
         title: "",
         companyName: "",
@@ -46,6 +47,13 @@ export function AddRole({ onClose, role, justClose }) {
         if (!token) {
             console.error('No token found');
             return;
+        }
+
+        if(!roleValue.title || !roleValue.companyName || !roleValue.location || !roleValue.locationType || !roleValue.jobType || !roleValue.startDate || !roleValue.endDate || !roleValue.description){
+            setAllErrorMessage('All fields are required.');
+            return;
+        }else{
+            setAllErrorMessage('');
         }
 
         try {
@@ -254,8 +262,9 @@ export function AddRole({ onClose, role, justClose }) {
                                 onChange={handleInput}
                                 rows={5}
                             />
+                            {allErrorMessage && <p className='text-red-500'>{allErrorMessage}</p>}
                         </div>
-
+                        
                         <button type="submit" className=' bg-customBlue font-bold text-white p-2 rounded mt-auto'>Submit</button>
                     </form>
                 </div>

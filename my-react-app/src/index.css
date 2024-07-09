@@ -502,7 +502,7 @@ form button {
   padding: 15px;
 }
 .jobList{
-  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 2.4px;
+  box-shadow: rgba(0, 0, 0, 0.15) 2.0px 2.4px 3.4px;
 }
 .jobLogo {
   height: 50px;
@@ -544,7 +544,7 @@ form button {
   height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+  box-shadow: rgba(0, 0, 0, 0.15) 2.0px 2.4px 3.2px;
 }
 .jobScroll{
   overflow-y: auto;

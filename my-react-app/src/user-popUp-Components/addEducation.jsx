@@ -5,6 +5,7 @@ import { IoClose } from "react-icons/io5";
 
 export function AddEducation({ onClose, education, justClose }) {
     const [errorMessage, setErrorMessage] = useState('');
+    const [allErrorMessage, setAllErrorMessage] = useState('');
     const [educationValue, setEducationValue] = useState({
         school: "",
         degree: "",
@@ -73,6 +74,13 @@ export function AddEducation({ onClose, education, justClose }) {
         if (!token) {
             console.error('No token found');
             return;
+        }
+
+        if (!educationValue.school || !educationValue.degree || !educationValue.startDate || !educationValue.endDate || !educationValue.grade) {
+            setAllErrorMessage('All fields are required.');
+            return;
+        } else {
+            setAllErrorMessage('');
         }
 
         try
@@ -195,6 +203,7 @@ export function AddEducation({ onClose, education, justClose }) {
                             value={educationValue.grade}
                             onChange={handleInput}
                         />
+                        {allErrorMessage && <p className='text-red-500'>{allErrorMessage}</p>}
                         </div>
                         <button type="submit" className=' bg-customBlue font-bold text-white p-2 rounded mt-auto'>Submit</button>
                     </form>
