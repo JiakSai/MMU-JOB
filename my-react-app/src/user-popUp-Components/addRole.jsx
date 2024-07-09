@@ -49,7 +49,7 @@ export function AddRole({ onClose, role, justClose }) {
             return;
         }
 
-        if(!roleValue.title || !roleValue.companyName || !roleValue.location || !roleValue.locationType || !roleValue.jobType || !roleValue.startDate || !roleValue.endDate || !roleValue.description){
+        if(!roleValue.title || !roleValue.companyName || !roleValue.location || !roleValue.locationType || !roleValue.jobType || !roleValue.startDate || !roleValue.endDate){
             setAllErrorMessage('All fields are required.');
             return;
         }else{
