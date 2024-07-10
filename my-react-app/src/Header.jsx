@@ -71,7 +71,7 @@ function Header() {
                             Profile
                         </Link>
                     </li>
-                    <li><a href="#">Company profiles</a></li>
+                    <li><a href="#">Company search</a></li>
                     <li id="user" className="User">
                         {
                             token ? 
@@ -99,7 +99,7 @@ function Header() {
                             Profile
                         </Link>
                     </li>
-                    <li className="hideOnMobile"><Link to="/searchCompany" >Company profiles</Link></li>
+                    <li className="hideOnMobile"><Link to="/searchCompany" >Company search</Link></li>
                     <li className="hideOnMobile">
                         <ul>
                             <li id="user" className="User">
